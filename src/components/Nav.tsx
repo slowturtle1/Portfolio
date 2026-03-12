@@ -3,29 +3,36 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { Menu, X, ArrowUpRight } from 'lucide-react'
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from 'framer-motion'
 
 const navLinks = [
-  { href: '/#projects', label: 'Projects', internal: true },
-  { href: '/#playground', label: 'Playground', internal: true },
-  { href: '/about', label: 'About', internal: true },
+  { href: '/#projects', label: 'Projects' },
+  { href: '/#playground', label: 'Playground' },
+  { href: '/about', label: 'About' },
 ]
 
 export default function Nav() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
-  const { scrollYProgress } = useScroll()
+  const [scrolled, setScrolled] = useState(false)
+  const { scrollY, scrollYProgress } = useScroll()
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1])
+
+  useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 60))
 
   return (
     <>
-      <nav className="nav">
-        {/* Scroll progress bar */}
+      <motion.nav
+        className={`nav${scrolled ? ' nav-scrolled' : ''}`}
+        initial={{ y: -10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+      >
         <motion.div className="nav-progress" style={{ scaleX }} />
 
         <Link href="/" className="nav-logo">
-          AV
+          Aleksandra V.
         </Link>
 
         <ul className="nav-links">
@@ -39,21 +46,21 @@ export default function Nav() {
               </Link>
             </li>
           ))}
-          <li>
-            <a href="mailto:hello@avugdragovic.com" className="btn-primary nav-cta">
-              Get in touch
-            </a>
-          </li>
         </ul>
 
-        <button
-          className="nav-hamburger"
-          aria-label="Open menu"
-          onClick={() => setMenuOpen(true)}
-        >
-          <Menu size={22} strokeWidth={1.5} />
-        </button>
-      </nav>
+        <div className="nav-right">
+          <a href="mailto:hello@avugdragovic.com" className="nav-cta-text">
+            Get in touch <ArrowUpRight size={13} strokeWidth={2} />
+          </a>
+          <button
+            className="nav-hamburger"
+            aria-label="Open menu"
+            onClick={() => setMenuOpen(true)}
+          >
+            <Menu size={22} strokeWidth={1.5} />
+          </button>
+        </div>
+      </motion.nav>
 
       <AnimatePresence>
         {menuOpen && (
@@ -65,7 +72,7 @@ export default function Nav() {
             transition={{ type: 'spring', stiffness: 300, damping: 32 }}
           >
             <div className="mobile-menu-header">
-              <span className="nav-logo">AV</span>
+              <span className="nav-logo">Aleksandra V.</span>
               <button
                 className="mobile-menu-close"
                 aria-label="Close menu"

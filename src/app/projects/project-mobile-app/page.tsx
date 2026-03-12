@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-export const metadata: Metadata = { title: 'Mobile App — Igor J' }
+export const metadata: Metadata = { title: 'Mobile App — Aleksandra Vugdragovic' }
 
 export default function ProjectMobileApp() {
   return (
