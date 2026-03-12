@@ -286,7 +286,7 @@ export default function Home() {
             </p>
             <div className="about-actions">
               <Magnetic>
-                <a href="mailto:hello@igorj.com" className="btn-primary">Get in touch</a>
+                <a href="mailto:hello@avugdragovic.com" className="btn-primary">Get in touch</a>
               </Magnetic>
               <Magnetic>
                 <Link href="/about" className="btn-secondary">Full story</Link>

@@ -12,7 +12,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: 'Igor J — Product Designer',
+  title: 'Aleksandra Vugdragovic — Product Designer',
   description: 'Product Designer crafting digital products that feel inevitable — clear, considered, and built for real people.',
 }
 

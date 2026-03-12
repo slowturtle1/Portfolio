@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'About — Igor J',
+  title: 'About — Aleksandra Vugdragovic',
 }
 
 export default function About() {
@@ -27,7 +27,7 @@ export default function About() {
             where design has a seat at the table from day one.
           </p>
           <div style={{ display: 'flex', gap: 'var(--space-md)', flexWrap: 'wrap', marginTop: 'var(--space-xl)' }}>
-            <a href="mailto:hello@igorj.com" className="btn-primary">Get in touch</a>
+            <a href="mailto:hello@avugdragovic.com" className="btn-primary">Get in touch</a>
             <a href="#" className="btn-secondary">Download CV</a>
           </div>
         </div>
@@ -84,7 +84,7 @@ export default function About() {
             If you&apos;re building something worth designing well, I&apos;d love to hear about it.
           </p>
           <div style={{ display: 'flex', gap: 'var(--space-md)', flexWrap: 'wrap' }}>
-            <a href="mailto:hello@igorj.com" className="btn-primary">hello@igorj.com</a>
+            <a href="mailto:hello@avugdragovic.com" className="btn-primary">hello@avugdragovic.com</a>
             <a href="#" className="btn-secondary">LinkedIn</a>
           </div>
         </div>
