@@ -91,11 +91,11 @@ export default function About() {
         <div>
           <div style={{ border: '1px solid var(--border)', padding: 'var(--space-xl)' }}>
             <div className="meta-label" style={{ marginBottom: 'var(--space-md)' }}>Currently based in</div>
-            <div style={{ fontSize: '1rem', fontWeight: 600, marginBottom: 'var(--space-xl)' }}>Belgrade, Serbia — open to remote</div>
+            <div className="about-detail">Belgrade, Serbia — open to remote</div>
             <div className="meta-label" style={{ marginBottom: 'var(--space-md)' }}>Availability</div>
-            <div style={{ fontSize: '1rem', fontWeight: 600, marginBottom: 'var(--space-xl)', color: 'var(--accent-primary)' }}>Available from April 2026</div>
+            <div className="about-detail about-detail--accent">Available from April 2026</div>
             <div className="meta-label" style={{ marginBottom: 'var(--space-md)' }}>Languages</div>
-            <div style={{ fontSize: '1rem', fontWeight: 600 }}>English (fluent), Serbian (native)</div>
+            <div className="about-detail">English (fluent), Serbian (native)</div>
           </div>
         </div>
       </div>

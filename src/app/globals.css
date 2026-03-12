@@ -52,7 +52,7 @@ img { display: block; max-width: 100%; }
 
 /* ─── TYPOGRAPHY HELPERS ─────────────────────────────────────── */
 .label {
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -391,7 +391,7 @@ img { display: block; max-width: 100%; }
   z-index: 1;
 }
 .tag {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -411,7 +411,7 @@ img { display: block; max-width: 100%; }
   flex: 1;
 }
 .project-number {
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   color: var(--accent-primary);
@@ -440,7 +440,7 @@ img { display: block; max-width: 100%; }
 .placeholder-image.pg2  { background: linear-gradient(145deg, #eeeeee 0%, #dedede 100%); }
 .placeholder-image.photo { background: linear-gradient(145deg, #efefef 0%, #e2e2e2 100%); min-height: 280px; }
 .placeholder-label {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -522,7 +522,7 @@ img { display: block; max-width: 100%; }
 }
 .about-heading { margin-top: var(--space-sm); margin-bottom: var(--space-lg); }
 .about-body {
-  font-size: 0.975rem;
+  font-size: 0.875rem;
   color: var(--text-secondary);
   line-height: 1.75;
   margin-bottom: var(--space-md);
@@ -543,7 +543,7 @@ img { display: block; max-width: 100%; }
 }
 .about-skills { padding: var(--space-xl); background: var(--bg-page); }
 .skills-title {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -644,7 +644,7 @@ img { display: block; max-width: 100%; }
   gap: var(--space-xs);
 }
 .meta-label {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -670,7 +670,7 @@ img { display: block; max-width: 100%; }
   gap: var(--space-3xl);
 }
 .case-number {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -678,7 +678,7 @@ img { display: block; max-width: 100%; }
   padding-top: 6px;
 }
 .case-heading { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: var(--space-lg); }
-.case-body { font-size: 0.925rem; color: var(--text-secondary); line-height: 1.8; max-width: 640px; margin-bottom: var(--space-md); }
+.case-body { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.8; max-width: 640px; margin-bottom: var(--space-md); }
 .case-image {
   width: 100%;
   height: 360px;
@@ -821,6 +821,14 @@ img { display: block; max-width: 100%; }
   align-items: start;
 }
 .contact-heading { font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; margin-top: var(--space-sm); margin-bottom: var(--space-lg); }
+.about-detail {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: var(--space-xl);
+}
+.about-detail--accent { color: var(--accent-primary); }
+.about-detail:last-child { margin-bottom: 0; }
+
 .contact-body { font-size: 0.925rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: var(--space-xl); }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
