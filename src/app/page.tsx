@@ -263,6 +263,58 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* ── TESTIMONIALS ─────────────────────────────────────── */}
+      <section className="section section-testimonials" id="testimonials">
+        <div className="section-header">
+          <span className="label section-label">Kind words</span>
+          <h2 className="section-heading">What people say</h2>
+        </div>
+
+        <motion.div
+          className="testimonials-grid"
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <motion.blockquote className="testimonial-card" variants={fadeUp}>
+            <span className="testimonial-mark">&ldquo;</span>
+            <p className="testimonial-quote">Aleksandra has a rare ability to translate ambiguous product requirements into designs that feel obvious in retrospect. Her work on our onboarding flow cut drop-off by nearly half — and the team felt her presence at every step of the process.</p>
+            <footer className="testimonial-footer">
+              <span className="testimonial-name">Jordan Meyers</span>
+              <span className="testimonial-role">Head of Product, Finflow</span>
+            </footer>
+          </motion.blockquote>
+
+          <motion.blockquote className="testimonial-card" variants={fadeUp}>
+            <span className="testimonial-mark">&ldquo;</span>
+            <p className="testimonial-quote">Working with Aleksandra was a masterclass in systems thinking. She didn't just deliver screens — she built a shared design language our whole engineering team could speak. Detail-oriented, collaborative, and genuinely great to work with.</p>
+            <footer className="testimonial-footer">
+              <span className="testimonial-name">Mia Fontaine</span>
+              <span className="testimonial-role">Engineering Lead, Stackable</span>
+            </footer>
+          </motion.blockquote>
+        </motion.div>
+      </section>
+
+      {/* ── CTA ───────────────────────────────────────────────── */}
+      <section className="section-cta" id="contact">
+        <motion.div
+          className="cta-inner"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ type: 'spring', stiffness: 70, damping: 18 }}
+        >
+          <span className="label cta-label">Open to work</span>
+          <h2 className="cta-heading">Got a project<br />in mind?</h2>
+          <p className="cta-body">I&apos;m currently available for new opportunities — full-time roles, freelance projects, and collaborations.</p>
+          <Magnetic>
+            <a href="mailto:hello@avugdragovic.com" className="btn-primary cta-btn">Get in touch</a>
+          </Magnetic>
+        </motion.div>
+      </section>
+
       {/* ── ABOUT ────────────────────────────────────────────── */}
       <section className="section section-about" id="about">
         <motion.div
