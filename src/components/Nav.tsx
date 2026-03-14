@@ -6,90 +6,67 @@ import { useState } from 'react'
 import { X } from 'lucide-react'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 
-const navLinks = [
+const links = [
   { href: '/#work',      label: 'Work' },
   { href: '/#about',     label: 'About' },
-  { href: '/about',      label: 'Full bio' },
+  { href: 'mailto:hello@igorj.com', label: 'Contact' },
 ]
 
 export default function Nav() {
   const pathname = usePathname()
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { scrollY } = useScroll()
 
-  useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 20))
+  useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 24))
 
   return (
     <>
       <motion.nav
-        className={`nav${scrolled ? ' nav-scrolled' : ''}`}
-        initial={{ y: -8, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+        className={`nav${scrolled ? ' nav--scrolled' : ''}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
       >
-        <Link href="/" className="nav-logo">Igor J</Link>
+        <Link href="/" className="nav-mark">IJ</Link>
 
         <ul className="nav-links">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className={link.href === '/about' && pathname === '/about' ? 'active' : ''}
-              >
-                {link.label}
+          {links.map(l => (
+            <li key={l.href}>
+              <Link href={l.href} className={pathname === '/about' && l.href === '/about' ? 'active' : ''}>
+                {l.label}
               </Link>
             </li>
           ))}
         </ul>
 
-        <div className="nav-right">
-          <a href="mailto:hello@igorj.com" className="nav-cta-text">
-            Get in touch
-          </a>
-          <button
-            className="nav-hamburger"
-            aria-label="Open menu"
-            onClick={() => setMenuOpen(true)}
-          >
-            <span /><span />
-          </button>
-        </div>
+        <button className="nav-burger" aria-label="Menu" onClick={() => setOpen(true)}>
+          <span /><span />
+        </button>
       </motion.nav>
 
       <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            className="mobile-menu"
+        {open && (
+          <motion.div className="mobile-menu"
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 32 }}
+            transition={{ type: 'spring', stiffness: 280, damping: 30 }}
           >
-            <div className="mobile-menu-header">
-              <span className="nav-logo">Igor J</span>
-              <button className="mobile-menu-close" aria-label="Close menu" onClick={() => setMenuOpen(false)}>
-                <X size={22} strokeWidth={1.5} />
-              </button>
+            <div className="mobile-menu-top">
+              <span className="nav-mark">IJ</span>
+              <button onClick={() => setOpen(false)} aria-label="Close"><X size={20} strokeWidth={1.5} /></button>
             </div>
-            <nav className="mobile-nav-links">
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
+            <nav className="mobile-nav">
+              {links.map((l, i) => (
+                <motion.div key={l.href}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.06 * i, type: 'spring', stiffness: 200, damping: 22 }}
+                  transition={{ delay: i * 0.06, type: 'spring', stiffness: 200, damping: 22 }}
                 >
-                  <Link href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</Link>
+                  <Link href={l.href} onClick={() => setOpen(false)}>{l.label}</Link>
                 </motion.div>
               ))}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 22 }}
-              >
-                <a href="mailto:hello@igorj.com" onClick={() => setMenuOpen(false)}>Get in touch</a>
-              </motion.div>
             </nav>
           </motion.div>
         )}

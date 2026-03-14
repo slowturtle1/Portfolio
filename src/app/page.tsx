@@ -1,264 +1,264 @@
 'use client'
 
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { useState, useRef, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 22 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring' as const, stiffness: 65, damping: 18 },
+const PROJECTS = [
+  {
+    id: 1,
+    num: '01',
+    title: 'Onboarding Redesign',
+    desc: 'Reduced drop-off by 40% through progressive disclosure and contextual guidance.',
+    disciplines: ['UX Research', 'Product Design'],
+    year: '2024',
+    href: '/projects/project-alpha',
+    color: 'linear-gradient(145deg, #2a2420 0%, #1a1410 100%)',
   },
+  {
+    id: 2,
+    num: '02',
+    title: 'Design System',
+    desc: 'Built a scalable component library unifying three product lines under one language.',
+    disciplines: ['Design System', 'UI Design'],
+    year: '2023',
+    href: '/projects/project-design-system',
+    color: 'linear-gradient(145deg, #1a2028 0%, #111820 100%)',
+  },
+  {
+    id: 3,
+    num: '03',
+    title: 'Fintech Mobile App',
+    desc: 'End-to-end design from discovery to launch — shipped to 50k+ users.',
+    disciplines: ['Mobile', 'UX Design'],
+    year: '2022',
+    href: '/projects/project-mobile-app',
+    color: 'linear-gradient(145deg, #201a28 0%, #140f1c 100%)',
+  },
+]
+
+const EXPERIMENTS = [
+  { num: 'P1', title: 'Motion Study', desc: 'Micro-interaction patterns for data-heavy dashboards.', tags: ['Motion', 'Prototyping'] },
+  { num: 'P2', title: 'Typography Grid', desc: 'Visual experiment with Swiss grid and expressive type hierarchy.', tags: ['Typography', 'Visual'] },
+]
+
+/* ── Floating project preview that follows cursor ─── */
+function ProjectPreview({ project, x, y }: { project: typeof PROJECTS[0] | null; x: number; y: number }) {
+  return (
+    <AnimatePresence>
+      {project && (
+        <motion.div
+          className="project-preview"
+          style={{ left: x + 24, top: y - 80 }}
+          initial={{ opacity: 0, scale: 0.88, y: 8 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.88, y: 8 }}
+          transition={{ duration: 0.18, ease: [0.25, 0.1, 0.25, 1] }}
+        >
+          <div className="project-preview-img" style={{ background: project.color }} />
+          <div className="project-preview-meta">
+            <span className="project-preview-num">{project.num}</span>
+            <span className="project-preview-title">{project.title}</span>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
 }
 
-const stagger = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
+/* ── Hero text stagger ─────────────────────────────── */
+const word = {
+  hidden: { opacity: 0, y: 32 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring', stiffness: 55, damping: 16, delay: i * 0.08 },
+  }),
 }
 
 export default function Home() {
+  const [hoveredProject, setHoveredProject] = useState<typeof PROJECTS[0] | null>(null)
+  const [mouse, setMouse] = useState({ x: 0, y: 0 })
+  const workRef = useRef<HTMLElement>(null)
+
+  const onMouseMove = useCallback((e: React.MouseEvent) => {
+    setMouse({ x: e.clientX, y: e.clientY })
+  }, [])
+
   return (
-    <>
-      {/* ── HERO ──────────────────────────────────────────────── */}
+    <div onMouseMove={onMouseMove}>
+      <ProjectPreview project={hoveredProject} x={mouse.x} y={mouse.y} />
+
+      {/* ── HERO ─────────────────────────────────────── */}
       <section className="hero">
-        <motion.div
-          className="hero-eyebrow"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+        <motion.div className="hero-status"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <span className="eyebrow-dot" />
-          Product Designer — Available April 2026
+          <span className="status-dot" />
+          <span>Available from April 2026</span>
         </motion.div>
 
-        <motion.h1
-          className="hero-heading"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 60, damping: 18, delay: 0.2 }}
-        >
-          Designing<br /><em>with intention.</em>
-        </motion.h1>
+        <div className="hero-heading-wrap">
+          {['Igor', 'J'].map((w, i) => (
+            <motion.span key={w} className="hero-word" custom={i}
+              variants={word} initial="hidden" animate="show"
+            >{w}</motion.span>
+          ))}
+        </div>
 
-        <motion.p
-          className="hero-body"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 60, damping: 18, delay: 0.35 }}
-        >
-          I craft digital products that feel inevitable —<br className="br-desktop" />
-          clear, considered, and built for real people.
-        </motion.p>
+        <div className="hero-bottom">
+          <motion.p className="hero-role"
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ type: 'spring', stiffness: 60, damping: 18, delay: 0.5 }}
+          >
+            Product Designer — Interaction design &amp; systems thinking.
+          </motion.p>
 
-        <motion.div
-          className="hero-actions"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 60, damping: 18, delay: 0.5 }}
-        >
-          <Link href="#work" className="cta-link">
-            View work <span>↓</span>
-          </Link>
-          <Link href="/about" className="cta-link cta-link--soft">
-            About me <span>→</span>
-          </Link>
-        </motion.div>
+          <motion.div className="hero-cta"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+          >
+            <button className="hero-cta-btn" onClick={() => workRef.current?.scrollIntoView({ behavior: 'smooth' })}>
+              View work
+            </button>
+            <Link href="/about" className="hero-cta-link">About →</Link>
+          </motion.div>
+        </div>
 
-        <div className="hero-rule" />
+        <motion.div className="hero-index"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, delay: 0.8 }}
+        >001</motion.div>
       </section>
 
-      {/* ── STATS ─────────────────────────────────────────────── */}
-      <motion.div
-        className="stats-row"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="stat">
-          <span className="stat-num">200k+</span>
-          <span className="stat-lbl">Patients impacted</span>
-        </div>
-        <div className="stat-divider" />
-        <div className="stat">
-          <span className="stat-num">7 yrs</span>
-          <span className="stat-lbl">Designing products</span>
-        </div>
-        <div className="stat-divider" />
-        <div className="stat">
-          <span className="stat-num">3</span>
-          <span className="stat-lbl">Industries served</span>
-        </div>
-      </motion.div>
-
-      {/* ── WORK ──────────────────────────────────────────────── */}
-      <section className="work" id="work">
-        <div className="s-header">
-          <span className="s-label">Selected work</span>
-          <div className="s-line" />
-        </div>
-
-        <motion.div
-          className="projects-list"
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.05 }}
+      {/* ── WORK ─────────────────────────────────────── */}
+      <section className="work" id="work" ref={workRef}>
+        <motion.div className="section-head"
+          initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.5 }}
         >
-          <motion.article variants={fadeUp}>
-            <Link href="/projects/project-alpha" className="project-link">
-              <div className="project-img-wrap">
-                <div className="project-img ph-warm" />
-              </div>
-              <div>
-                <div className="project-meta-row">
-                  <span className="project-num">01</span>
-                  <div className="project-tag-group">
-                    <span className="ptag">UX Research</span>
-                    <span className="ptag">Product Design</span>
-                  </div>
-                  <span className="project-arr">→</span>
-                </div>
-                <h2 className="project-title">Onboarding Redesign</h2>
-                <p className="project-desc">Reduced drop-off by 40% through progressive disclosure and contextual guidance for a B2B SaaS platform.</p>
-              </div>
-            </Link>
-          </motion.article>
-
-          <motion.article variants={fadeUp}>
-            <Link href="/projects/project-design-system" className="project-link">
-              <div className="project-img-wrap">
-                <div className="project-img ph-cool" />
-              </div>
-              <div>
-                <div className="project-meta-row">
-                  <span className="project-num">02</span>
-                  <div className="project-tag-group">
-                    <span className="ptag">Design System</span>
-                    <span className="ptag">UI Design</span>
-                  </div>
-                  <span className="project-arr">→</span>
-                </div>
-                <h2 className="project-title">Design System</h2>
-                <p className="project-desc">Built a scalable component library unifying three product lines under a single visual language.</p>
-              </div>
-            </Link>
-          </motion.article>
-
-          <motion.article variants={fadeUp}>
-            <Link href="/projects/project-mobile-app" className="project-link">
-              <div className="project-img-wrap">
-                <div className="project-img ph-stone" />
-              </div>
-              <div>
-                <div className="project-meta-row">
-                  <span className="project-num">03</span>
-                  <div className="project-tag-group">
-                    <span className="ptag">Mobile</span>
-                    <span className="ptag">UX Design</span>
-                  </div>
-                  <span className="project-arr">→</span>
-                </div>
-                <h2 className="project-title">Fintech Mobile App</h2>
-                <p className="project-desc">End-to-end design from discovery to launch — shipped to 50k+ users across iOS and Android.</p>
-              </div>
-            </Link>
-          </motion.article>
+          <span className="section-label">Selected work</span>
+          <div className="section-rule" />
+          <span className="section-count">{PROJECTS.length} projects</span>
         </motion.div>
+
+        <div className="project-table">
+          {PROJECTS.map((p, i) => (
+            <motion.div key={p.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+            >
+              <Link
+                href={p.href}
+                className="project-row"
+                onMouseEnter={() => setHoveredProject(p)}
+                onMouseLeave={() => setHoveredProject(null)}
+              >
+                <span className="pr-num">{p.num}</span>
+                <div className="pr-main">
+                  <span className="pr-title">{p.title}</span>
+                  <span className="pr-desc">{p.desc}</span>
+                </div>
+                <div className="pr-meta">
+                  <span className="pr-disciplines">{p.disciplines.join(' · ')}</span>
+                  <span className="pr-year">{p.year}</span>
+                </div>
+                <span className="pr-arrow">→</span>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
       </section>
 
-      {/* ── PLAYGROUND ────────────────────────────────────────── */}
+      {/* ── PLAYGROUND ───────────────────────────────── */}
       <section className="playground" id="playground">
-        <div className="s-header">
-          <span className="s-label">Experiments</span>
-          <div className="s-line" />
-        </div>
-
-        <motion.div
-          className="playground-grid"
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
+        <motion.div className="section-head"
+          initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.5 }}
         >
-          <motion.article className="playground-card" variants={fadeUp}>
-            <div className="pg-content">
-              <span className="pg-num">P1</span>
-              <div>
-                <h3 className="playground-title">Motion Study</h3>
-                <p className="playground-desc">Micro-interaction patterns for data-heavy dashboards.</p>
-                <div className="playground-tags">
-                  <span className="ptag">Motion</span>
-                  <span className="ptag">Prototyping</span>
-                </div>
-              </div>
-            </div>
-            <a href="#" className="pg-link" aria-label="Open experiment">↗</a>
-          </motion.article>
-
-          <motion.article className="playground-card" variants={fadeUp}>
-            <div className="pg-content">
-              <span className="pg-num">P2</span>
-              <div>
-                <h3 className="playground-title">Typography Grid</h3>
-                <p className="playground-desc">Visual experiment with Swiss grid systems and expressive type hierarchy.</p>
-                <div className="playground-tags">
-                  <span className="ptag">Typography</span>
-                  <span className="ptag">Visual Design</span>
-                </div>
-              </div>
-            </div>
-            <a href="#" className="pg-link" aria-label="Open experiment">↗</a>
-          </motion.article>
+          <span className="section-label">Experiments</span>
+          <div className="section-rule" />
         </motion.div>
+
+        <div className="experiment-grid">
+          {EXPERIMENTS.map((e, i) => (
+            <motion.a key={e.num} href="#"
+              className="experiment-item"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: i * 0.1 }}
+            >
+              <div className="exp-head">
+                <span className="exp-num">{e.num}</span>
+                <span className="exp-arrow">↗</span>
+              </div>
+              <h3 className="exp-title">{e.title}</h3>
+              <p className="exp-desc">{e.desc}</p>
+              <div className="exp-tags">
+                {e.tags.map(t => <span key={t} className="exp-tag">{t}</span>)}
+              </div>
+            </motion.a>
+          ))}
+        </div>
       </section>
 
-      {/* ── ABOUT ─────────────────────────────────────────────── */}
-      <section className="about-section" id="about">
-        <div className="s-header">
-          <span className="s-label">About me</span>
-          <div className="s-line" />
-        </div>
-
-        <motion.div
-          className="about-grid"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ type: 'spring', stiffness: 65, damping: 18 }}
+      {/* ── ABOUT ────────────────────────────────────── */}
+      <section className="about" id="about">
+        <motion.div className="section-head"
+          initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.5 }}
         >
-          <div className="about-left">
-            <blockquote className="about-quote">
-              &ldquo;Great design is mostly invisible — it removes friction, surfaces the right information, and earns trust over time.&rdquo;
-            </blockquote>
-            <p className="about-body">
-              I&apos;m a Product Designer with a focus on interaction design and systems thinking. I&apos;ve worked across B2B SaaS, fintech, and healthtech — at startups where I was the first designer, and at scale-ups navigating rapid growth.
+          <span className="section-label">About</span>
+          <div className="section-rule" />
+        </motion.div>
+
+        <motion.div className="about-body-grid"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="about-text">
+            <p className="about-p">
+              I&apos;m a Product Designer with a focus on interaction design and systems thinking.
+              7 years across B2B SaaS, fintech, and healthtech — at startups as the first designer,
+              and at scale-ups navigating rapid growth.
             </p>
-            <p className="about-body">
-              Currently Lead Product Designer at Nkomor Healthcare, shipping features used by 200k+ patients. Open to full-time roles from April 2026.
+            <p className="about-p">
+              Currently Lead Product Designer at Nkomor Healthcare — built the design system,
+              established a research practice, grew the team. Features I&apos;ve shipped are used by 200k+ patients.
             </p>
             <div className="about-actions">
-              <a href="mailto:hello@igorj.com" className="btn-ink">Get in touch</a>
-              <Link href="/about" className="btn-text-link">Full story →</Link>
+              <a href="mailto:hello@igorj.com" className="btn-primary">Get in touch</a>
+              <Link href="/about" className="btn-ghost">Full story →</Link>
             </div>
           </div>
 
-          <div className="about-right">
-            <div className="about-photo">
-              <span className="ph-label">Photo</span>
+          <div className="about-aside">
+            <div className="about-stat-row">
+              <span className="about-stat-n">200k+</span>
+              <span className="about-stat-l">Patients impacted</span>
             </div>
-            <ul className="skills-list">
-              <li>Product Design</li>
-              <li>Interaction Design</li>
-              <li>Design Systems</li>
-              <li>UX Research</li>
-              <li>Prototyping</li>
-              <li>Workshop Facilitation</li>
-            </ul>
+            <div className="about-stat-row">
+              <span className="about-stat-n">7 yrs</span>
+              <span className="about-stat-l">Designing products</span>
+            </div>
+            <div className="about-stat-row">
+              <span className="about-stat-n">3</span>
+              <span className="about-stat-l">Industries</span>
+            </div>
+            <div className="about-skills">
+              {['Product Design', 'Interaction Design', 'Design Systems', 'UX Research', 'Prototyping', 'Workshop Facilitation'].map(s => (
+                <span key={s} className="about-skill">{s}</span>
+              ))}
+            </div>
           </div>
         </motion.div>
       </section>
-    </>
+    </div>
   )
 }
