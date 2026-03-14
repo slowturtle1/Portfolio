@@ -3,37 +3,32 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { Menu, X, ArrowUpRight } from 'lucide-react'
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from 'framer-motion'
+import { X } from 'lucide-react'
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 
 const navLinks = [
-  { href: '/#projects', label: 'Projects' },
-  { href: '/#playground', label: 'Playground' },
-  { href: '/about', label: 'About' },
+  { href: '/#work',      label: 'Work' },
+  { href: '/#about',     label: 'About' },
+  { href: '/about',      label: 'Full bio' },
 ]
 
 export default function Nav() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const { scrollY, scrollYProgress } = useScroll()
-  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1])
+  const { scrollY } = useScroll()
 
-  useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 60))
+  useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 20))
 
   return (
     <>
       <motion.nav
         className={`nav${scrolled ? ' nav-scrolled' : ''}`}
-        initial={{ y: -10, opacity: 0 }}
+        initial={{ y: -8, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
       >
-        <motion.div className="nav-progress" style={{ scaleX }} />
-
-        <Link href="/" className="nav-logo">
-          Aleksandra V.
-        </Link>
+        <Link href="/" className="nav-logo">Igor J</Link>
 
         <ul className="nav-links">
           {navLinks.map((link) => (
@@ -49,15 +44,15 @@ export default function Nav() {
         </ul>
 
         <div className="nav-right">
-          <a href="mailto:hello@avugdragovic.com" className="nav-cta-text">
-            Get in touch <ArrowUpRight size={13} strokeWidth={2} />
+          <a href="mailto:hello@igorj.com" className="nav-cta-text">
+            Get in touch
           </a>
           <button
             className="nav-hamburger"
             aria-label="Open menu"
             onClick={() => setMenuOpen(true)}
           >
-            <Menu size={22} strokeWidth={1.5} />
+            <span /><span />
           </button>
         </div>
       </motion.nav>
@@ -72,36 +67,28 @@ export default function Nav() {
             transition={{ type: 'spring', stiffness: 300, damping: 32 }}
           >
             <div className="mobile-menu-header">
-              <span className="nav-logo">Aleksandra V.</span>
-              <button
-                className="mobile-menu-close"
-                aria-label="Close menu"
-                onClick={() => setMenuOpen(false)}
-              >
-                <X size={24} strokeWidth={1.5} />
+              <span className="nav-logo">Igor J</span>
+              <button className="mobile-menu-close" aria-label="Close menu" onClick={() => setMenuOpen(false)}>
+                <X size={22} strokeWidth={1.5} />
               </button>
             </div>
             <nav className="mobile-nav-links">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.href}
-                  initial={{ opacity: 0, x: 24 }}
+                  initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.06 * i, type: 'spring', stiffness: 200, damping: 22 }}
                 >
-                  <Link href={link.href} onClick={() => setMenuOpen(false)}>
-                    {link.label}
-                  </Link>
+                  <Link href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</Link>
                 </motion.div>
               ))}
               <motion.div
-                initial={{ opacity: 0, x: 24 }}
+                initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.18, type: 'spring', stiffness: 200, damping: 22 }}
+                transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 22 }}
               >
-                <a href="mailto:hello@avugdragovic.com" onClick={() => setMenuOpen(false)}>
-                  Get in touch
-                </a>
+                <a href="mailto:hello@igorj.com" onClick={() => setMenuOpen(false)}>Get in touch</a>
               </motion.div>
             </nav>
           </motion.div>
