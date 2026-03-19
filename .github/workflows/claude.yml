@@ -21,7 +21,7 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          direct_prompt: |
+          prompt: |
             Please review this pull request. Check for bugs, code quality issues,
             and anything that looks off. Post your findings as a PR review comment.
 
