@@ -16,6 +16,10 @@ jobs:
       pull-requests: write
       issues: write
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - uses: anthropics/claude-code-action@v1
         if: github.event_name == 'pull_request_target'
         with:
