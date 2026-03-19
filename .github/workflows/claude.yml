@@ -28,6 +28,10 @@ jobs:
           prompt: |
             Please review this pull request. Check for bugs, code quality issues,
             and anything that looks off. Post your findings as a PR review comment.
+          additional_permissions: |
+            mcp__github__create_pull_request_review: allow
+            mcp__github__add_pull_request_review_comment: allow
+            mcp__github__create_issue_comment: allow
 
       - uses: anthropics/claude-code-action@v1
         if: github.event_name != 'pull_request_target'
