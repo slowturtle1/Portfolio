@@ -33,9 +33,7 @@ jobs:
             2. Review the diff for bugs, quality issues, and Swiss Glass design adherence
             3. Post your findings with: gh pr comment ${{ github.event.pull_request.number }} --body "## Claude Review\n\n[your findings]"
           additional_permissions: |
-            Bash(gh pr diff*): allow
-            Bash(gh pr comment*): allow
-            Bash(gh pr view*): allow
+            Bash(*): allow
 
   claude-comment:
     runs-on: ubuntu-latest
