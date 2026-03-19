@@ -25,14 +25,17 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           show_full_output: true
           prompt: |
-            Review this pull request for bugs, code quality, and Swiss Glass design
-            system adherence. Post your findings as a PR review comment.
+            Review the changes in PR #${{ github.event.pull_request.number }} in the repo ${{ github.repository }}.
+            Do NOT use any slash commands.
+            Use only Read, Glob, Grep, and Bash tools.
+            Steps:
+            1. Run: gh pr diff ${{ github.event.pull_request.number }} to see the changes
+            2. Review the diff for bugs, quality issues, and Swiss Glass design adherence
+            3. Post your findings with: gh pr comment ${{ github.event.pull_request.number }} --body "## Claude Review\n\n[your findings]"
           additional_permissions: |
-            mcp__github__create_pull_request_review: allow
-            mcp__github__add_pull_request_review_comment: allow
-            mcp__github__create_issue_comment: allow
-            mcp__github__update_pull_request_comment: allow
-            Bash: allow
+            Bash(gh pr diff*): allow
+            Bash(gh pr comment*): allow
+            Bash(gh pr view*): allow
 
   claude-comment:
     runs-on: ubuntu-latest
