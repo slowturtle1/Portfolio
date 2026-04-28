@@ -275,12 +275,13 @@ img { display: block; max-width: 100%; }
   margin-bottom: 4px;
 }
 .hero-intro-role {
-  font-family: var(--font-serif);
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  font-weight: 500;
-  font-style: italic;
+  font-family: "Neue Haas Grotesk Display Pro 45 Light", "Neue Haas Grotesk Display Pro 45 Light Placeholder", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  font-feature-settings: normal;
   color: var(--text-primary);
-  line-height: 1.1;
+  line-height: 1.5;
 }
 .hero-tagline {
   font-family: var(--font-primary);
