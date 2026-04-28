@@ -75,18 +75,18 @@ export default function Home() {
         {/* Animated blobs */}
         <motion.div
           className="blob blob-pink"
-          animate={{ rotate: [0, 90, 180, 270, 360], scale: [1, 1.1, 1] }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+          animate={{ x: [0, 20, 0], y: [0, -20, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="blob blob-yellow"
-          animate={{ rotate: [360, 270, 180, 90, 0], scale: [1, 1.2, 1] }}
-          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+          animate={{ x: [0, -15, 0], y: [0, 25, 0] }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="blob blob-blue"
-          animate={{ y: [0, -30, 0], scale: [1, 1.05, 1] }}
-          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
         />
 
         <div className="hero-v2-inner">
@@ -219,7 +219,7 @@ export default function Home() {
                     whileHover={{ scale: 1.07 }}
                     transition={{ type: 'spring', stiffness: 160, damping: 28 }}
                   >
-                    <img src={project.image} alt={project.title} />
+                    <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
                   </motion.div>
                   <div className="pcard-image-overlay" />
                 </div>

@@ -165,10 +165,12 @@ img { display: block; max-width: 100%; }
 .blob {
   position: absolute;
   border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
-  filter: blur(80px);
-  opacity: 0.6;
-  mix-blend-mode: multiply;
+  filter: blur(60px);
+  opacity: 0.5;
   pointer-events: none;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 .blob-pink {
   top: 10%;
@@ -518,6 +520,8 @@ img { display: block; max-width: 100%; }
 .pcard-image-inner {
   width: 100%;
   height: 100%;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .pcard-image-inner img {
   width: 100%;
