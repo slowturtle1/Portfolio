@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, EB_Garamond } from 'next/font/google'
+import { Playfair_Display } from 'next/font/google'
 import './globals.css'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
@@ -12,13 +12,6 @@ const playfair = Playfair_Display({
   display: 'swap',
 })
 
-const garamond = EB_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  style: ['normal', 'italic'],
-  variable: '--font-garamond',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   title: 'Aleksandra Vugdragovic — Product Designer',
@@ -27,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${garamond.variable}`}>
+    <html lang="en" className={playfair.variable}>
       <body>
         <Nav />
         {children}
