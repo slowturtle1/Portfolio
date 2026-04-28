@@ -1,7 +1,7 @@
 /* ─── TOKENS ────────────────────────────────────────────────── */
 :root {
-  --font-primary: var(--font-dm-sans), 'DM Sans', sans-serif;
-  --font-serif:   var(--font-instrument-serif), 'Instrument Serif', serif;
+  --font-primary: var(--font-garamond), 'EB Garamond', Georgia, serif;
+  --font-serif:   var(--font-playfair), 'Playfair Display', Georgia, serif;
 
   --bg-page:         #fafafa;
   --bg-surface:      #f0f0f0;
@@ -71,11 +71,10 @@ img { display: block; max-width: 100%; }
   justify-content: space-between;
 }
 .nav-logo {
-  font-family: var(--font-primary);
+  font-family: var(--font-serif);
   font-weight: 700;
   font-size: 22px;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--text-primary);
 }
 .nav-links {
@@ -85,9 +84,10 @@ img { display: block; max-width: 100%; }
 }
 .nav-link {
   position: relative;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-secondary);
   transition: color 0.2s ease;
@@ -199,10 +199,11 @@ img { display: block; max-width: 100%; }
 
 /* Hero text */
 .hero-eyebrow {
-  font-size: 12px;
-  letter-spacing: 0.3em;
+  font-family: var(--font-primary);
+  font-size: 13px;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--accent-primary);
   margin-bottom: 32px;
   display: flex;
@@ -227,9 +228,10 @@ img { display: block; max-width: 100%; }
 .hero-subheading {
   display: block;
   font-family: var(--font-primary);
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 300;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0em;
   color: var(--text-secondary);
   margin-bottom: 16px;
 }
@@ -258,12 +260,13 @@ img { display: block; max-width: 100%; }
   display: block;
 }
 .hero-tagline {
-  font-size: clamp(1.1rem, 2vw, 1.4rem);
-  font-weight: 300;
+  font-family: var(--font-primary);
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-weight: 400;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.7;
   margin-bottom: 48px;
-  max-width: 640px;
+  max-width: 600px;
 }
 .hero-ctas {
   display: flex;
@@ -289,11 +292,12 @@ img { display: block; max-width: 100%; }
 }
 .hero-stat:hover .hero-stat-val { color: var(--accent-primary); }
 .hero-stat-label {
-  font-size: 11px;
-  letter-spacing: 0.2em;
+  font-family: var(--font-primary);
+  font-size: 12px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-tertiary);
-  font-weight: 600;
+  font-weight: 500;
 }
 .br-sm { display: none; }
 
@@ -306,10 +310,11 @@ img { display: block; max-width: 100%; }
   color: var(--text-on-dark);
   padding: 16px 32px;
   border-radius: 9999px;
-  font-size: 12px;
-  letter-spacing: 0.15em;
+  font-family: var(--font-primary);
+  font-size: 13px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
   cursor: pointer;
   border: none;
   transition: background 0.3s, transform 0.3s;
@@ -329,10 +334,11 @@ img { display: block; max-width: 100%; }
   align-items: center;
   padding: 16px 32px;
   border-radius: 9999px;
-  font-size: 12px;
-  letter-spacing: 0.15em;
+  font-family: var(--font-primary);
+  font-size: 13px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text-primary);
   cursor: pointer;
   transition: background 0.3s;
@@ -358,10 +364,11 @@ img { display: block; max-width: 100%; }
   gap: 24px;
 }
 .projects-eyebrow {
-  font-size: 12px;
-  letter-spacing: 0.3em;
+  font-family: var(--font-primary);
+  font-size: 13px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--accent-primary);
   margin-bottom: 16px;
   display: flex;
@@ -446,10 +453,11 @@ img { display: block; max-width: 100%; }
 }
 .pcard-category {
   display: block;
-  font-size: 10px;
-  letter-spacing: 0.15em;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 12px;
 }
 .pcard-title {
@@ -628,26 +636,28 @@ img { display: block; max-width: 100%; }
   padding-top: 32px;
 }
 .footer-v2-logo {
-  font-family: var(--font-primary);
+  font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 20px;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+  font-size: 22px;
+  font-style: italic;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
 }
 .footer-v2-copy {
-  font-size: 13px;
+  font-family: var(--font-primary);
+  font-size: 14px;
   color: var(--text-tertiary);
-  font-weight: 500;
-  letter-spacing: 0.03em;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 .footer-v2-links { display: flex; gap: 32px; }
 .footer-v2-links a {
-  font-size: 11px;
-  letter-spacing: 0.2em;
+  font-family: var(--font-primary);
+  font-size: 12px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-secondary);
-  font-weight: 700;
+  font-weight: 500;
   transition: color 0.2s;
 }
 .footer-v2-links a:hover { color: var(--accent-primary); }
@@ -933,8 +943,8 @@ img { display: block; max-width: 100%; }
   border-radius: 9999px;
   padding: 13px 28px;
   font-family: var(--font-primary);
-  font-weight: 700;
-  font-size: 0.75rem;
+  font-weight: 500;
+  font-size: 0.8rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
@@ -955,8 +965,8 @@ img { display: block; max-width: 100%; }
   border-radius: 9999px;
   padding: 13px 28px;
   font-family: var(--font-primary);
-  font-weight: 700;
-  font-size: 0.75rem;
+  font-weight: 500;
+  font-size: 0.8rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
