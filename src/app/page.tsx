@@ -97,18 +97,8 @@ export default function Home() {
             animate="visible"
           >
             <motion.div className="hero-intro" variants={heroItem}>
-              <p className="hero-intro-line">aleksandra vugdragovic is a</p>
-              <p className="hero-intro-role">product designer ❁</p>
+              <p className="hero-intro-role">hi, i&apos;m aleksandra — a product designer who loves solving problems and crafting digital products built for real people. ❁</p>
             </motion.div>
-
-            <motion.p className="hero-tagline" variants={heroItem}>
-              she crafts digital products that feel inevitable —<br />
-              clear, considered, and built for real people.
-            </motion.p>
-
-            <motion.p className="hero-tagline" variants={heroItem}>
-              she loves solving problems.
-            </motion.p>
 
             <motion.p className="hero-tagline hero-friendly" variants={heroItem}>
               let&apos;s work together :)
