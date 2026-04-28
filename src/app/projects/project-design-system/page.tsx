@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
 
 export const metadata: Metadata = { title: 'Design System — Aleksandra Vugdragovic' }
 
@@ -75,9 +76,11 @@ export default function ProjectDesignSystem() {
       <div className="next-project">
         <div>
           <div className="next-project-label">Next project</div>
-          <Link href="/projects/project-mobile-app"><div className="next-project-title">Mobile App →</div></Link>
+          <Link href="/projects/project-mobile-app">
+            <div className="next-project-title">Mobile App <ArrowUpRight size={18} style={{ display: 'inline', verticalAlign: 'middle' }} /></div>
+          </Link>
         </div>
-        <Link href="/#projects" className="btn-secondary">All projects</Link>
+        <Link href="/#work" className="btn-secondary">All projects</Link>
       </div>
     </>
   )

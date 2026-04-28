@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
 
 export const metadata: Metadata = { title: 'Mobile App — Aleksandra Vugdragovic' }
 
@@ -75,9 +76,11 @@ export default function ProjectMobileApp() {
       <div className="next-project">
         <div>
           <div className="next-project-label">Back to start</div>
-          <Link href="/projects/project-alpha"><div className="next-project-title">Onboarding Redesign →</div></Link>
+          <Link href="/projects/project-alpha">
+            <div className="next-project-title">Onboarding Redesign <ArrowUpRight size={18} style={{ display: 'inline', verticalAlign: 'middle' }} /></div>
+          </Link>
         </div>
-        <Link href="/#projects" className="btn-secondary">All projects</Link>
+        <Link href="/#work" className="btn-secondary">All projects</Link>
       </div>
     </>
   )

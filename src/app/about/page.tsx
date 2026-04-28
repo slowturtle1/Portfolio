@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'About — Aleksandra Vugdragovic',
@@ -26,8 +27,10 @@ export default function About() {
             Currently open to new opportunities. I work best in collaborative environments
             where design has a seat at the table from day one.
           </p>
-          <div style={{ display: 'flex', gap: 'var(--space-md)', flexWrap: 'wrap', marginTop: 'var(--space-xl)' }}>
-            <a href="mailto:hello@avugdragovic.com" className="btn-primary">Get in touch</a>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: 'var(--space-xl)' }}>
+            <a href="mailto:hello@avugdragovic.com" className="btn-primary">
+              Get in touch <ArrowUpRight size={14} />
+            </a>
             <a href="#" className="btn-secondary">Download CV</a>
           </div>
         </div>
@@ -41,10 +44,30 @@ export default function About() {
         <h2 className="section-heading">Where I&apos;ve worked</h2>
         <div className="experience-list">
           {[
-            { period: '2023 — Present', role: 'Lead Product Designer', company: 'Nkomor Healthcare', desc: 'Leading design across three product lines. Built the company\'s first design system, established a research practice, and grew the design team from one to three. Shipped features used by 200k+ patients.' },
-            { period: '2021 — 2023', role: 'Product Designer', company: 'MyNurse', desc: 'End-to-end design of the patient-facing mobile app and clinician dashboard. Worked closely with nursing staff to understand clinical workflows and translate them into a usable digital experience.' },
-            { period: '2019 — 2021', role: 'UX Designer', company: 'Freelance', desc: 'Worked with early-stage startups across fintech, e-commerce, and productivity tools. Projects ranged from 0→1 product design to usability audits and design system foundations.' },
-            { period: '2017 — 2019', role: 'Junior UI Designer', company: 'Studio Flux', desc: 'Designed marketing sites, dashboards, and brand identities for agency clients. Built a reusable component kit that became the studio\'s default starting point.' },
+            {
+              period: '2023 — Present',
+              role: 'Lead Product Designer',
+              company: 'Nkomor Healthcare',
+              desc: "Leading design across three product lines. Built the company's first design system, established a research practice, and grew the design team from one to three. Shipped features used by 200k+ patients.",
+            },
+            {
+              period: '2021 — 2023',
+              role: 'Product Designer',
+              company: 'MyNurse',
+              desc: 'End-to-end design of the patient-facing mobile app and clinician dashboard. Worked closely with nursing staff to understand clinical workflows and translate them into a usable digital experience.',
+            },
+            {
+              period: '2019 — 2021',
+              role: 'UX Designer',
+              company: 'Freelance',
+              desc: 'Worked with early-stage startups across fintech, e-commerce, and productivity tools. Projects ranged from 0→1 product design to usability audits and design system foundations.',
+            },
+            {
+              period: '2017 — 2019',
+              role: 'Junior UI Designer',
+              company: 'Studio Flux',
+              desc: "Designed marketing sites, dashboards, and brand identities for agency clients. Built a reusable component kit that became the studio's default starting point.",
+            },
           ].map((item) => (
             <div key={item.company} className="experience-item">
               <div className="experience-period">{item.period}</div>
@@ -83,18 +106,20 @@ export default function About() {
             I&apos;m currently open to full-time roles and select freelance projects.
             If you&apos;re building something worth designing well, I&apos;d love to hear about it.
           </p>
-          <div style={{ display: 'flex', gap: 'var(--space-md)', flexWrap: 'wrap' }}>
-            <a href="mailto:hello@avugdragovic.com" className="btn-primary">hello@avugdragovic.com</a>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <a href="mailto:hello@avugdragovic.com" className="btn-primary">
+              hello@avugdragovic.com <ArrowUpRight size={14} />
+            </a>
             <a href="#" className="btn-secondary">LinkedIn</a>
           </div>
         </div>
         <div>
-          <div style={{ border: '1px solid var(--border)', padding: 'var(--space-xl)' }}>
-            <div className="meta-label" style={{ marginBottom: 'var(--space-md)' }}>Currently based in</div>
+          <div style={{ border: '1px solid var(--border)', padding: 'var(--space-xl)', borderRadius: '1rem' }}>
+            <div className="meta-label" style={{ marginBottom: 'var(--space-sm)' }}>Currently based in</div>
             <div className="about-detail">Belgrade, Serbia — open to remote</div>
-            <div className="meta-label" style={{ marginBottom: 'var(--space-md)' }}>Availability</div>
+            <div className="meta-label" style={{ marginBottom: 'var(--space-sm)', marginTop: 'var(--space-lg)' }}>Availability</div>
             <div className="about-detail about-detail--accent">Available from April 2026</div>
-            <div className="meta-label" style={{ marginBottom: 'var(--space-md)' }}>Languages</div>
+            <div className="meta-label" style={{ marginBottom: 'var(--space-sm)', marginTop: 'var(--space-lg)' }}>Languages</div>
             <div className="about-detail">English (fluent), Serbian (native)</div>
           </div>
         </div>

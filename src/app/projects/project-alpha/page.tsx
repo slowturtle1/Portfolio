@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
 
 export const metadata: Metadata = { title: 'Onboarding Redesign — Aleksandra Vugdragovic' }
 
@@ -26,7 +27,7 @@ export default function ProjectAlpha() {
         <div className="case-number">01</div>
         <div>
           <h2 className="case-heading">Overview</h2>
-          <p className="case-body">The platform had a critical retention problem — 62% of new users never reached their first "aha moment" within the first session. Analytics showed users abandoning the setup flow at three consistent drop-off points, but we didn&apos;t know why.</p>
+          <p className="case-body">The platform had a critical retention problem — 62% of new users never reached their first &ldquo;aha moment&rdquo; within the first session. Analytics showed users abandoning the setup flow at three consistent drop-off points, but we didn&apos;t know why.</p>
           <p className="case-body">My goal was to diagnose the friction, redesign the experience, and validate the new flow before shipping — all within a 3-month window ahead of a major growth push.</p>
           <div className="highlight-block"><p>&ldquo;62% of new users never completed onboarding — we were losing people before they understood the product&apos;s value.&rdquo;</p></div>
         </div>
@@ -75,9 +76,11 @@ export default function ProjectAlpha() {
       <div className="next-project">
         <div>
           <div className="next-project-label">Next project</div>
-          <Link href="/projects/project-design-system"><div className="next-project-title">Design System →</div></Link>
+          <Link href="/projects/project-design-system">
+            <div className="next-project-title">Design System <ArrowUpRight size={18} style={{ display: 'inline', verticalAlign: 'middle' }} /></div>
+          </Link>
         </div>
-        <Link href="/#projects" className="btn-secondary">All projects</Link>
+        <Link href="/#work" className="btn-secondary">All projects</Link>
       </div>
     </>
   )

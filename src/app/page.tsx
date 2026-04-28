@@ -1,368 +1,269 @@
 'use client'
 
 import Link from 'next/link'
-import { useRef } from 'react'
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  useMotionValue,
-} from 'framer-motion'
-import { Figma, Layers, Search, Zap, BarChart2, Users, ArrowUpRight } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { ArrowUpRight } from 'lucide-react'
 
-/* ─── Magnetic wrapper ──────────────────────────────────────── */
-function Magnetic({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const springX = useSpring(x, { stiffness: 250, damping: 18 })
-  const springY = useSpring(y, { stiffness: 250, damping: 18 })
+const ease = [0.16, 1, 0.3, 1] as const
 
-  return (
-    <motion.div
-      ref={ref}
-      style={{ x: springX, y: springY, display: 'inline-block' }}
-      onMouseMove={(e) => {
-        const rect = ref.current!.getBoundingClientRect()
-        x.set((e.clientX - rect.left - rect.width / 2) * 0.35)
-        y.set((e.clientY - rect.top - rect.height / 2) * 0.35)
-      }}
-      onMouseLeave={() => { x.set(0); y.set(0) }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
-/* ─── Animation variants ────────────────────────────────────── */
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: 'spring' as const,
-      stiffness: 70,
-      damping: 18,
-    },
+const projects = [
+  {
+    id: 1,
+    category: 'Hackathon',
+    title: 'Aether OS',
+    description: 'Redefining desktop interactions with a spatial, layered window management system.',
+    bg: '#fce4ec',
+    textColor: '#333333',
+    descColor: '#6b7280',
+    btnBorder: '#333333',
+    image: 'https://images.unsplash.com/photo-1720962158883-b0f2021fb51e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80',
+    href: '/projects/project-alpha',
   },
+  {
+    id: 2,
+    category: 'UX Research',
+    title: 'Flora App',
+    description: 'Helping urban gardeners track, plan and care for their plants with delightful micro-interactions.',
+    bg: '#fff9c4',
+    textColor: '#333333',
+    descColor: '#6b7280',
+    btnBorder: '#333333',
+    image: 'https://images.unsplash.com/photo-1748801583967-3038967d7279?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80',
+    href: '/projects/project-design-system',
+  },
+  {
+    id: 3,
+    category: 'Branding',
+    title: 'Meridian',
+    description: 'A complete visual identity for a sustainable architecture firm navigating the intersection of nature and structure.',
+    bg: '#14746f',
+    textColor: '#ffffff',
+    descColor: '#f5f5f5',
+    btnBorder: '#ffffff',
+    image: 'https://images.unsplash.com/photo-1727755868081-c25d2b427ce3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80',
+    href: '/projects/project-mobile-app',
+  },
+  {
+    id: 4,
+    category: 'Product Design',
+    title: 'Orbit',
+    description: 'A data-dense analytics dashboard built for clarity — surfacing key metrics without cognitive overload.',
+    bg: '#f5f5f5',
+    textColor: '#333333',
+    descColor: '#6b7280',
+    btnBorder: '#333333',
+    image: '/orbit-dashboard.png',
+    href: '/projects/project-alpha',
+  },
+]
+
+const heroContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
 }
 
-const stagger = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
+const heroItem = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 1, ease } },
 }
 
-/* ─── Page ──────────────────────────────────────────────────── */
 export default function Home() {
-  const heroRef = useRef<HTMLElement>(null)
-  const { scrollY } = useScroll()
-  const rawY = useTransform(scrollY, [0, 700], [0, -90])
-  const rawOpacity = useTransform(scrollY, [0, 500], [1, 0.5])
-  const heroY = useSpring(rawY, { stiffness: 60, damping: 20 })
-  const heroOpacity = useSpring(rawOpacity, { stiffness: 60, damping: 20 })
-
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="hero" id="home" ref={heroRef}>
-        <motion.div className="hero-inner" style={{ y: heroY, opacity: heroOpacity }}>
-          <motion.span
-            className="label section-label"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            Product Designer
-          </motion.span>
-
-          <motion.h1
-            className="hero-heading"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 60, damping: 18, delay: 0.2 }}
-          >
-            Designing clarity<br />in complex&nbsp;spaces.
-          </motion.h1>
-
-          <motion.p
-            className="hero-body"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 60, damping: 18, delay: 0.35 }}
-          >
-            I craft digital products that feel inevitable — clear, considered,<br className="br-desktop" />
-            and built for real people.
-          </motion.p>
-
-          <motion.div
-            className="hero-actions"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 60, damping: 18, delay: 0.5 }}
-          >
-            <Magnetic>
-              <Link href="#projects" className="btn-primary">View work</Link>
-            </Magnetic>
-            <Magnetic>
-              <Link href="/about" className="btn-secondary">About me</Link>
-            </Magnetic>
-          </motion.div>
-        </motion.div>
-
+      <section className="hero-v2" id="home">
+        {/* Animated blobs */}
         <motion.div
-          className="hero-number"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, delay: 0.6 }}
-        >
-          /001
-        </motion.div>
+          className="blob blob-pink"
+          animate={{ rotate: [0, 90, 180, 270, 360], scale: [1, 1.1, 1] }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+        />
+        <motion.div
+          className="blob blob-yellow"
+          animate={{ rotate: [360, 270, 180, 90, 0], scale: [1, 1.2, 1] }}
+          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        />
+        <motion.div
+          className="blob blob-blue"
+          animate={{ y: [0, -30, 0], scale: [1, 1.05, 1] }}
+          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        <div className="hero-v2-inner">
+          <motion.div
+            className="hero-v2-content"
+            variants={heroContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.p className="hero-eyebrow" variants={heroItem}>
+              <span className="hero-eyebrow-line" />
+              Portfolio · Product Designer
+            </motion.p>
+
+            <motion.h1 className="hero-heading-v2" variants={heroItem}>
+              <span className="hero-subheading">Hi, I&apos;m Aleksandra.</span>
+              Product Designer{' '}
+              <br className="br-sm" />
+              <span className="hero-italic">that enjoys</span>{' '}
+              solving{' '}
+              <span className="hero-highlight-wrap">
+                <span className="hero-highlight-text">problems</span>
+                <motion.span
+                  className="hero-highlight-bar"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: 1.2, duration: 1, ease }}
+                />
+              </span>
+              .
+            </motion.h1>
+
+            <motion.p className="hero-tagline" variants={heroItem}>
+              I craft digital products that feel inevitable —
+              clear, considered and built for real people.
+            </motion.p>
+
+            <motion.div className="hero-ctas" variants={heroItem}>
+              <a href="#work" className="btn-dark">
+                View Work
+                <ArrowUpRight size={15} className="btn-icon" />
+              </a>
+              <Link href="/about" className="btn-ghost">About Me</Link>
+            </motion.div>
+
+            <motion.div className="hero-stats" variants={heroItem}>
+              {[
+                { val: '5+', label: 'Years experience' },
+                { val: '30+', label: 'Projects shipped' },
+                { val: '12', label: 'Happy clients' },
+              ].map(({ val, label }) => (
+                <div key={label} className="hero-stat">
+                  <p className="hero-stat-val">{val}</p>
+                  <p className="hero-stat-label">{label}</p>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
       </section>
 
       {/* ── PROJECTS ─────────────────────────────────────────── */}
-      <section className="section" id="projects">
-        <div className="section-header">
-          <span className="label section-label">Selected work</span>
-          <h2 className="section-heading">Projects</h2>
-        </div>
-
+      <section id="work" className="projects-section">
         <motion.div
-          className="projects-grid"
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.08 }}
+          className="projects-header"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 1, ease }}
         >
-          <motion.article
-            className="project-card featured"
-            variants={fadeUp}
-            whileHover={{ y: -8, transition: { type: 'spring', stiffness: 200, damping: 22 } }}
-          >
-            <div className="project-image-wrap">
-              <div className="project-image placeholder-image">
-                <span className="placeholder-label">Project image</span>
-              </div>
-              <div className="project-tags">
-                <span className="tag">UX Research</span>
-                <span className="tag">Product Design</span>
-              </div>
-            </div>
-            <div className="project-info">
-              <span className="project-number">/01</span>
-              <h3 className="project-title">Onboarding Redesign</h3>
-              <p className="project-desc">A redesign of the core onboarding experience, reducing drop-off by 40% through progressive disclosure and contextual guidance.</p>
-              <Link href="/projects/project-alpha" className="btn-primary project-btn">View case study</Link>
-            </div>
-          </motion.article>
-
-          <motion.article
-            className="project-card"
-            variants={fadeUp}
-            whileHover={{ y: -8, transition: { type: 'spring', stiffness: 200, damping: 22 } }}
-          >
-            <div className="project-image-wrap">
-              <div className="project-image placeholder-image alt">
-                <span className="placeholder-label">Project image</span>
-              </div>
-              <div className="project-tags">
-                <span className="tag">Design System</span>
-                <span className="tag">UI Design</span>
-              </div>
-            </div>
-            <div className="project-info">
-              <span className="project-number">/02</span>
-              <h3 className="project-title">Design System</h3>
-              <p className="project-desc">Built a scalable component library from scratch, unifying three product lines under a single visual language.</p>
-              <Link href="/projects/project-design-system" className="btn-secondary project-btn">View case study</Link>
-            </div>
-          </motion.article>
-
-          <motion.article
-            className="project-card"
-            variants={fadeUp}
-            whileHover={{ y: -8, transition: { type: 'spring', stiffness: 200, damping: 22 } }}
-          >
-            <div className="project-image-wrap">
-              <div className="project-image placeholder-image alt2">
-                <span className="placeholder-label">Project image</span>
-              </div>
-              <div className="project-tags">
-                <span className="tag">Mobile</span>
-                <span className="tag">UX Design</span>
-              </div>
-            </div>
-            <div className="project-info">
-              <span className="project-number">/03</span>
-              <h3 className="project-title">Mobile App</h3>
-              <p className="project-desc">End-to-end design of a fintech mobile app, from discovery workshops to a shipped product used by 50k+ users.</p>
-              <Link href="/projects/project-mobile-app" className="btn-secondary project-btn">View case study</Link>
-            </div>
-          </motion.article>
+          <div>
+            <p className="projects-eyebrow">
+              <span className="projects-eyebrow-dot" />
+              Selected Work
+            </p>
+            <h2 className="projects-heading">Featured Projects</h2>
+          </div>
+          <a href="#" className="projects-all-link">
+            All Projects
+            <span className="projects-all-icon">
+              <ArrowUpRight size={14} />
+            </span>
+          </a>
         </motion.div>
-      </section>
 
-      {/* ── PLAYGROUND ───────────────────────────────────────── */}
-      <section className="section" id="playground">
-        <div className="section-header">
-          <span className="label section-label">Experiments</span>
-          <h2 className="section-heading">Playground</h2>
+        <div className="projects-stack">
+          {projects.map((project, i) => {
+            const isEven = i % 2 === 0
+            return (
+              <div
+                key={project.id}
+                className="project-sticky"
+                style={{ top: `calc(120px + ${i * 40}px)` }}
+              >
+                <motion.div
+                  className="pcard"
+                  style={{ backgroundColor: project.bg }}
+                  initial={{ opacity: 0, y: 100, rotate: 0 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: isEven ? -1 : 1 }}
+                  viewport={{ once: true, margin: '-100px' }}
+                  transition={{ duration: 0.8, ease }}
+                  whileHover={{
+                    scale: 1.02,
+                    rotate: isEven ? -2.5 : 2.5,
+                    y: -16,
+                    transition: { duration: 0.4, ease },
+                  }}
+                >
+                  <div className="pcard-content">
+                    <div>
+                      <span
+                        className="pcard-category"
+                        style={{ color: project.textColor === '#ffffff' ? '#fff' : '#ea580c' }}
+                      >
+                        {project.category}
+                      </span>
+                      <h3 className="pcard-title" style={{ color: project.textColor }}>
+                        {project.title}
+                      </h3>
+                      <p className="pcard-desc" style={{ color: project.descColor }}>
+                        {project.description}
+                      </p>
+                    </div>
+                    <div>
+                      <Link
+                        href={project.href}
+                        className="pcard-btn"
+                        style={{ borderColor: project.btnBorder, color: project.btnBorder }}
+                      >
+                        Case Study
+                        <span className="pcard-btn-icon">
+                          <ArrowUpRight size={12} strokeWidth={2.5} />
+                        </span>
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="pcard-image">
+                    <motion.div
+                      className="pcard-image-inner"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.8, ease }}
+                    >
+                      <img src={project.image} alt={project.title} />
+                    </motion.div>
+                    <div className="pcard-image-overlay" />
+                  </div>
+                </motion.div>
+              </div>
+            )
+          })}
         </div>
-
-        <motion.div
-          className="playground-grid"
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
-        >
-          <motion.article
-            className="playground-card"
-            variants={fadeUp}
-            whileHover={{ y: -6, transition: { type: 'spring', stiffness: 200, damping: 22 } }}
-          >
-            <div className="playground-image">
-              <div className="placeholder-image pg1" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span className="placeholder-label">Preview</span>
-              </div>
-            </div>
-            <div className="playground-info">
-              <span className="project-number">/P1</span>
-              <h3 className="playground-title">Motion Study</h3>
-              <p className="playground-desc">Exploring micro-interaction patterns for data-heavy dashboards.</p>
-              <div className="playground-tags">
-                <span className="tag">Motion</span>
-                <span className="tag">Prototyping</span>
-              </div>
-              <a href="#" className="link-arrow">Explore <ArrowUpRight size={14} strokeWidth={2.5} /></a>
-            </div>
-          </motion.article>
-
-          <motion.article
-            className="playground-card"
-            variants={fadeUp}
-            whileHover={{ y: -6, transition: { type: 'spring', stiffness: 200, damping: 22 } }}
-          >
-            <div className="playground-image">
-              <div className="placeholder-image pg2" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span className="placeholder-label">Preview</span>
-              </div>
-            </div>
-            <div className="playground-info">
-              <span className="project-number">/P2</span>
-              <h3 className="playground-title">Typography Grid</h3>
-              <p className="playground-desc">A visual experiment with Swiss grid systems and expressive type hierarchy.</p>
-              <div className="playground-tags">
-                <span className="tag">Typography</span>
-                <span className="tag">Visual Design</span>
-              </div>
-              <a href="#" className="link-arrow">Explore <ArrowUpRight size={14} strokeWidth={2.5} /></a>
-            </div>
-          </motion.article>
-        </motion.div>
-      </section>
-
-      {/* ── TESTIMONIALS ─────────────────────────────────────── */}
-      <section className="section section-testimonials" id="testimonials">
-        <div className="section-header">
-          <span className="label section-label">Kind words</span>
-          <h2 className="section-heading">What people say</h2>
-        </div>
-
-        <motion.div
-          className="testimonials-grid"
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
-        >
-          <motion.blockquote className="testimonial-card" variants={fadeUp}>
-            <span className="testimonial-mark">&ldquo;</span>
-            <p className="testimonial-quote">Aleksandra has a rare ability to translate ambiguous product requirements into designs that feel obvious in retrospect. Her work on our onboarding flow cut drop-off by nearly half — and the team felt her presence at every step of the process.</p>
-            <footer className="testimonial-footer">
-              <span className="testimonial-name">Jordan Meyers</span>
-              <span className="testimonial-role">Head of Product, Finflow</span>
-            </footer>
-          </motion.blockquote>
-
-          <motion.blockquote className="testimonial-card" variants={fadeUp}>
-            <span className="testimonial-mark">&ldquo;</span>
-            <p className="testimonial-quote">Working with Aleksandra was a masterclass in systems thinking. She didn't just deliver screens — she built a shared design language our whole engineering team could speak. Detail-oriented, collaborative, and genuinely great to work with.</p>
-            <footer className="testimonial-footer">
-              <span className="testimonial-name">Mia Fontaine</span>
-              <span className="testimonial-role">Engineering Lead, Stackable</span>
-            </footer>
-          </motion.blockquote>
-        </motion.div>
       </section>
 
       {/* ── CTA ───────────────────────────────────────────────── */}
-      <section className="section-cta" id="contact">
+      <section id="contact" className="cta-wrap">
         <motion.div
-          className="cta-inner"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ type: 'spring', stiffness: 70, damping: 18 }}
+          className="cta-panel"
+          initial={{ opacity: 0, scale: 0.95, y: 40 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 1, ease }}
         >
-          <span className="label cta-label">Open to work</span>
-          <h2 className="cta-heading">Got a project<br />in mind?</h2>
-          <p className="cta-body">I&apos;m currently available for new opportunities — full-time roles, freelance projects, and collaborations.</p>
-          <Magnetic>
-            <a href="mailto:hello@avugdragovic.com" className="btn-primary cta-btn">Get in touch</a>
-          </Magnetic>
-        </motion.div>
-      </section>
-
-      {/* ── ABOUT ────────────────────────────────────────────── */}
-      <section className="section section-about" id="about">
-        <motion.div
-          className="about-grid"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ type: 'spring', stiffness: 70, damping: 18 }}
-        >
-          <div className="about-content">
-            <span className="label section-label">About me</span>
-            <h2 className="section-heading about-heading">Turning complexity<br />into clarity.</h2>
-            <p className="about-body">
-              I&apos;m a Product Designer with a focus on interaction design and systems thinking.
-              I believe that great design is mostly invisible — it removes friction, surfaces the right information,
-              and earns trust over time.
-            </p>
-            <p className="about-body">
-              Currently open to new opportunities. I work best in collaborative environments where
-              design has a seat at the table from day one.
-            </p>
-            <div className="about-actions">
-              <Magnetic>
-                <a href="mailto:hello@avugdragovic.com" className="btn-primary">Get in touch</a>
-              </Magnetic>
-              <Magnetic>
-                <Link href="/about" className="btn-secondary">Full story</Link>
-              </Magnetic>
+          <div className="cta-glow" />
+          <div className="cta-panel-inner">
+            <div>
+              <p className="cta-eyebrow">Let&apos;s work together</p>
+              <h2 className="cta-panel-heading">
+                Have a project<br className="br-sm" />
+                in mind?{' '}
+                <em>Let&apos;s build it.</em>
+              </h2>
             </div>
-          </div>
-
-          <div className="about-side">
-            <div className="about-photo-wrap">
-              <div className="about-photo placeholder-image photo">
-                <span className="placeholder-label">Photo</span>
-              </div>
-            </div>
-            <div className="about-skills">
-              <h4 className="skills-title">Skills</h4>
-              <ul className="skills-list">
-                <li><Figma size={15} strokeWidth={1.75} /> Figma</li>
-                <li><Layers size={15} strokeWidth={1.75} /> Design Systems</li>
-                <li><Search size={15} strokeWidth={1.75} /> UX Research</li>
-                <li><Zap size={15} strokeWidth={1.75} /> Prototyping</li>
-                <li><BarChart2 size={15} strokeWidth={1.75} /> Data Visualization</li>
-                <li><Users size={15} strokeWidth={1.75} /> Workshop Facilitation</li>
-              </ul>
-            </div>
+            <a href="mailto:hello@avugdragovic.com" className="cta-panel-btn">
+              Get in touch
+              <ArrowUpRight size={16} className="btn-icon" />
+            </a>
           </div>
         </motion.div>
       </section>
