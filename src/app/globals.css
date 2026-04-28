@@ -412,50 +412,37 @@ img { display: block; max-width: 100%; }
   color: #fff;
 }
 
-/* Sticky stacked cards */
-.projects-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  position: relative;
-  padding-bottom: 10vh;
+/* 2×2 project grid */
+.projects-grid-v2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
-.project-sticky {
-  width: 100%;
-  position: sticky;
-  margin-bottom: 30vh;
-  transition: z-index 0s;
-  z-index: 1;
-}
-.project-sticky:hover { z-index: 50; }
 
 .pcard {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   overflow: hidden;
   border-radius: 2rem;
   box-shadow: 0 8px 30px rgba(0,0,0,0.04);
   transition: box-shadow 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   width: 100%;
-  max-width: 768px;
-  margin: 0 auto;
-  min-height: 320px;
   border: 1px solid rgba(0,0,0,0.05);
   transform-origin: bottom center;
   will-change: transform;
+  cursor: pointer;
 }
 .pcard:hover {
   box-shadow: 0 24px 48px rgba(0,0,0,0.10), 0 4px 16px rgba(0,0,0,0.06);
 }
 .pcard-content {
-  padding: 32px;
+  padding: 28px 28px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 50%;
   position: relative;
   z-index: 10;
+  flex: 1;
 }
 .pcard-category {
   display: block;
@@ -514,14 +501,15 @@ img { display: block; max-width: 100%; }
 .pcard-btn:hover .pcard-btn-icon { transform: scale(1.1); }
 .pcard-image {
   position: relative;
-  width: 50%;
+  width: 100%;
+  height: 220px;
   overflow: hidden;
   flex-shrink: 0;
+  order: -1;
 }
 .pcard-image-inner {
   width: 100%;
   height: 100%;
-  min-height: 320px;
 }
 .pcard-image-inner img {
   width: 100%;
@@ -532,9 +520,9 @@ img { display: block; max-width: 100%; }
 .pcard-image-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.06));
   opacity: 0;
-  transition: opacity 0.5s;
+  transition: opacity 0.6s;
   pointer-events: none;
 }
 .pcard:hover .pcard-image-overlay { opacity: 1; }
@@ -988,7 +976,7 @@ img { display: block; max-width: 100%; }
   .hero-v2 { padding: 120px 32px 64px; }
   .projects-section { padding: 0 32px 120px; }
   .projects-header { flex-direction: column; align-items: flex-start; }
-  .pcard { max-width: 100%; }
+  .projects-grid-v2 { grid-template-columns: 1fr; }
 
   .cta-panel { padding: 64px 40px; }
   .cta-panel-inner { flex-direction: column; align-items: flex-start; }
@@ -1017,11 +1005,8 @@ img { display: block; max-width: 100%; }
   .hero-ctas { margin-bottom: 48px; }
   .br-sm { display: block; }
 
-  .pcard { flex-direction: column; min-height: unset; }
-  .pcard-content { width: 100%; }
-  .pcard-image { width: 100%; height: 200px; }
-  .pcard-image-inner { min-height: 200px; }
-  .project-sticky { margin-bottom: 20vh; }
+  .projects-grid-v2 { grid-template-columns: 1fr; gap: 16px; }
+  .pcard-image { height: 180px; }
 
   .projects-section { padding: 0 24px 80px; }
   .cta-wrap { padding: 0 8px 8px; }

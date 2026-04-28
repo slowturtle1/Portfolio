@@ -172,80 +172,75 @@ export default function Home() {
           </a>
         </motion.div>
 
-        <div className="projects-stack">
+        <div className="projects-grid-v2">
           {projects.map((project, i) => {
-            const isEven = i % 2 === 0
-            const restRotation = isEven ? -1 : 1
+            const isLeft = i % 2 === 0
+            const restRotation = isLeft ? -0.8 : 0.8
             return (
-              <div
+              <motion.div
                 key={project.id}
-                className="project-sticky"
-                style={{ top: `calc(120px + ${i * 40}px)` }}
-              >
-                <motion.div
-                  className="pcard"
-                  style={{ backgroundColor: project.bg }}
-                  initial={{ opacity: 0, y: 80 }}
-                  whileInView={{ opacity: 1, y: 0, rotate: restRotation }}
-                  viewport={{ once: true, margin: '-80px' }}
-                  transition={{
+                className="pcard"
+                style={{ backgroundColor: project.bg }}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0, rotate: restRotation }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 50,
+                  damping: 18,
+                  delay: i * 0.08,
+                }}
+                whileHover={{
+                  scale: 1.03,
+                  rotate: isLeft ? -2 : 2,
+                  y: -14,
+                  transition: {
                     type: 'spring',
-                    stiffness: 48,
-                    damping: 18,
-                    delay: i * 0.06,
-                  }}
-                  whileHover={{
-                    scale: 1.025,
-                    rotate: isEven ? -2 : 2,
-                    y: -12,
-                    transition: {
-                      type: 'spring',
-                      stiffness: 220,
-                      damping: 28,
-                    },
-                  }}
-                >
-                  <div className="pcard-content">
-                    <div>
-                      <span
-                        className="pcard-category"
-                        style={{ color: project.textColor === '#ffffff' ? '#fff' : '#ea580c' }}
-                      >
-                        {project.category}
-                      </span>
-                      <h3 className="pcard-title" style={{ color: project.textColor }}>
-                        {project.title}
-                      </h3>
-                      <p className="pcard-desc" style={{ color: project.descColor }}>
-                        {project.description}
-                      </p>
-                    </div>
-                    <div>
-                      <Link
-                        href={project.href}
-                        className="pcard-btn"
-                        style={{ borderColor: project.btnBorder, color: project.btnBorder }}
-                      >
-                        Case Study
-                        <span className="pcard-btn-icon">
-                          <ArrowUpRight size={12} strokeWidth={2.5} />
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
-
-                  <div className="pcard-image">
-                    <motion.div
-                      className="pcard-image-inner"
-                      whileHover={{ scale: 1.06 }}
-                      transition={{ type: 'spring', stiffness: 180, damping: 32 }}
+                    stiffness: 200,
+                    damping: 24,
+                  },
+                }}
+              >
+                <div className="pcard-content">
+                  <div>
+                    <span
+                      className="pcard-category"
+                      style={{ color: project.textColor === '#ffffff' ? '#fff' : '#ea580c' }}
                     >
-                      <img src={project.image} alt={project.title} />
-                    </motion.div>
-                    <div className="pcard-image-overlay" />
+                      {project.category}
+                    </span>
+                    <h3 className="pcard-title" style={{ color: project.textColor }}>
+                      {project.title}
+                    </h3>
+                    <p className="pcard-desc" style={{ color: project.descColor }}>
+                      {project.description}
+                    </p>
                   </div>
-                </motion.div>
-              </div>
+                  <div>
+                    <Link
+                      href={project.href}
+                      className="pcard-btn"
+                      style={{ borderColor: project.btnBorder, color: project.btnBorder }}
+                    >
+                      Case Study
+                      <span className="pcard-btn-icon">
+                        <ArrowUpRight size={12} strokeWidth={2.5} />
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="pcard-image">
+                  <motion.div
+                    className="pcard-image-inner"
+                    whileHover={{ scale: 1.07 }}
+                    transition={{ type: 'spring', stiffness: 160, damping: 28 }}
+                  >
+                    <img src={project.image} alt={project.title} />
+                  </motion.div>
+                  <div className="pcard-image-overlay" />
+                </div>
+              </motion.div>
             )
           })}
         </div>
