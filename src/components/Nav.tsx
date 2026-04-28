@@ -9,9 +9,9 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-
 const ease = [0.16, 1, 0.3, 1] as const
 
 const navLinks = [
-  { href: '/#work', label: 'Work' },
-  { href: '/about', label: 'About' },
-  { href: '/#contact', label: 'Contact' },
+  { href: '/#work', label: 'work' },
+  { href: '/about', label: 'about' },
+  { href: '/#contact', label: 'contact' },
 ]
 
 export default function Nav() {

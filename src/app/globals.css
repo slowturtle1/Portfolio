@@ -275,9 +275,8 @@ img { display: block; max-width: 100%; }
 }
 .scroll-indicator-text {
   font-family: var(--font-primary);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: lowercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
 }
 .hero-intro-line {
   font-family: var(--font-primary);

@@ -173,14 +173,10 @@ export default function Home() {
           transition={{ duration: 1, ease }}
         >
           <div>
-            <p className="projects-eyebrow">
-              <span className="projects-eyebrow-dot" />
-              Selected Work
-            </p>
             <h2 className="projects-heading">Featured Projects</h2>
           </div>
           <a href="#" className="projects-all-link">
-            All Projects
+            all projects
             <span className="projects-all-icon">
               <ArrowUpRight size={14} />
             </span>
