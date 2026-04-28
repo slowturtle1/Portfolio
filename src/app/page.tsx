@@ -34,7 +34,7 @@ function Typewriter({ text, speed = 18 }: { text: string; speed?: number }) {
   return (
     <span>
       {content}
-      {!done && <span className="typewriter-cursor">|</span>}
+      {!done && <span className="typewriter-cursor" />}
     </span>
   )
 }

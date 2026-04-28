@@ -290,9 +290,14 @@ img { display: block; max-width: 100%; }
 }
 .typewriter-cursor {
   display: inline-block;
-  color: var(--accent-primary);
-  animation: blink 0.8s step-end infinite;
-  margin-left: 1px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-primary);
+  background: transparent;
+  margin-left: 6px;
+  vertical-align: middle;
+  animation: blink 0.9s ease-in-out infinite;
 }
 @keyframes blink {
   0%, 100% { opacity: 1; }
