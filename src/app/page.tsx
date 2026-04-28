@@ -144,6 +144,22 @@ export default function Home() {
 
           </motion.div>
         </div>
+
+        <motion.a
+          href="#work"
+          className="scroll-indicator"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.5, duration: 1 }}
+        >
+          <motion.span
+            className="scroll-indicator-text"
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            scroll for my work ↓
+          </motion.span>
+        </motion.a>
       </section>
 
       {/* ── PROJECTS ─────────────────────────────────────────── */}

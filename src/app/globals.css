@@ -149,7 +149,9 @@ img { display: block; max-width: 100%; }
   position: relative;
   min-height: 100svh;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 128px 48px 80px;
   overflow: hidden;
   z-index: 10;
@@ -265,6 +267,23 @@ img { display: block; max-width: 100%; }
 }
 .hero-intro {
   margin-bottom: 32px;
+}
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-secondary);
+}
+.scroll-indicator-text {
+  font-family: var(--font-primary);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: lowercase;
 }
 .hero-intro-line {
   font-family: var(--font-primary);
