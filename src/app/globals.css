@@ -285,10 +285,8 @@ img { display: block; max-width: 100%; }
   max-width: 520px;
 }
 .hero-underline {
-  text-decoration: underline;
-  text-decoration-color: var(--accent-primary);
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1.5px;
+  color: var(--accent-primary);
+  font-weight: 700;
 }
 .typewriter-cursor {
   display: inline-block;
