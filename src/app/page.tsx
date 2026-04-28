@@ -44,7 +44,7 @@ const ease = [0.16, 1, 0.3, 1] as const
 const projects = [
   {
     id: 1,
-    category: 'Hackathon',
+    category: 'hackathon',
     title: 'Aether OS',
     description: 'Redefining desktop interactions with a spatial, layered window management system.',
     bg: '#fce4ec',
@@ -56,7 +56,7 @@ const projects = [
   },
   {
     id: 2,
-    category: 'UX Research',
+    category: 'ux research',
     title: 'Flora App',
     description: 'Helping urban gardeners track, plan and care for their plants with delightful micro-interactions.',
     bg: '#fff9c4',
@@ -68,7 +68,7 @@ const projects = [
   },
   {
     id: 3,
-    category: 'Branding',
+    category: 'branding',
     title: 'Meridian',
     description: 'A complete visual identity for a sustainable architecture firm navigating the intersection of nature and structure.',
     bg: '#14746f',
@@ -80,7 +80,7 @@ const projects = [
   },
   {
     id: 4,
-    category: 'Product Design',
+    category: 'product design',
     title: 'Orbit',
     description: 'A data-dense analytics dashboard built for clarity — surfacing key metrics without cognitive overload.',
     bg: '#f5f5f5',
@@ -173,7 +173,7 @@ export default function Home() {
           transition={{ duration: 1, ease }}
         >
           <div>
-            <h2 className="projects-heading">Featured Projects</h2>
+            <h2 className="projects-heading">featured projects</h2>
           </div>
           <a href="#" className="projects-all-link">
             all projects
@@ -233,7 +233,7 @@ export default function Home() {
                       className="pcard-btn"
                       style={{ borderColor: project.btnBorder, color: project.btnBorder }}
                     >
-                      Case Study
+                      case study
                       <span className="pcard-btn-icon">
                         <ArrowUpRight size={12} strokeWidth={2.5} />
                       </span>
