@@ -175,6 +175,7 @@ export default function Home() {
         <div className="projects-stack">
           {projects.map((project, i) => {
             const isEven = i % 2 === 0
+            const restRotation = isEven ? -1 : 1
             return (
               <div
                 key={project.id}
@@ -184,15 +185,24 @@ export default function Home() {
                 <motion.div
                   className="pcard"
                   style={{ backgroundColor: project.bg }}
-                  initial={{ opacity: 0, y: 100, rotate: 0 }}
-                  whileInView={{ opacity: 1, y: 0, rotate: isEven ? -1 : 1 }}
-                  viewport={{ once: true, margin: '-100px' }}
-                  transition={{ duration: 0.8, ease }}
+                  initial={{ opacity: 0, y: 80 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: restRotation }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 48,
+                    damping: 18,
+                    delay: i * 0.06,
+                  }}
                   whileHover={{
-                    scale: 1.02,
-                    rotate: isEven ? -2.5 : 2.5,
-                    y: -16,
-                    transition: { duration: 0.4, ease },
+                    scale: 1.025,
+                    rotate: isEven ? -2 : 2,
+                    y: -12,
+                    transition: {
+                      type: 'spring',
+                      stiffness: 220,
+                      damping: 28,
+                    },
                   }}
                 >
                   <div className="pcard-content">
@@ -227,8 +237,8 @@ export default function Home() {
                   <div className="pcard-image">
                     <motion.div
                       className="pcard-image-inner"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.8, ease }}
+                      whileHover={{ scale: 1.06 }}
+                      transition={{ type: 'spring', stiffness: 180, damping: 32 }}
                     >
                       <img src={project.image} alt={project.title} />
                     </motion.div>

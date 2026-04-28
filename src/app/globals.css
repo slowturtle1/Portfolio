@@ -436,16 +436,17 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
   border-radius: 2rem;
   box-shadow: 0 8px 30px rgba(0,0,0,0.04);
-  transition: box-shadow 0.5s;
+  transition: box-shadow 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   width: 100%;
   max-width: 768px;
   margin: 0 auto;
   min-height: 320px;
   border: 1px solid rgba(0,0,0,0.05);
-  transform-origin: bottom;
+  transform-origin: bottom center;
+  will-change: transform;
 }
 .pcard:hover {
-  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.10), 0 4px 16px rgba(0,0,0,0.06);
 }
 .pcard-content {
   padding: 32px;
