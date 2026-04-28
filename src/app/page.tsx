@@ -96,35 +96,28 @@ export default function Home() {
             initial="hidden"
             animate="visible"
           >
-            <motion.h1 className="hero-heading-v2" variants={heroItem}>
-              <span className="hero-subheading">Hi, I&apos;m Aleksandra.</span>
-              Product Designer{' '}
-              <br className="br-sm" />
-              <span className="hero-italic">that enjoys</span>{' '}
-              solving{' '}
-              <span className="hero-highlight-wrap">
-                <span className="hero-highlight-text">problems</span>
-                <motion.span
-                  className="hero-highlight-bar"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 1.2, duration: 1, ease }}
-                />
-              </span>
-              .
-            </motion.h1>
+            <motion.div className="hero-intro" variants={heroItem}>
+              <p className="hero-intro-line">aleksandra vugdragovic is a</p>
+              <p className="hero-intro-role">product designer ❁</p>
+            </motion.div>
 
             <motion.p className="hero-tagline" variants={heroItem}>
-              I craft digital products that feel inevitable —
-              clear, considered and built for real people.
+              she crafts digital products that feel inevitable —<br />
+              clear, considered, and built for real people.
             </motion.p>
 
-            <motion.div className="hero-ctas" variants={heroItem}>
-              <a href="#work" className="btn-dark">
-                View Work
-                <ArrowUpRight size={15} className="btn-icon" />
-              </a>
-              <Link href="/about" className="btn-ghost">About Me</Link>
+            <motion.p className="hero-tagline" variants={heroItem}>
+              she loves solving problems.
+            </motion.p>
+
+            <motion.p className="hero-tagline hero-friendly" variants={heroItem}>
+              let&apos;s work together :)
+            </motion.p>
+
+            <motion.div className="hero-text-links" variants={heroItem}>
+              <a href="#work" className="hero-text-link">work</a>
+              <Link href="/about" className="hero-text-link">about</Link>
+              <a href="#contact" className="hero-text-link">contact</a>
             </motion.div>
 
           </motion.div>
