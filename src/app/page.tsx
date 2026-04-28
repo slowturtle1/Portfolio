@@ -261,32 +261,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CTA ───────────────────────────────────────────────── */}
-      <section id="contact" className="cta-wrap">
-        <motion.div
-          className="cta-panel"
-          initial={{ opacity: 0, scale: 0.95, y: 40 }}
-          whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 1, ease }}
-        >
-          <div className="cta-glow" />
-          <div className="cta-panel-inner">
-            <div>
-              <p className="cta-eyebrow">Let&apos;s work together</p>
-              <h2 className="cta-panel-heading">
-                Have a project<br className="br-sm" />
-                in mind?{' '}
-                <em>Let&apos;s build it.</em>
-              </h2>
-            </div>
-            <a href="mailto:hello@avugdragovic.com" className="cta-panel-btn">
-              Get in touch
-              <ArrowUpRight size={16} className="btn-icon" />
-            </a>
-          </div>
-        </motion.div>
-      </section>
     </>
   )
 }
