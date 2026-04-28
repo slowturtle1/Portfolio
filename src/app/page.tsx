@@ -96,11 +96,6 @@ export default function Home() {
             initial="hidden"
             animate="visible"
           >
-            <motion.p className="hero-eyebrow" variants={heroItem}>
-              <span className="hero-eyebrow-line" />
-              Portfolio · Product Designer
-            </motion.p>
-
             <motion.h1 className="hero-heading-v2" variants={heroItem}>
               <span className="hero-subheading">Hi, I&apos;m Aleksandra.</span>
               Product Designer{' '}
@@ -132,18 +127,6 @@ export default function Home() {
               <Link href="/about" className="btn-ghost">About Me</Link>
             </motion.div>
 
-            <motion.div className="hero-stats" variants={heroItem}>
-              {[
-                { val: '5+', label: 'Years experience' },
-                { val: '30+', label: 'Projects shipped' },
-                { val: '12', label: 'Happy clients' },
-              ].map(({ val, label }) => (
-                <div key={label} className="hero-stat">
-                  <p className="hero-stat-val">{val}</p>
-                  <p className="hero-stat-label">{label}</p>
-                </div>
-              ))}
-            </motion.div>
           </motion.div>
         </div>
       </section>
