@@ -52,7 +52,7 @@ const projects = [
     textColor: '#333333',
     descColor: '#6b7280',
     btnBorder: '#333333',
-    image: '/orbit-dashboard.png',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80',
     href: '/projects/project-alpha',
   },
 ]
