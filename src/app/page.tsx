@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-function Typewriter({ text, speed = 38 }: { text: string; speed?: number }) {
+function Typewriter({ text, speed = 18 }: { text: string; speed?: number }) {
   const [displayed, setDisplayed] = useState('')
   const [done, setDone] = useState(false)
 
