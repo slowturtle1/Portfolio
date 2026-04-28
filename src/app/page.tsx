@@ -175,7 +175,7 @@ export default function Home() {
         <div className="projects-grid-v2">
           {projects.map((project, i) => {
             const isLeft = i % 2 === 0
-            const restRotation = isLeft ? -0.8 : 0.8
+            const restRotation = isLeft ? -2.5 : 2.5
             return (
               <motion.div
                 key={project.id}
@@ -191,8 +191,8 @@ export default function Home() {
                   delay: i * 0.08,
                 }}
                 whileHover={{
-                  scale: 1.03,
-                  rotate: isLeft ? -2 : 2,
+                  scale: 1.04,
+                  rotate: isLeft ? -4.5 : 4.5,
                   y: -14,
                   transition: {
                     type: 'spring',
