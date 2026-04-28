@@ -3,6 +3,31 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
+import { useEffect, useState } from 'react'
+
+function Typewriter({ text, speed = 38 }: { text: string; speed?: number }) {
+  const [displayed, setDisplayed] = useState('')
+  const [done, setDone] = useState(false)
+
+  useEffect(() => {
+    let i = 0
+    setDisplayed('')
+    setDone(false)
+    const t = setInterval(() => {
+      i++
+      setDisplayed(text.slice(0, i))
+      if (i >= text.length) { clearInterval(t); setDone(true) }
+    }, speed)
+    return () => clearInterval(t)
+  }, [text, speed])
+
+  return (
+    <span>
+      {displayed}
+      {!done && <span className="typewriter-cursor">|</span>}
+    </span>
+  )
+}
 
 const ease = [0.16, 1, 0.3, 1] as const
 
@@ -97,18 +122,15 @@ export default function Home() {
             animate="visible"
           >
             <motion.div className="hero-intro" variants={heroItem}>
-              <p className="hero-intro-role">hi, i&apos;m aleksandra — a product designer who loves solving problems and crafting digital products built for real people. ❁</p>
+              <p className="hero-intro-role">
+                <Typewriter text="hi, i'm aleksandra — a product designer who loves solving problems and crafting digital products built for real people. ❁" />
+              </p>
             </motion.div>
 
             <motion.p className="hero-tagline hero-friendly" variants={heroItem}>
               let&apos;s work together :)
             </motion.p>
 
-            <motion.div className="hero-text-links" variants={heroItem}>
-              <a href="#work" className="hero-text-link">work</a>
-              <Link href="/about" className="hero-text-link">about</Link>
-              <a href="#contact" className="hero-text-link">contact</a>
-            </motion.div>
 
           </motion.div>
         </div>
