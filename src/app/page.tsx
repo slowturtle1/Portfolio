@@ -21,9 +21,19 @@ function Typewriter({ text, speed = 18 }: { text: string; speed?: number }) {
     return () => clearInterval(t)
   }, [text, speed])
 
+  const target = 'product designer'
+  const idx = displayed.indexOf(target)
+  const content = idx === -1 ? displayed : (
+    <>
+      {displayed.slice(0, idx)}
+      <span className="hero-underline">{displayed.slice(idx, idx + target.length)}</span>
+      {displayed.slice(idx + target.length)}
+    </>
+  )
+
   return (
     <span>
-      {displayed}
+      {content}
       {!done && <span className="typewriter-cursor">|</span>}
     </span>
   )
