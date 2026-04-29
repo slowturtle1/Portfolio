@@ -45,7 +45,7 @@ const projects = [
   {
     id: 1,
     category: 'hackathon',
-    title: 'Aether OS',
+    title: 'aether os',
     description: 'Redefining desktop interactions with a spatial, layered window management system.',
     bg: '#fce4ec',
     textColor: '#333333',
@@ -57,7 +57,7 @@ const projects = [
   {
     id: 2,
     category: 'ux research',
-    title: 'Flora App',
+    title: 'flora app',
     description: 'Helping urban gardeners track, plan and care for their plants with delightful micro-interactions.',
     bg: '#fff9c4',
     textColor: '#333333',
@@ -69,7 +69,7 @@ const projects = [
   {
     id: 3,
     category: 'branding',
-    title: 'Meridian',
+    title: 'meridian',
     description: 'A complete visual identity for a sustainable architecture firm navigating the intersection of nature and structure.',
     bg: '#14746f',
     textColor: '#ffffff',
@@ -81,7 +81,7 @@ const projects = [
   {
     id: 4,
     category: 'product design',
-    title: 'Orbit',
+    title: 'orbit',
     description: 'A data-dense analytics dashboard built for clarity — surfacing key metrics without cognitive overload.',
     bg: '#f5f5f5',
     textColor: '#333333',
