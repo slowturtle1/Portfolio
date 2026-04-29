@@ -76,9 +76,10 @@ img { display: block; max-width: 100%; }
   justify-content: space-between;
 }
 .nav-logo {
-  font-family: var(--font-primary);
-  font-weight: 400;
-  font-size: var(--size-body);
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 22px;
   letter-spacing: 0.04em;
   color: var(--text-primary);
 }
