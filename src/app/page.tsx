@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+const b = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
+
 function Typewriter({ text, speed = 18 }: { text: string; speed?: number }) {
   const [displayed, setDisplayed] = useState('')
   const [done, setDone] = useState(false)
@@ -44,51 +46,51 @@ const ease = [0.16, 1, 0.3, 1] as const
 const projects = [
   {
     id: 1,
-    category: 'hackathon',
-    title: 'aether os',
-    description: 'Redefining desktop interactions with a spatial, layered window management system.',
-    bg: '#fce4ec',
-    textColor: '#333333',
-    descColor: '#6b7280',
-    btnBorder: '#333333',
-    image: 'https://images.unsplash.com/photo-1720962158883-b0f2021fb51e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80',
-    href: '/projects/project-alpha',
+    category: 'healthcare · hackathon · voice ui',
+    title: 'CareLoop',
+    description: 'A voice-first symptom journaling concept for NHS clinicians, designed and prototyped in 24 hours. Winner of the Accurx challenge at HuddleHive Hackathon, March 2026.',
+    tags: ['Healthcare', 'Hackathon', 'NHS', 'Voice UI', 'AI-assisted'],
+    year: '2026',
+    bg: '#0f766e',
+    textColor: '#ffffff',
+    descColor: 'rgba(255,255,255,0.75)',
+    btnBorder: '#ffffff',
+    imageBg: 'linear-gradient(135deg, #0d9488 0%, #047857 100%)',
+    image: '/careloop-hero.png',
+    imageAlt: 'Hand holding phone showing CareLoop voice recording screen',
+    href: '/work/careloop',
   },
   {
     id: 2,
-    category: 'ux research',
-    title: 'flora app',
-    description: 'Helping urban gardeners track, plan and care for their plants with delightful micro-interactions.',
-    bg: '#fff9c4',
-    textColor: '#333333',
-    descColor: '#6b7280',
-    btnBorder: '#333333',
-    image: 'https://images.unsplash.com/photo-1748801583967-3038967d7279?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80',
-    href: '/projects/project-design-system',
+    category: 'healthcare',
+    title: 'Nkomor Healthcare',
+    description: '[ONE-LINE SUMMARY OF NKOMOR — what is it, what did you design, who is it for]',
+    tags: ['Healthcare', '[ADD]', '[ADD]'],
+    year: '[YEAR]',
+    bg: '#f0fdf4',
+    textColor: '#14532d',
+    descColor: '#166534',
+    btnBorder: '#14532d',
+    imageBg: 'linear-gradient(135deg, #bbf7d0 0%, #86efac 100%)',
+    image: undefined as string | undefined,
+    imageAlt: undefined as string | undefined,
+    href: '/work/nkomor',
   },
   {
     id: 3,
-    category: 'branding',
-    title: 'meridian',
-    description: 'A complete visual identity for a sustainable architecture firm navigating the intersection of nature and structure.',
-    bg: '#14746f',
+    category: 'internal tooling · surveying',
+    title: 'DPR QA Tool',
+    description: 'Internal QA tooling for one of London\'s leading building surveying practices. Designed for experts in regulated, high-stakes professional environments.',
+    tags: ['Internal Tooling', 'Surveying', 'Design Systems'],
+    year: '[YEAR]',
+    bg: '#1e293b',
     textColor: '#ffffff',
-    descColor: '#f5f5f5',
+    descColor: 'rgba(255,255,255,0.65)',
     btnBorder: '#ffffff',
-    image: 'https://images.unsplash.com/photo-1727755868081-c25d2b427ce3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80',
-    href: '/projects/project-mobile-app',
-  },
-  {
-    id: 4,
-    category: 'product design',
-    title: 'orbit',
-    description: 'A data-dense analytics dashboard built for clarity — surfacing key metrics without cognitive overload.',
-    bg: '#f5f5f5',
-    textColor: '#333333',
-    descColor: '#6b7280',
-    btnBorder: '#333333',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80',
-    href: '/projects/project-alpha',
+    imageBg: 'linear-gradient(135deg, #334155 0%, #1e293b 100%)',
+    image: undefined as string | undefined,
+    imageAlt: undefined as string | undefined,
+    href: '/work/dpr-qa-tool',
   },
 ]
 
@@ -127,39 +129,62 @@ export default function Home() {
         />
 
         <div className="hero-v2-inner">
-          <motion.div
-            className="hero-v2-content"
-            variants={heroContainer}
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.div className="hero-intro" variants={heroItem}>
-              <p className="hero-intro-role">
-                <Typewriter text="hi, i'm aleksandra — a product designer who loves solving problems and crafting digital products built for real people. ❁" />
-              </p>
+          <div className="hero-split">
+
+            {/* ── LEFT: video ── */}
+            <motion.div
+              className="hero-video-col"
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, ease }}
+            >
+              <div className="hero-video-wrap">
+                <video
+                  className="hero-video"
+                  src={`${b}/careloop-demo.mp4`}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+              </div>
             </motion.div>
 
-            <motion.p className="hero-tagline hero-friendly" variants={heroItem}>
-              let&apos;s work together :)
-            </motion.p>
-
-            <motion.a
-              href="#work"
-              className="scroll-indicator"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 2.5, duration: 1 }}
+            {/* ── RIGHT: text ── */}
+            <motion.div
+              className="hero-v2-content"
+              variants={heroContainer}
+              initial="hidden"
+              animate="visible"
             >
-              <motion.span
-                className="scroll-indicator-text"
-                animate={{ y: [0, 6, 0] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                scroll for my work ↓
-              </motion.span>
-            </motion.a>
+              <motion.div className="hero-intro" variants={heroItem}>
+                <p className="hero-intro-role">
+                  <Typewriter text="i'm a product designer based in london. healthcare focused, with a background in 3D design, now redirecting the craft toward clinical software. ❁" />
+                </p>
+              </motion.div>
 
-          </motion.div>
+              <motion.p className="hero-tagline hero-friendly" variants={heroItem}>
+                currently open to product design roles in NHS-adjacent and UK healthtech teams.
+              </motion.p>
+
+              <motion.a
+                href="#work"
+                className="scroll-indicator"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2.5, duration: 1 }}
+              >
+                <motion.span
+                  className="scroll-indicator-text"
+                  animate={{ y: [0, 6, 0] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  scroll for my work ↓
+                </motion.span>
+              </motion.a>
+
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -216,7 +241,7 @@ export default function Home() {
                   <div>
                     <span
                       className="pcard-category"
-                      style={{ color: project.textColor === '#ffffff' ? '#fff' : '#ea580c' }}
+                      style={{ color: project.textColor === '#ffffff' ? 'rgba(255,255,255,0.6)' : '#ea580c' }}
                     >
                       {project.category}
                     </span>
@@ -244,10 +269,17 @@ export default function Home() {
                 <div className="pcard-image">
                   <motion.div
                     className="pcard-image-inner"
+                    style={{ background: project.imageBg }}
                     whileHover={{ scale: 1.07 }}
                     transition={{ type: 'spring', stiffness: 160, damping: 28 }}
                   >
-                    <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
+                    {project.image && (
+                      <img
+                        src={`${b}${project.image}`}
+                        alt={project.imageAlt ?? project.title}
+                        className="pcard-photo"
+                      />
+                    )}
                   </motion.div>
                   <div className="pcard-image-overlay" />
                 </div>

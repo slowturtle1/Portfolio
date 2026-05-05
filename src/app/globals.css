@@ -164,7 +164,36 @@ img { display: block; max-width: 100%; }
   position: relative;
   z-index: 10;
 }
-.hero-v2-content { max-width: 896px; }
+.hero-v2-content { max-width: 560px; }
+
+/* ── Hero split layout ───────────────────────────────────── */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  width: 100%;
+}
+.hero-video-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-video-wrap {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.14);
+  aspect-ratio: 9 / 16;
+  background: #000;
+}
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
 /* Blobs */
 .blob {
@@ -491,10 +520,10 @@ img { display: block; max-width: 100%; }
   color: #fff;
 }
 
-/* 2×2 project grid */
+/* project grid */
 .projects-grid-v2 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
@@ -582,7 +611,7 @@ img { display: block; max-width: 100%; }
 .pcard-image {
   position: relative;
   width: 100%;
-  height: 220px;
+  height: 340px;
   overflow: hidden;
   flex-shrink: 0;
   order: -1;
@@ -592,11 +621,16 @@ img { display: block; max-width: 100%; }
   height: 100%;
   will-change: transform;
   backface-visibility: hidden;
+  position: relative;
 }
-.pcard-image-inner img {
+.pcard-image-inner img,
+.pcard-photo {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 35%;
   display: block;
 }
 .pcard-image-overlay {
@@ -732,6 +766,72 @@ img { display: block; max-width: 100%; }
   transition: color 0.2s;
 }
 .footer-v2-links a:hover { color: var(--accent-primary); }
+
+/* ─── TODO PLACEHOLDERS ─────────────────────────────────────── */
+.todo-placeholder {
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px dashed rgba(217, 119, 6, 0.5);
+  border-radius: 3px;
+  padding: 1px 6px;
+  color: #92400e;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+/* ─── CASE STUDY EXTRAS ──────────────────────────────────────── */
+.case-section-label {
+  display: block;
+  font-family: var(--font-primary);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-lg);
+}
+.case-steps { margin-top: var(--space-xl); }
+.case-step {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: var(--space-md);
+  padding: var(--space-lg) 0;
+  border-top: 1px solid var(--border);
+}
+.case-step:last-child { border-bottom: 1px solid var(--border); }
+.case-step-num {
+  font-size: var(--size-sm);
+  color: var(--accent-primary);
+  font-weight: 400;
+  padding-top: 2px;
+}
+.case-step-text {
+  font-size: var(--size-body);
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+.case-step-text strong { color: var(--text-primary); font-weight: 600; }
+
+.case-decisions { margin-top: var(--space-xl); }
+.case-decision {
+  padding: var(--space-lg) 0;
+  border-top: 1px solid var(--border);
+}
+.case-decision:last-child { border-bottom: 1px solid var(--border); }
+.case-decision-title {
+  font-size: var(--size-body);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+.case-decision-body {
+  font-size: var(--size-body);
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+.project-meta--3col { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px) {
+  .project-meta--3col { grid-template-columns: repeat(2, 1fr); }
+}
 
 /* ─── PROJECT / ABOUT PAGES ──────────────────────────────────── */
 .nav-back {
@@ -1044,14 +1144,120 @@ img { display: block; max-width: 100%; }
   transform: scale(1.04);
 }
 
+/* ─── CARELOOP CASE STUDY ────────────────────────────────────── */
+
+/* CareLoop teal accent token — only used inside this case study */
+:root { --cs-accent: #0d9488; }
+
+.cs-hero { border-bottom: none; }
+.cs-tagline {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--text-secondary);
+  font-weight: 400;
+  line-height: 1.4;
+  max-width: 520px;
+  margin-bottom: var(--space-3xl);
+}
+
+/* Hero phone trio */
+.cs-phones {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-2xl);
+  padding: var(--space-xl) 0;
+}
+.cs-phone { margin: 0; flex-shrink: 0; }
+.cs-phone--left  { transform: translateY(16px) rotate(-4deg); }
+.cs-phone--center { transform: translateY(0); z-index: 2; }
+.cs-phone--right { transform: translateY(16px) rotate(4deg); }
+.cs-phone-img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+  box-shadow: 0 20px 48px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08);
+  object-fit: contain;
+}
+
+/* Metadata grid override for 3-col */
+.cs-meta { grid-template-columns: repeat(3, 1fr); }
+.cs-accent { color: var(--cs-accent); font-weight: 600; }
+
+/* Section heading style (caps, tracked, smaller) */
+.cs-section-heading {
+  font-size: 0.7rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  color: var(--text-tertiary) !important;
+  margin-bottom: var(--space-xl) !important;
+}
+
+/* How it works — alternating text + phone rows */
+.how-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  margin-top: var(--space-xl);
+}
+.how-step {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: var(--space-3xl);
+  align-items: center;
+  padding: var(--space-xl) 0;
+  border-top: 1px solid var(--border);
+}
+.how-step--reverse {
+  grid-template-columns: 240px 1fr;
+}
+.how-step-num {
+  font-size: var(--size-sm);
+  color: var(--cs-accent);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+}
+.how-step-text { max-width: 480px; }
+.how-step-img {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+.how-step--reverse .how-step-img { order: -1; }
+
+/* Design decisions — dual view side-by-side */
+.cs-dual-view {
+  display: flex;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+  align-items: flex-start;
+}
+.cs-dual-phone { margin: 0; text-align: center; }
+.cs-phone-caption {
+  display: block;
+  font-size: var(--size-sm);
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+  margin-top: var(--space-sm);
+}
+
+/* Outcome grid override — 3 cols on case study */
+.cs-outcome-grid { grid-template-columns: repeat(3, 1fr); }
+
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 @media (max-width: 900px) {
   :root { --space-3xl: 40px; --space-4xl: 64px; --space-5xl: 96px; }
 
   .hero-v2 { padding: 120px 32px 64px; }
+  .hero-split { grid-template-columns: 1fr; gap: 48px; }
+  .hero-video-wrap { max-width: 360px; margin: 0 auto; }
   .projects-section { padding: 0 32px 120px; }
   .projects-header { flex-direction: column; align-items: flex-start; }
-  .projects-grid-v2 { grid-template-columns: 1fr 1fr; }
+  .projects-grid-v2 { grid-template-columns: 1fr; }
 
   .cta-panel { padding: 64px 40px; }
   .cta-panel-inner { flex-direction: column; align-items: flex-start; }
@@ -1068,6 +1274,15 @@ img { display: block; max-width: 100%; }
   .skills-grid-page { grid-template-columns: repeat(2, 1fr); }
   .contact-section { grid-template-columns: 1fr; }
   .next-project { flex-direction: column; align-items: flex-start; gap: var(--space-lg); }
+
+  .cs-meta { grid-template-columns: repeat(2, 1fr); }
+  .how-step { grid-template-columns: 1fr; }
+  .how-step--reverse { grid-template-columns: 1fr; }
+  .how-step--reverse .how-step-img { order: 0; }
+  .how-step-img { justify-content: flex-start; }
+  .cs-phones { gap: var(--space-sm); }
+  .cs-phone--left, .cs-phone--right { transform: none; }
+  .cs-phone--center { transform: none; }
 }
 
 @media (max-width: 640px) {
@@ -1076,12 +1291,13 @@ img { display: block; max-width: 100%; }
   .nav-hamburger { display: flex; }
 
   .hero-v2 { padding: 96px 24px 48px; }
+  .hero-video-wrap { max-width: 280px; }
   .hero-stats { gap: 32px; }
   .hero-ctas { margin-bottom: 48px; }
   .br-sm { display: block; }
 
   .projects-grid-v2 { grid-template-columns: 1fr; gap: 16px; }
-  .pcard-image { height: 180px; }
+  .pcard-image { height: 260px; }
 
   .projects-section { padding: 0 24px 80px; }
   .cta-wrap { padding: 0 8px 8px; }
@@ -1100,4 +1316,10 @@ img { display: block; max-width: 100%; }
   .skills-section,
   .contact-section { padding-left: var(--space-lg); padding-right: var(--space-lg); }
   .next-project { padding: var(--space-2xl) var(--space-lg); }
+
+  .cs-meta { grid-template-columns: 1fr; }
+  .cs-dual-view { flex-direction: column; }
+  .cs-outcome-grid { grid-template-columns: 1fr; }
+  .cs-phones { gap: var(--space-xs); }
+  .cs-phone-img { max-width: 100px; border-radius: 12px; }
 }
