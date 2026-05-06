@@ -147,6 +147,66 @@ img { display: block; max-width: 100%; }
   display: block;
 }
 
+/* ─── INTRO OVERLAY ─────────────────────────────────────────── */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  overflow: hidden;
+}
+.intro-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.intro-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 40%),
+    linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 30%);
+  pointer-events: none;
+}
+.intro-namecard {
+  position: absolute;
+  bottom: 52px;
+  left: 52px;
+  color: rgba(255,255,255,0.9);
+  font-family: var(--font-primary);
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  line-height: 1;
+}
+.intro-namecard-role {
+  color: rgba(255,255,255,0.55);
+}
+.intro-skip {
+  position: absolute;
+  bottom: 44px;
+  right: 48px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.75);
+  font-family: var(--font-primary);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  padding: 10px 20px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  text-transform: lowercase;
+}
+.intro-skip:hover {
+  background: rgba(255,255,255,0.16);
+  color: #fff;
+  border-color: rgba(255,255,255,0.5);
+}
+
 /* ─── HERO ───────────────────────────────────────────────────── */
 .hero-v2 {
   position: relative;

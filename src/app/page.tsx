@@ -1,17 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 const b = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
-function Typewriter({ text, speed = 18 }: { text: string; speed?: number }) {
+function Typewriter({ text, speed = 18, active }: { text: string; speed?: number; active: boolean }) {
   const [displayed, setDisplayed] = useState('')
   const [done, setDone] = useState(false)
 
   useEffect(() => {
+    if (!active) return
     let i = 0
     setDisplayed('')
     setDone(false)
@@ -21,7 +22,7 @@ function Typewriter({ text, speed = 18 }: { text: string; speed?: number }) {
       if (i >= text.length) { clearInterval(t); setDone(true) }
     }, speed)
     return () => clearInterval(t)
-  }, [text, speed])
+  }, [text, speed, active])
 
   const target = 'product designer'
   const idx = displayed.indexOf(target)
@@ -36,7 +37,7 @@ function Typewriter({ text, speed = 18 }: { text: string; speed?: number }) {
   return (
     <span>
       {content}
-      {!done && <span className="typewriter-cursor">|</span>}
+      {!done && active && <span className="typewriter-cursor">|</span>}
     </span>
   )
 }
@@ -96,7 +97,7 @@ const projects = [
 
 const heroContainer = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.18, delayChildren: 0.2 } },
 }
 
 const heroItem = {
@@ -105,12 +106,88 @@ const heroItem = {
 }
 
 export default function Home() {
+  const [introVisible, setIntroVisible] = useState(true)
+  const [heroDone, setHeroDone] = useState(false)
+
   useEffect(() => { window.scrollTo(0, 0) }, [])
+
+  // Lock scroll during intro
+  useEffect(() => {
+    if (introVisible) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [introVisible])
+
+  // Auto-transition after 7s
+  useEffect(() => {
+    const t = setTimeout(() => setIntroVisible(false), 7000)
+    return () => clearTimeout(t)
+  }, [])
+
+  const dismiss = () => setIntroVisible(false)
 
   return (
     <>
-      {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="hero-v2" id="home">
+      {/* ── INTRO OVERLAY ───────────────────────────────────────── */}
+      <AnimatePresence onExitComplete={() => setHeroDone(true)}>
+        {introVisible && (
+          <motion.div
+            className="intro-overlay"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* Video — starts slightly zoomed, slowly pulls back */}
+            <motion.video
+              className="intro-video"
+              autoPlay
+              muted
+              playsInline
+              onEnded={dismiss}
+              src={`${b}/careloop-demo.mp4`}
+              initial={{ scale: 1.12 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 9, ease: 'easeOut' }}
+            />
+
+            {/* Cinematic vignette */}
+            <div className="intro-vignette" />
+
+            {/* Name card — fades in after 0.8s */}
+            <motion.div
+              className="intro-namecard"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 1.2, ease }}
+            >
+              aleksandra vugdragovic
+              <span className="intro-namecard-role"> — product designer</span>
+            </motion.div>
+
+            {/* Skip */}
+            <motion.button
+              className="intro-skip"
+              onClick={dismiss}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.8, duration: 0.8 }}
+            >
+              enter portfolio ↓
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── HERO ────────────────────────────────────────────────── */}
+      <motion.section
+        className="hero-v2"
+        id="home"
+        initial={{ opacity: 0, y: 24 }}
+        animate={heroDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+        transition={{ duration: 1.1, ease }}
+      >
         {/* Animated blobs */}
         <motion.div
           className="blob blob-pink"
@@ -134,9 +211,9 @@ export default function Home() {
             {/* ── LEFT: video ── */}
             <motion.div
               className="hero-video-col"
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, ease }}
+              initial={{ opacity: 0, x: -32 }}
+              animate={heroDone ? { opacity: 1, x: 0 } : { opacity: 0, x: -32 }}
+              transition={{ duration: 1, delay: 0.15, ease }}
             >
               <div className="hero-video-wrap">
                 <video
@@ -155,11 +232,14 @@ export default function Home() {
               className="hero-v2-content"
               variants={heroContainer}
               initial="hidden"
-              animate="visible"
+              animate={heroDone ? 'visible' : 'hidden'}
             >
               <motion.div className="hero-intro" variants={heroItem}>
                 <p className="hero-intro-role">
-                  <Typewriter text="i'm a product designer based in london. healthcare focused, with a background in 3D design, now redirecting the craft toward clinical software. ❁" />
+                  <Typewriter
+                    text="i'm a product designer based in london. healthcare focused, with a background in 3D design, now redirecting the craft toward clinical software. ❁"
+                    active={heroDone}
+                  />
                 </p>
               </motion.div>
 
@@ -171,8 +251,8 @@ export default function Home() {
                 href="#work"
                 className="scroll-indicator"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2.5, duration: 1 }}
+                animate={heroDone ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ delay: 2.8, duration: 1 }}
               >
                 <motion.span
                   className="scroll-indicator-text"
@@ -186,7 +266,7 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ── PROJECTS ─────────────────────────────────────────── */}
       <section id="work" className="projects-section">
@@ -288,7 +368,6 @@ export default function Home() {
           })}
         </div>
       </section>
-
     </>
   )
 }
