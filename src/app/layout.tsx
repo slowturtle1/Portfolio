@@ -13,8 +13,14 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Aleksandra Vugdragovic — Product Designer',
-  description: 'Product Designer crafting digital products that feel inevitable — clear, considered, and built for real people.',
+  title: 'Aleksandra Vugdragovic — Product Designer, London',
+  description:
+    'I spent five years making the records that construction software is trying to replace. Now I design the software. Selected work: Cow Compass, QA Tool, CareLoop, Notice.',
+  openGraph: {
+    title: 'Aleksandra Vugdragovic',
+    description: 'Product designer, London. Complex technical domains.',
+    type: 'website',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

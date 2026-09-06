@@ -1,60 +1,76 @@
 import type { Metadata } from 'next'
-import { ArrowUpRight } from 'lucide-react'
+import { Todo } from '../../components/Todo'
 
 export const metadata: Metadata = {
   title: 'About — Aleksandra Vugdragovic',
+  description:
+    'Project manager at a London building consultancy. Five years in measured survey, laser scanning and BIM coordination. Design arrived sideways.',
 }
 
 export default function About() {
   return (
-    <>
-      <div className="about-page-hero">
-        <div>
-          <h1 className="about-page-title">turning complexity<br />into clarity.</h1>
-          <p className="about-page-body">
-            i&apos;m a product designer with a focus on interaction design and systems thinking.
-            i believe great design is mostly invisible — it removes friction, surfaces the right
-            information, and earns trust over time.
-          </p>
-          <p className="about-page-body">
-            i&apos;ve worked across b2b saas, fintech, and healthtech — at startups where i was
-            the first designer, and at scale-ups navigating rapid growth. what i enjoy most
-            is working on problems that are genuinely hard to solve.
-          </p>
-          <p className="about-page-body">
-            currently open to new opportunities. i work best in collaborative environments
-            where design has a seat at the table from day one.
-          </p>
-          <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', marginTop: 'var(--space-xl)' }}>
-            <a href="mailto:avugdragovic@gmail.com" className="hero-text-link">
-              get in touch <ArrowUpRight size={13} style={{ display: 'inline', verticalAlign: 'middle' }} />
-            </a>
-            <a href="#" className="hero-text-link">download cv</a>
-          </div>
-        </div>
-        <div className="about-page-photo">
-          <span className="placeholder-label">Photo</span>
+    <div className="about-page-hero">
+      <div>
+        <h1 className="about-page-title">About</h1>
+
+        <p className="about-page-body">
+          I am a project manager at a London building consultancy, and I came into it from the
+          technical side rather than from site engineering. Measured building surveys, laser
+          scanning and point cloud, BIM coordination, and information management to ISO 19650.
+          Five years of it, four at DPR, where I moved from doing that work to running its
+          delivery: managing three external contractor teams, owning the client relationship
+          through review and sign-off, and writing the fee proposals.
+        </p>
+        <p className="about-page-body">
+          Design arrived sideways. I kept hitting processes that were quietly broken and kept
+          building small things to fix them, starting with AutoLISP scripts that standardised CAD
+          layer setup across forty-seven layers because people got it wrong on every project. The
+          QA tool is the same instinct, several years later and considerably more ambitious.
+        </p>
+        <p className="about-page-body">
+          What I bring to a product team is not years of design titles. It is that I have been
+          the user of the software this industry builds, in the conditions it is used in, and I
+          know precisely why most of it gets abandoned in month two.
+        </p>
+
+        <div className="contact-links" style={{ marginTop: 'var(--space-2xl)' }}>
+          <a className="contact-link" href="mailto:avugdragovic@gmail.com">
+            avugdragovic@gmail.com
+          </a>
+          <a
+            className="contact-link"
+            href="https://www.linkedin.com/in/avugdragovic/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
         </div>
       </div>
 
-      <div className="contact-section">
-        <div>
-          <h2 className="contact-heading">let&apos;s work<br />together.</h2>
-          <p className="contact-body">
-            i&apos;m currently open to full-time roles and select freelance projects.
-            if you&apos;re building something worth designing well, i&apos;d love to hear about it.
+      <div>
+        <div className="about-page-photo">
+          <Todo>[PHOTO]</Todo>
+        </div>
+
+        <div className="about-side-block">
+          <div className="about-side-block-title">Turning vague feedback into work</div>
+          <p>
+            Most of my week is taking something a client said imprecisely and turning it into an
+            instruction a technical team can act on, then going back when the first attempt
+            misses. It is the closest thing to product work in my current job.
           </p>
-          <p className="about-page-body" style={{ marginBottom: 'var(--space-lg)' }}>
-            currently based in london.
+        </div>
+
+        <div className="about-side-block">
+          <div className="about-side-block-title">Information that has to survive handover</div>
+          <p>
+            ISO 19650 is an argument about structure: naming, status, and who is allowed to rely
+            on what. Making that work across organisations that disagree is an information
+            architecture problem before it is a compliance one.
           </p>
-          <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
-            <a href="mailto:avugdragovic@gmail.com" className="hero-text-link">
-              avugdragovic@gmail.com <ArrowUpRight size={13} style={{ display: 'inline', verticalAlign: 'middle' }} />
-            </a>
-            <a href="https://www.linkedin.com/in/avugdragovic/" target="_blank" rel="noopener noreferrer" className="hero-text-link">linkedin</a>
-          </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
