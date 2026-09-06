@@ -14,15 +14,19 @@ export default function Home() {
         </div>
 
         <div style={{ position: 'relative', zIndex: 10 }}>
-          <p className="lp-intro">
-            hi, i&apos;m alex. london based <span className="lp-intro-accent">product designer</span>.
+          <h1 className="lp-headline">
+            I design digital products for complex, real-world problems.
+          </h1>
+          <p className="lp-intro-body">
+            I&apos;m Alex, a London-based product designer with five years of experience in
+            digital construction.
           </p>
           <p className="lp-intro-body">
-            Five years in digital construction: laser scanning, BIM coordination and ISO 19650.
-            I manage survey delivery at DPR. What I gravitate to is getting into a process,
-            understanding where the friction is, and fixing it. Along the way I kept building
-            the tools I wished existed. This is that work, labelled honestly: one concept, one
-            prototype, two things built in twenty-four hours.
+            I&apos;ve worked with BIM, laser scanning, surveying and construction delivery —
+            now I&apos;m bringing that domain knowledge into product design.
+          </p>
+          <p className="lp-intro-cta">
+            Currently open to product design roles in London.
           </p>
         </div>
       </section>

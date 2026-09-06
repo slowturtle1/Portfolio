@@ -1457,16 +1457,15 @@ img { display: block; max-width: 100%; }
   color: var(--accent-primary);
   margin-bottom: var(--space-2xl);
 }
-.lp-intro {
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
+.lp-headline {
+  font-family: var(--font-primary);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-weight: var(--weight-heading);
-  line-height: 1.2;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   color: var(--text-primary);
   max-width: 640px;
-  margin-bottom: var(--space-lg);
-}
-.lp-intro-accent {
-  color: var(--accent-primary);
+  margin-bottom: var(--space-xl);
 }
 .lp-intro-body {
   font-size: var(--size-body);
@@ -1474,6 +1473,14 @@ img { display: block; max-width: 100%; }
   line-height: 1.8;
   color: var(--text-secondary);
   max-width: 560px;
+  margin-bottom: var(--space-md);
+}
+.lp-intro-cta {
+  font-size: var(--size-body);
+  font-weight: var(--weight-heading);
+  color: var(--text-primary);
+  max-width: 560px;
+  margin-top: var(--space-lg);
 }
 .lp-lead {
   font-size: clamp(1.05rem, 1.8vw, 1.35rem);
