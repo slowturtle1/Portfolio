@@ -60,6 +60,9 @@ a{color:inherit}
 .icons.free{display:block}
 .icons.free .icon{position:absolute}
 .icon.dragging{z-index:5;opacity:.85;cursor:grabbing}
+.ctx{position:fixed;z-index:300;min-width:180px;background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:8px;box-shadow:4px 4px 0 var(--ink);padding:4px;font:500 13px var(--mono)}
+.ctx button{display:block;width:100%;text-align:left;padding:7px 10px;border-radius:5px}
+.ctx button:hover,.ctx button:focus-visible{background:var(--gold);outline:none}
 .icon:hover,.icon.sel{background:rgba(244,241,234,.08)}
 .icon span{font:500 12px var(--mono);background:rgba(12,15,21,.85);padding:1px 6px;border-radius:3px;white-space:nowrap}
 .icon .badge{position:absolute;top:0;right:6px;font:700 10px var(--mono);background:var(--coral);color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:1px 6px;transform:rotate(8deg)}
@@ -937,6 +940,18 @@ $('#icons').addEventListener('dblclick',e=>{const b=e.target.closest('.icon');if
     const[x,y]=clamp(drag.b,drag.ox+dx,drag.oy+dy);drag.b.style.left=x+'px';drag.b.style.top=y+'px'});
   function end(){if(!drag)return;if(drag.moved){drag.b.classList.remove('dragging');iconClickBlock=Date.now()+350;save()}drag=null}
   addEventListener('pointerup',end);addEventListener('pointercancel',end);
+  function arrange(){const icons=[...box.children];const before=icons.map(b=>b.getBoundingClientRect());
+    box.classList.remove('free');icons.forEach(b=>{b.style.left='';b.style.top=''});freed=false;try{localStorage.removeItem(key)}catch(e){}
+    if(reduce)return;icons.forEach((b,i)=>{const a=b.getBoundingClientRect(),dx=before[i].left-a.left,dy=before[i].top-a.top;if(!dx&&!dy)return;
+      b.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:'none'}],{duration:450,easing:'cubic-bezier(.2,.8,.2,1)',delay:i*25})})}
+  const menu=document.createElement('div');menu.className='ctx';menu.hidden=true;menu.setAttribute('role','menu');menu.setAttribute('aria-label','Desktop');
+  menu.innerHTML='<button role="menuitem" data-ctx="arrange">Arrange icons</button>';document.body.appendChild(menu);
+  desk.addEventListener('contextmenu',e=>{if(e.target.closest('.win'))return;e.preventDefault();menu.hidden=false;
+    menu.style.left=Math.min(e.clientX,innerWidth-menu.offsetWidth-6)+'px';menu.style.top=Math.min(e.clientY,innerHeight-menu.offsetHeight-6)+'px';menu.querySelector('button').focus()});
+  addEventListener('pointerdown',e=>{if(!menu.hidden&&!e.target.closest('.ctx'))menu.hidden=true},true);
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden){menu.hidden=true;e.stopPropagation()}},true);
+  addEventListener('blur',()=>{menu.hidden=true});
+  menu.addEventListener('click',e=>{const b=e.target.closest('[data-ctx]');if(!b)return;menu.hidden=true;if(b.dataset.ctx==='arrange')arrange()});
   addEventListener('resize',()=>{if(!freed)return;[...box.children].forEach(b=>{const[x,y]=clamp(b,b.offsetLeft,b.offsetTop);b.style.left=x+'px';b.style.top=y+'px'})});
 })();
 
