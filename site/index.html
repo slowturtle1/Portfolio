@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Alex Vugdragovic: product design portfolio. MoonMates, a hackathon win, and a drawing QA tool piloted at DPR.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8.5' fill='%230C0F15'/%3E%3Cpath d='M10 1.5 A8.5 8.5 0 0 1 10 18.5 A4 8.5 0 0 0 10 1.5Z' fill='%23F2C14E'/%3E%3C/svg%3E">
+<title>Alex Vugdragovic</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@600;700&display=swap">
+<style>
+/* One deliberate look: a night-sky desktop, taken from the MoonMates video. */
+:root{
+  color-scheme:dark;
+  --ink:#0C0F15; --screen:#131824; --raise:#1B2130; --line:#2B3345; --line2:#3A4358;
+  --paper:#F4F1EA; --paper2:#FBF9F4; --text:#16181F; --sub:#585D69; --muted:#9AA3B5;
+  --coral:#FF6B4A; --teal:#3FC1B0; --gold:#F2C14E; --lilac:#B79CFF; --blue:#6FA8FF; --moon:#F1E6BD;
+  --display:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --body:'DM Sans',ui-sans-serif,system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --hand:'Caveat','Comic Sans MS',cursive;
+  --barH:36px; --taskH:46px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--ink);color:var(--paper);font:400 15px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.mono{font-family:var(--mono)}
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(circle at 1px 1px,#1F2636 1.3px,transparent 1.7px) 0 0/22px 22px,radial-gradient(ellipse at 75% 15%,#1A2236 0%,var(--ink) 60%)}
+.sky svg{position:absolute;inset:0;width:100%;height:100%}
+
+/* menubar */
+.menubar{position:fixed;top:0;left:0;right:0;z-index:50;height:calc(var(--barH) + env(safe-area-inset-top,0px));padding:env(safe-area-inset-top,0px) 14px 0;
+  display:flex;align-items:center;gap:18px;background:var(--paper);color:var(--ink);border-bottom:2px solid var(--ink);font:500 14px var(--body)}
+.menubar .brand{display:flex;align-items:center;gap:7px;font:700 16px var(--display)}
+.menubar nav{display:flex;gap:16px}
+.menubar nav button:hover,.menubar .toggle:hover{text-decoration:underline;text-underline-offset:3px}
+.menubar .sp{flex:1}
+.menubar .phase{display:flex;align-items:center;gap:6px;font:500 12.5px var(--mono);white-space:nowrap}
+.menubar .toggle{font:600 12.5px var(--mono);border:1.5px solid var(--ink);border-radius:6px;padding:3px 9px;background:#fff;white-space:nowrap}
+
+/* taskbar */
+.taskbar{position:fixed;left:0;right:0;bottom:0;z-index:50;height:calc(var(--taskH) + env(safe-area-inset-bottom,0px));padding:0 10px env(safe-area-inset-bottom,0px);
+  display:flex;align-items:center;gap:8px;background:var(--paper);color:var(--ink);border-top:2px solid var(--ink);font:500 12.5px var(--mono);overflow:hidden}
+.taskbar .start{display:flex;align-items:center;gap:7px;font:700 15px var(--display);background:var(--gold);border:2px solid var(--ink);border-radius:7px;padding:4px 12px;box-shadow:2px 2px 0 var(--ink);flex:none}
+.taskbar .tabs{display:flex;gap:6px;overflow:hidden;min-width:0}
+.taskbar .tab{border:1.5px solid var(--ink);border-radius:6px;padding:4px 10px;background:#fff;white-space:nowrap;flex:none}
+.taskbar .tab.min{background:transparent;opacity:.6}
+.taskbar .tab.on{background:var(--ink);color:var(--paper)}
+.taskbar .sp{flex:1}
+.taskbar .credit{white-space:nowrap;opacity:.75}
+
+/* desktop */
+.desk{position:fixed;left:0;right:0;top:calc(var(--barH) + env(safe-area-inset-top,0px));bottom:calc(var(--taskH) + env(safe-area-inset-bottom,0px));z-index:1;overflow:hidden}
+.icons{position:absolute;left:14px;top:14px;bottom:14px;display:grid;gap:6px;z-index:2;grid-auto-flow:column;grid-template-rows:repeat(auto-fill,88px);align-content:start}
+.icon{width:96px;display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px 2px;border-radius:8px;position:relative}
+.icon:hover,.icon.sel{background:rgba(244,241,234,.08)}
+.icon span{font:500 12px var(--mono);background:rgba(12,15,21,.85);padding:1px 6px;border-radius:3px;white-space:nowrap}
+.icon .badge{position:absolute;top:0;right:6px;font:700 10px var(--mono);background:var(--coral);color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:1px 6px;transform:rotate(8deg)}
+.note{position:absolute;z-index:1;font:700 27px/1.05 var(--hand);color:var(--gold)}
+.desk-sticky{position:absolute;left:150px;bottom:24px;z-index:1;width:230px;background:var(--gold);color:var(--ink);padding:22px 18px 14px;transform:rotate(3deg);box-shadow:6px 8px 0 rgba(0,0,0,.45);font:700 25px/1.08 var(--hand)}
+.desk-sticky::before{content:"";position:absolute;width:86px;height:24px;left:50%;top:-11px;margin-left:-43px;background:rgba(244,241,234,.7);transform:rotate(-4deg)}
+
+/* windows */
+.win{--accent:var(--teal);position:absolute;display:flex;flex-direction:column;background:var(--paper2);color:var(--text);border:2px solid var(--paper);border-radius:12px;
+  box-shadow:8px 8px 0 var(--accent);overflow:hidden;max-width:calc(100% - 20px)}
+.win.focus{box-shadow:10px 10px 0 var(--accent)}
+.win .bar{flex:none;height:34px;display:flex;align-items:center;gap:7px;padding:0 12px;background:var(--paper);border-bottom:2px solid var(--ink);font:600 13px var(--mono);color:var(--ink);cursor:grab;user-select:none;touch-action:none}
+.win .bar:active{cursor:grabbing}
+.win .bar .dot{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--ink);flex:none}
+.win .bar .ttl{margin-left:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.win .bar .r{margin-left:auto;font-weight:500;opacity:.7;white-space:nowrap}
+.win .body{flex:1;overflow:auto;padding:22px 26px 28px;overscroll-behavior:contain}
+.win.dark .body{background:var(--screen);color:var(--paper)}
+.win.max{left:8px!important;top:8px!important;width:calc(100% - 26px)!important;height:calc(100% - 26px)!important;max-width:none}
+
+/* document mode: same windows, stacked */
+.doc{position:relative;z-index:1;padding-block:calc(var(--barH) + 28px + env(safe-area-inset-top,0px)) calc(var(--taskH) + 40px);padding-inline:16px;display:flex;flex-direction:column;align-items:center;gap:34px}
+.doc .win{position:relative;width:100%;max-width:820px;left:auto!important;top:auto!important;height:auto!important}
+.doc .win .bar{cursor:default}
+.doc .win .body{overflow:visible}
+body.docmode .desk{display:none}
+body:not(.docmode) .doc{display:none}
+
+/* type inside windows */
+.k{font:600 12px var(--mono);letter-spacing:1.6px;text-transform:uppercase;color:var(--sub)}
+.win.dark .k{color:var(--teal)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:40px;line-height:1.02;letter-spacing:-1.2px}
+h2{font-size:30px;line-height:1.08;letter-spacing:-.6px}
+h3{font-size:19px;line-height:1.25;letter-spacing:-.2px}
+p{margin:0;max-width:66ch}
+.stack{display:flex;flex-direction:column;gap:14px}
+.stack-l{display:flex;flex-direction:column;gap:26px}
+.lead{font-size:17px;line-height:1.55}
+.hl{background:linear-gradient(transparent 58%,rgba(242,193,78,.55) 58%);padding:0 2px}
+.teal{color:#1F8F80}
+.pillrow{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font:600 12px var(--mono);border:1.5px solid var(--text);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.pill.win-p{background:var(--coral);border-color:var(--ink);color:var(--ink)}
+.pill.soon{border-style:dashed;color:var(--sub);border-color:var(--sub)}
+.btnrow{display:flex;flex-wrap:wrap;gap:10px}
+.btn{font:700 14px var(--body);border:2px solid var(--ink);border-radius:9px;padding:8px 14px;background:#fff;box-shadow:3px 3px 0 var(--ink)}
+.btn.primary{background:var(--teal)}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+hr.cut{border:0;border-top:2px dashed #D9D3C7;margin:4px 0}
+ul.ticks{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;max-width:66ch}
+ul.ticks li{padding-left:22px;position:relative}
+ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;height:9px;border-radius:50%;background:var(--accent,var(--teal));border:1.5px solid var(--text)}
+.handnote{font:700 24px/1.1 var(--hand);color:#B3321A}
+
+/* hello */
+.hello-top{display:flex;gap:18px;align-items:center}
+.avatar{width:84px;height:84px;border-radius:50%;flex:none;border:4px solid var(--gold);box-shadow:0 0 0 2px var(--text);background:#ddd center/cover}
+
+/* facts grid */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px;background:var(--text);border:2px solid var(--text);border-radius:10px;overflow:hidden}
+.facts div{background:var(--paper);padding:10px 12px}
+.facts dt{font:600 11px var(--mono);letter-spacing:1.2px;text-transform:uppercase;color:var(--sub)}
+.facts dd{margin:2px 0 0;font:600 15px/1.3 var(--body)}
+
+/* case study media */
+.hero-media{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px;align-items:center}
+.vidframe{background:var(--ink);border:2px solid var(--text);border-radius:12px;overflow:hidden;box-shadow:6px 6px 0 var(--coral)}
+.vidframe video{display:block;width:100%;aspect-ratio:4/5;background:#000}
+.team{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.team figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.team img{width:100%;max-width:92px;aspect-ratio:1;border-radius:50%;padding:4px;background:var(--c);box-shadow:0 0 0 2px var(--text)}
+.team b{font:700 14px var(--display)}
+.team small{display:block;font:600 10.5px var(--mono);letter-spacing:.8px;text-transform:uppercase;color:var(--sub)}
+.decisions{display:grid;gap:14px}
+.decision{border:2px solid var(--text);border-radius:12px;padding:16px 18px;background:var(--paper);display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:start}
+.decision .sym{grid-row:span 2;width:44px;height:44px}
+.decision p{color:#2A2D35}
+.strip{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 12px;scroll-snap-type:x mandatory}
+.strip figure{margin:0;flex:none;width:190px;scroll-snap-align:start;display:flex;flex-direction:column;gap:8px}
+.strip img{width:100%;border-radius:14px;border:2px solid var(--text);display:block;background:var(--screen)}
+.strip figcaption{font-size:13px;line-height:1.4;color:var(--sub)}
+.evo{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+.evo figure{margin:0;display:flex;flex-direction:column;gap:8px}
+.evo .shot{aspect-ratio:3/4;border-radius:12px;border:2px solid var(--text);overflow:hidden;background:var(--screen)}
+.evo .shot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.evo figcaption b{font:700 15px var(--display);display:block}
+.evo figcaption span{font-size:13px;color:var(--sub);line-height:1.4;display:block}
+.evo figure.final .shot{box-shadow:5px 5px 0 var(--teal)}
+.photos{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;align-items:start}
+.photos .wide{grid-column:1/-1}
+.photos img{width:100%;display:block;border-radius:10px;border:2px solid var(--text)}
+.polaroid{background:#fff;padding:9px 9px 0;box-shadow:4px 5px 0 rgba(0,0,0,.25);transform:rotate(-2deg);border:1px solid #ddd}
+.polaroid img{border:0;border-radius:0}
+.polaroid p{font:700 22px var(--hand);text-align:center;padding:4px 0 6px}
+.uifig{margin:0;display:flex;flex-direction:column;gap:8px}
+.uifig figcaption{font-size:13px;line-height:1.45;color:var(--sub);max-width:66ch}
+.ui{width:100%;display:block;border:2px solid var(--text);border-radius:10px;background:#fff;box-shadow:5px 5px 0 var(--teal)}
+.zoom{cursor:zoom-in}
+.uigrid{display:grid;gap:16px}
+.uigrid.two-one{grid-template-columns:minmax(0,2fr) minmax(0,1fr);align-items:start}
+.diagram-wrap{border:2px solid var(--text);border-radius:12px;background:#fff;padding:8px;overflow-x:auto}
+.diagram{display:block;width:100%;min-width:560px;height:auto}
+.tablewrap{overflow-x:auto;border:2px solid var(--text);border-radius:12px}
+.findings{width:100%;border-collapse:collapse;font-size:14px;line-height:1.45;background:var(--paper);color:var(--text)}
+.findings th{font:600 11px var(--mono);letter-spacing:1.2px;text-transform:uppercase;color:var(--sub);text-align:left;padding:10px 14px;background:#ECE7DC;border-bottom:2px solid var(--text)}
+.findings td{padding:10px 14px;vertical-align:top;border-top:1px solid #D9D3C7;width:50%}
+.findings td:first-child{color:#3A3E48;font-style:italic}
+.pill.piloted{background:var(--teal);border-color:var(--ink);color:var(--ink)}
+.lb{position:fixed;inset:0;z-index:200;background:rgba(12,15,21,.93);display:flex;align-items:center;justify-content:center;padding:56px 16px 24px}
+.lb img{max-width:100%;max-height:100%;border-radius:8px;border:2px solid var(--paper);background:#fff}
+.lb button{position:absolute;top:12px;right:16px}
+.small-note{font-size:13px;color:var(--sub)}
+.strip.wide figure{width:340px}
+.strip.wide{align-items:flex-start}
+.strip.wide img{border-radius:10px;background:#fff;height:220px;object-fit:cover;object-position:top left}
+.strip img.zoom{cursor:zoom-in}
+.users{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.user{border:2px solid var(--text);border-radius:12px;background:var(--paper);padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:4px 4px 0 var(--c)}
+.user .ic{width:34px;height:34px;border-radius:50%;background:var(--c);border:2px solid var(--text);display:grid;place-items:center;font:700 15px var(--display)}
+.user b{font:700 16px var(--display)}
+.user p{font-size:13.5px;line-height:1.45;color:#3A3E48}
+.changes{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.chg{border:2px solid var(--text);border-radius:12px;background:var(--paper);padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.chg p{font-size:13.5px;line-height:1.45}
+.chg p:nth-of-type(1){font-style:italic;color:#3A3E48}
+.chg .k{font-size:10.5px}
+.chg .k.to{color:#1F8F80;margin-top:4px}
+.qa-anim{position:relative;aspect-ratio:4/5;max-width:100%;background:var(--screen);border:2px solid var(--text);border-radius:12px;box-shadow:6px 6px 0 var(--teal);padding:14px;display:flex;flex-direction:column;gap:8px;overflow:hidden;color:var(--paper)}
+.qa-anim .lab{font:600 10.5px var(--mono);letter-spacing:1.4px;text-transform:uppercase;color:var(--muted)}
+.qa-anim .lab.after{color:var(--teal)}
+.qa-anim .mails{position:relative;height:118px}
+.qa-anim .mail{position:absolute;left:0;right:0;display:flex;gap:8px;align-items:center;background:#232A3B;border:1px solid var(--line2);border-radius:8px;padding:6px 9px;font:500 11.5px var(--mono);white-space:nowrap;overflow:hidden;animation:qa-mail 6s ease-in-out infinite}
+.qa-anim .mail i{flex:none;width:16px;height:11px;border:1.5px solid var(--muted);border-radius:2px;background:linear-gradient(155deg,transparent 45%,var(--muted) 46%,var(--muted) 54%,transparent 55%),linear-gradient(25deg,transparent 45%,var(--muted) 46%,var(--muted) 54%,transparent 55%)}
+.qa-anim .m1{top:0;transform:rotate(-2deg)}
+.qa-anim .m2{top:28px;left:14px;transform:rotate(2deg);animation-delay:.15s}
+.qa-anim .m3{top:56px;left:4px;transform:rotate(-1deg);animation-delay:.3s}
+.qa-anim .m4{top:84px;left:20px;transform:rotate(1.5deg);animation-delay:.45s}
+.qa-anim .cost{align-self:flex-start;font:700 11px var(--mono);background:var(--coral);color:var(--ink);border-radius:999px;padding:3px 9px}
+.qa-anim .list{flex:1;background:var(--paper);color:var(--text);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.qa-anim .row{display:flex;gap:8px;align-items:center;font:500 11.5px var(--body)}
+.qa-anim .row b{flex:none;width:16px;height:16px;border-radius:4px;border:2px solid var(--text);background:#fff;animation:qa-tick 6s infinite}
+.qa-anim .row.bad b{animation-name:qa-fail}
+.qa-anim .r2 b{animation-delay:.35s}.qa-anim .r3 b{animation-delay:.7s}.qa-anim .r4 b{animation-delay:1.05s}
+.qa-anim .report{margin-top:auto;align-self:flex-start;font:700 11px var(--mono);background:var(--teal);color:var(--ink);border:2px solid var(--text);border-radius:8px;padding:5px 9px;animation:qa-pop 6s infinite}
+@keyframes qa-mail{0%,8%{opacity:1}30%,70%{opacity:.35;filter:blur(.6px)}92%,100%{opacity:1}}
+@keyframes qa-tick{0%,30%{background:#fff}38%,88%{background:#3FC1B0}96%,100%{background:#fff}}
+@keyframes qa-fail{0%,30%{background:#fff}38%,88%{background:#FF6B4A}96%,100%{background:#fff}}
+@keyframes qa-pop{0%,52%{transform:scale(.4);opacity:0}60%{transform:scale(1.12);opacity:1}66%,88%{transform:scale(1);opacity:1}96%,100%{transform:scale(.4);opacity:0}}
+@media (prefers-reduced-motion:reduce){.qa-anim .row b{background:#3FC1B0}.qa-anim .row.bad b{background:#FF6B4A}.qa-anim .report{opacity:1;transform:none}}
+.cmp2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.cmp2>div{display:flex;flex-direction:column;gap:10px;border-radius:14px;padding:18px 18px 16px}
+.cmp-a{background:#E6E1D5;border:2px solid #D2CBBB}
+.cmp-b{background:var(--screen);color:var(--paper);border:2px solid var(--teal)}
+.cmp-b .k{color:var(--teal)}
+.cmp-b h3{color:var(--teal)}
+.cmp-b ul.ticks li::before{border-color:var(--paper)}
+.reflect{background:var(--gold);color:var(--ink);padding:18px 18px 14px;transform:rotate(-.6deg);box-shadow:5px 6px 0 rgba(0,0,0,.2);font:700 23px/1.15 var(--hand);max-width:520px}
+
+/* folder (work) */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.card{text-align:left;border:2px solid var(--text);border-radius:12px;background:var(--paper);padding:14px 14px 12px;display:flex;flex-direction:column;gap:8px;box-shadow:4px 4px 0 var(--c,var(--teal))}
+.card:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--c,var(--teal))}
+.card h3{font-size:18px}
+.card p{font-size:13.5px;line-height:1.45;color:#3A3E48}
+.card .meta{font:600 11px var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--sub)}
+
+/* about */
+.timeline{display:grid;gap:14px}
+.tl{display:grid;grid-template-columns:118px 1fr;gap:14px}
+.tl .when{font:600 12.5px var(--mono);color:var(--sub);padding-top:3px;font-variant-numeric:tabular-nums}
+.tl h3{font-size:17px}
+.tl p{font-size:14px;color:#3A3E48;margin-top:3px}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.skills div{border:1.5px solid #D9D3C7;border-radius:10px;padding:10px 12px;background:var(--paper)}
+.skills b{font:600 11px var(--mono);letter-spacing:1.2px;text-transform:uppercase;color:var(--sub);display:block;margin-bottom:3px}
+.skills span{font-size:14px}
+
+/* terminal */
+.term{font:500 13.5px/1.7 var(--mono);color:#CFD5E2;overflow-x:auto}
+.term .p{color:var(--teal)}
+.term .w{color:var(--gold);font-weight:600}
+.term .row{display:grid;grid-template-columns:76px 1fr;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line2)}
+.term .row b{color:var(--paper);font-weight:600}
+.term .row small{display:block;color:var(--muted);font-size:12.5px}
+
+/* contact */
+.copyrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;border:2px solid var(--text);border-radius:10px;padding:10px 12px;background:var(--paper)}
+.copyrow code{font:600 15px var(--mono);user-select:all;word-break:break-all;flex:1}
+.copyrow .lbl{font:600 11px var(--mono);letter-spacing:1.2px;text-transform:uppercase;color:var(--sub);width:72px;flex:none}
+.copyrow a{flex:1}
+.btn.sm{padding:5px 10px;font-size:13px}
+.bag{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:22px;align-items:start}
+.bagshot{width:100%;display:block;border-radius:18px;border:2px solid var(--text);box-shadow:5px 5px 0 #F5B544}
+.pill.bonus{background:#F5B544;border-color:var(--ink);color:var(--ink)}
+.btn.amber{background:#F5B544;text-decoration:none}
+.cvprev{width:100%;display:block;border:2px solid var(--text);border-radius:8px;box-shadow:5px 5px 0 var(--blue);background:#fff}
+.dlmsg{font-size:13.5px;color:var(--sub)}
+.dummy{color:var(--sub);font-style:italic}
+
+@media (max-width:760px){
+  h1{font-size:32px} h2{font-size:25px}
+  .win .body{padding:18px 16px 22px}
+  .hero-media{grid-template-columns:1fr}
+  .vidframe{max-width:320px;margin:0 auto}
+  .team{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .evo{grid-template-columns:1fr}
+  .evo .shot{aspect-ratio:4/3}
+  .photos{grid-template-columns:1fr}
+  .tl{grid-template-columns:1fr;gap:2px}
+  .bag{grid-template-columns:1fr}
+  .cmp2{grid-template-columns:1fr}
+  .users{grid-template-columns:1fr}
+  .qa-anim{max-width:320px;margin:0 auto}
+  .strip.wide figure{width:280px}
+  .uigrid.two-one{grid-template-columns:1fr}
+  .bagshot{max-width:240px;margin:0 auto}
+  .menubar nav,.menubar .toggle,.taskbar .tabs,.taskbar .credit{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="sky" aria-hidden="true"><svg id="stars"></svg></div>
+
+<header class="menubar">
+  <button class="brand" data-open="hello" aria-label="Open hello.txt"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="#0C0F15"/><path d="M10 1.5 A8.5 8.5 0 0 1 10 18.5 A4 8.5 0 0 0 10 1.5Z" fill="#F2C14E"/></svg>Alex</button>
+  <nav aria-label="Main">
+    <button data-open="work">Work</button>
+    <button data-open="moonmates">MoonMates</button>
+    <button data-open="qa-tool">QA tool</button>
+    <button data-open="about">About</button>
+    <button data-open="contact">Contact</button>
+  </nav>
+  <span class="sp"></span>
+  <span class="phase" id="phase" title="Tonight's moon over London"></span>
+  <button class="toggle" id="modeBtn">Read as a document</button>
+</header>
+
+<main class="desk" id="desk" aria-label="Desktop">
+  <div class="icons" id="icons" role="toolbar" aria-label="Files"></div>
+  <div class="desk-sticky" aria-hidden="true">Click an icon to open it.<br><span style="color:#B3321A">Bonus: run bagcheck.app on yourself.</span></div>
+</main>
+
+<div class="doc" id="doc"></div>
+<div class="lb" id="lb" hidden role="dialog" aria-label="Screenshot, full size"><img alt=""><button class="btn sm" id="lbClose">Close</button></div>
+
+<footer class="taskbar">
+  <button class="start" data-open="hello"><svg width="15" height="15" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="#0C0F15"/><path d="M10 1.5 A8.5 8.5 0 0 1 10 18.5 A4 8.5 0 0 0 10 1.5Z" fill="#F4F1EA"/></svg>Alex</button>
+  <div class="tabs" id="tabs"></div>
+  <span class="sp"></span>
+  <span class="credit">built with Claude Code · London · 2026</span>
+</footer>
+
+<!-- All content lives here. New projects: add an entry to "projects" (and an optional case study template below). -->
+<script id="data" type="application/json">
+{
+  "person": {
+    "name": "Aleksandra Vugdragovic",
+    "short": "Alex",
+    "headline": "Product & Delivery · Construction Tech: BIM, Geospatial & Digital Twins",
+    "email": "avugdragovic@gmail.com",
+    "notion": "https://avugdragovic.notion.site/portfolio"
+  },
+  "projects": [
+    {"id":"moonmates","title":"MoonMates","accent":"#FF6B4A","status":"case","meta":"Hackathon · Oct 2026","badge":"winner",
+     "summary":"A shared savings app for the friends you keep meaning to see. Won the Engine by Starling challenge at HuddleHive Hack."},
+    {"id":"qa-tool","title":"Drawing QA tool","accent":"#3FC1B0","status":"case","meta":"DPR · internal tool · 2025–2026","badge":"piloted",
+     "summary":"Drawing QA at DPR ran through Outlook, with no shared standard and no record of who checked what. I designed one checklist that keeps the feedback with the project, built it with Claude Code and piloted it in my team."},
+    {"id":"careloop","title":"CareLoop","accent":"#6FA8FF","status":"soon","meta":"Hackathon · Mar 2026","badge":"winner",
+     "summary":"A voice-first symptom diary. I led a team of five to a working prototype in 24 hours, and we won the Accurx challenge at the HuddleHive NHS Hackathon.",
+     "facts":["Team of 5","24 hours","Winner, Accurx challenge"]},
+    {"id":"notice","title":"Notice","accent":"#B79CFF","status":"soon","meta":"Hackathon · Jun 2026",
+     "summary":"A civic-tech tool for local planning. We pivoted halfway through the hackathon and finished in the top 6 of 19 teams at the Wise Hackathon.",
+     "facts":["Mid-hackathon pivot","Top 6 of 19"]},
+    {"id":"nkomor","title":"Nkomor Healthcare","accent":"#F2C14E","status":"soon","meta":"Volunteer UX · 2024–2025",
+     "summary":"A year as the only UX designer on a medication platform. I redesigned it into a marketplace with two paths, one for buyers and one for pharmacies, and tested it with the internal team.",
+     "facts":["Sole designer, 12 months","Two-sided marketplace"]},
+    {"id":"cow-compass","title":"Cow Compass","accent":"#3FC1B0","status":"soon","meta":"Personal project · 2024",
+     "summary":"Started when my family's bulls went missing in 2024. Four interviews with farmers in rural Croatia, mapped into a user journey and a user flow.",
+     "facts":["4 interviews","Journey map and user flow"]}
+  ]
+}
+</script>
+
+<template id="t-hello">
+  <div class="stack-l">
+    <div class="hello-top">
+      <div class="avatar" style="background-image:url(media/alex.png)" role="img" aria-label="Alex"></div>
+      <div class="stack" style="gap:6px">
+        <span class="k">hello.txt</span>
+        <h1>Hi, I'm Alex.</h1>
+      </div>
+    </div>
+    <p class="lead">I come from the digital side of construction: four years of measured survey, laser scanning, point clouds and BIM, then running delivery as a project manager. Along the way I kept finding <span class="hl">processes worth fixing</span>, which is how I started designing and building tools. Now I'm moving into product design.</p>
+    <p>This desktop is my portfolio. Start with <b>MoonMates</b>, a hackathon win, or the <b>QA tool</b> I designed and piloted at DPR. Everything else is in <b>work/</b>.</p>
+    <div class="btnrow">
+      <button class="btn primary" data-open="moonmates">Open MoonMates</button>
+      <button class="btn primary" data-open="qa-tool">Open QA tool</button>
+      <button class="btn" data-open="work">See all work</button>
+      <button class="btn" data-open="cv">CV</button>
+      <button class="btn" data-open="contact">Contact</button>
+    </div>
+    <div class="handnote">Currently: open to product design roles · London</div>
+  </div>
+</template>
+
+<template id="t-work">
+  <div class="stack-l">
+    <div class="stack" style="gap:6px"><span class="k">work/</span><h2>Selected work</h2><p>Internal tools, hackathon products and volunteer design work. Full case studies are added one at a time.</p></div>
+    <div class="cards" id="cards"></div>
+  </div>
+</template>
+
+<template id="t-moonmates">
+  <article class="stack-l">
+    <header class="stack" style="gap:10px">
+      <div class="pillrow"><span class="pill win-p">Winner</span><span class="pill">Engine by Starling challenge</span><span class="pill">HuddleHive Hack 2026</span></div>
+      <h1>MoonMates</h1>
+      <p class="lead">An app for the friends you keep meaning to see. Your circle saves a little every day into a shared pot, a moon fills up as the balance grows, and when it's full the app suggests a time and place that already fit everyone's week.</p>
+    </header>
+
+    <dl class="facts">
+      <div><dt>Team</dt><dd>5 people</dd></div>
+      <div><dt>Time</dt><dd>24 hours</dd></div>
+      <div><dt>My role</dt><dd>Product &amp; design</dd></div>
+      <div><dt>APIs</dt><dd>Engine core + TfL</dd></div>
+    </dl>
+
+    <div class="hero-media">
+      <div class="vidframe"><video src="media/moonmates.mp4" poster="media/poster.jpg" autoplay muted loop playsinline aria-label="MoonMates in 13 seconds: friends save daily, cross paths on the Tube, the moon fills up and turns into pizza night"></video></div>
+      <div class="stack">
+        <span class="k">The brief</span>
+        <h3>“Connect a mock Engine core to an unexpected, non-banking API and create a brand new financial service.”</h3>
+        <p>We paired Engine by Starling with Transport for London. Engine Spaces hold the shared pot, and TfL data finds where your routes already cross, so nobody has to trek across the city.</p>
+      </div>
+    </div>
+
+    <hr class="cut">
+
+    <section class="stack">
+      <span class="k">01 · Context &amp; problem</span>
+      <h2>Friends don't drift apart on purpose</h2>
+      <p>Plans stall in the group chat. Picking a date, agreeing where to meet and splitting the bill all take effort, and saving on your own rarely sticks. We spent the first hours narrowing this down, because choosing the problem was the hardest part of the brief.</p>
+    </section>
+
+    <section class="stack">
+      <span class="k">02 · My role</span>
+      <h2>Product and design, from the first sketch to the pitch</h2>
+      <div class="team">
+        <figure style="--c:#FF6B4A"><img src="media/maya.png" alt="Avatar of Maya"><figcaption><b>Maya</b><small>Engineer</small></figcaption></figure>
+        <figure style="--c:#3FC1B0"><img src="media/lena.png" alt="Avatar of Lena"><figcaption><b>Lena</b><small>Engineer</small></figcaption></figure>
+        <figure style="--c:#F2C14E"><img src="media/alex.png" alt="Alex"><figcaption><b>Alex (me)</b><small>Product &amp; design</small></figcaption></figure>
+        <figure style="--c:#B79CFF"><img src="media/sofia.png" alt="Avatar of Sofia"><figcaption><b>Sofia</b><small>Designer</small></figcaption></figure>
+        <figure style="--c:#6FA8FF"><img src="media/nina.png" alt="Avatar of Nina"><figcaption><b>Nina</b><small>Product manager</small></figcaption></figure>
+      </div>
+      <p class="small-note">My teammates appear here as avatars with made-up names.</p>
+      <ul class="ticks">
+        <li>I facilitated our ideation with a Crazy Eights session, then we cut the ideas down until the strongest were left.</li>
+        <li>I researched the problem from the start, since narrowing it down was our main bottleneck.</li>
+        <li>I explored which APIs to combine and went to Starling engineers and the judges early for feedback.</li>
+        <li>I built and pitched several prototypes in Claude Code, then pitched the chosen concept to the team as a clickable prototype: problem, process, technical background and solution.</li>
+        <li>My prototype's visual language became the product UI, which the team refined for the final pitch.</li>
+        <li>I designed the logo and reworked our submission document, effectively a PRD, within the 24 hours.</li>
+      </ul>
+    </section>
+
+    <section class="stack">
+      <span class="k">03 · Key decisions</span>
+      <h2>Decisions that shaped the product</h2>
+      <div class="decisions">
+        <div class="decision">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="#232A3B" stroke="#16181F" stroke-width="2"/><path d="M22 4 A18 18 0 0 1 22 40 A8 18 0 0 0 22 4Z" fill="#F1E6BD" stroke="#16181F" stroke-width="2"/></svg>
+          <h3>Let the moon set the rhythm</h3>
+          <p>Agreeing on a date is often where plans stall. A 30-day lunar cycle gives everyone the same deadline without anyone negotiating it, and watching the moon fill up makes slow saving visible.</p>
+        </div>
+        <div class="decision">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><path d="M4 34 C 14 30, 18 18, 22 22 S 30 12, 40 8" fill="none" stroke="#3FC1B0" stroke-width="4" stroke-linecap="round"/><path d="M6 8 C 16 14, 26 26, 40 36" fill="none" stroke="#6FA8FF" stroke-width="4" stroke-linecap="round"/><circle cx="22" cy="22" r="5" fill="#F4F1EA" stroke="#16181F" stroke-width="2"/></svg>
+          <h3>Meet where your weeks already cross</h3>
+          <p>Crossed Paths suggests a spot where everyone's week already overlaps, so nobody crosses the city. In the demo the TfL patterns were mocked. Reflections below explain why, and how we'd build it for real.</p>
+        </div>
+        <div class="decision">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><rect x="4" y="10" width="36" height="24" rx="5" fill="#3FC1B0" stroke="#16181F" stroke-width="2"/><rect x="9" y="25" width="12" height="3" rx="1.5" fill="#16181F"/></svg>
+          <h3>Make saying yes effortless</h3>
+          <p>When the moon is full, the app drafts the invite and four out of five yeses books the table. A single-use virtual card is ready on the night, and anything left over stays in the Space so the next moon starts ahead.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="stack">
+      <span class="k">04 · How the idea evolved</span>
+      <h2>From a coffee pot to a moon</h2>
+      <p>I prototyped two earlier ideas before MoonMates. Coffee Pot put 10p aside every time you bought a coffee alone, towards a coffee with a friend. Full Moon Pizza turned saving into a monthly ritual inside a bank's Spaces. MoonMates kept the ritual and added the friends and a place to meet.</p>
+      <div class="evo">
+        <figure><div class="shot"><img src="media/concept_coffee.jpg" alt="Coffee Pot prototype: every coffee alone saves 10p for a coffee together" loading="lazy"></div><figcaption><b>Coffee Pot</b><span>Every coffee alone saves 10p towards a coffee together.</span></figcaption></figure>
+        <figure><div class="shot"><img src="media/concept_pizza.jpg" alt="Full Moon Pizza: a Moon Pot inside a bank's Spaces" loading="lazy"></div><figcaption><b>Full Moon Pizza</b><span>A ritual pot inside your bank's Spaces that unlocks on the full moon.</span></figcaption></figure>
+        <figure class="final"><div class="shot"><img src="media/proto_1.jpg" alt="MoonMates: Lena and Nina cross paths at Liverpool Street" loading="lazy"></div><figcaption><b>MoonMates</b><span>Your circle saves together and TfL finds where your weeks cross.</span></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="stack">
+      <span class="k">05 · The prototype</span>
+      <h2>One moon, start to finish</h2>
+      <div class="strip" tabindex="0" aria-label="Prototype screens, scroll sideways. Click a screen to enlarge it.">
+        <figure><img class="zoom" src="media/proto_1.jpg" alt="" loading="lazy"><figcaption>Day 6. Lena and Nina's weeks cross at Liverpool Street.</figcaption></figure>
+        <figure><img class="zoom" src="media/proto_2.jpg" alt="" loading="lazy"><figcaption>Day 12. Maya, Alex and Sofia meet at London Bridge.</figcaption></figure>
+        <figure><img class="zoom" src="media/proto_3.jpg" alt="" loading="lazy"><figcaption>Full moon. The app drafts the invite, and 4 of 5 yeses books it.</figcaption></figure>
+        <figure><img class="zoom" src="media/proto_4.jpg" alt="" loading="lazy"><figcaption>A single-use Pizza Card for the four who said yes.</figcaption></figure>
+        <figure><img class="zoom" src="media/proto_5.jpg" alt="" loading="lazy"><figcaption>Pizza night. Nina's £15 stays in the Space for the next moon.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="stack">
+      <span class="k">06 · Outcome</span>
+      <h2>We won the Engine by Starling challenge</h2>
+      <div class="photos">
+        <img class="wide" src="media/winners.jpg" alt="The MoonMates team on stage with the Engine by Starling hosts" loading="lazy">
+        <img src="media/pitch.jpg" alt="Pitching MoonMates on stage" loading="lazy">
+        <div class="polaroid"><img src="media/irl.jpg" alt="The team in a lift after the hackathon" loading="lazy"><p>Team IRL</p></div>
+      </div>
+      <p class="small-note">I'm the one with glasses.</p>
+    </section>
+
+    <section class="stack">
+      <span class="k">07 · Reflections</span>
+      <h2>What I'd do differently: bring privacy in on day one</h2>
+      <p>Midway through the weekend I looked into what data TfL shares. Its Unified API only has open network data: lines, stations, arrivals and journey planning. It has no journey history, because that is personal data under UK GDPR, and weekly patterns show where people live and work.</p>
+      <div class="cmp2">
+        <div class="cmp-a">
+          <span class="k">In our demo</span>
+          <h3>Mocked TfL patterns</h3>
+          <ul class="ticks" style="--accent:#B8B09C">
+            <li>The app learns where your weeks cross</li>
+            <li>The whole circle opts in to share patterns</li>
+            <li>Fine for a demo, not for real people</li>
+          </ul>
+        </div>
+        <div class="cmp-b">
+          <span class="k">How we'd build it</span>
+          <h3>Stations you share</h3>
+          <ul class="ticks" style="--accent:var(--teal)">
+            <li>Everyone adds their usual stations and office days</li>
+            <li>TfL's open journey planner finds the spot that suits the group</li>
+            <li>No journey history, no tracking</li>
+            <li>Remove your stations any time</li>
+          </ul>
+        </div>
+      </div>
+      <p>The feature would work the same way without tracking anyone. We spotted this too late to rebuild it within the 24 hours, so the demo kept the mocked data and the fix went on its own slide.</p>
+      <div class="reflect">Next time I'll check what data each API gives us, and what that means for the people in it, before designing a feature around it.</div>
+    </section>
+  </article>
+</template>
+
+<template id="t-about">
+  <div class="stack-l">
+    <div class="stack" style="gap:6px"><span class="k">about.txt</span><h2>Aleksandra (Alex) Vugdragovic</h2><p>I'm based in London. I spent five years in measured survey, BIM and project delivery, and I now design tools and products for that kind of work.</p></div>
+    <div class="timeline">
+      <div class="tl"><span class="when">2025–2026</span><div><h3>Project Manager, DPR</h3><p>Ran a 10-storey survey project in central London from fee proposal to client handover, coordinating three external teams. Main client contact; fee proposals up to £50k. Built the drawing QA tool.</p></div></div>
+      <div class="tl"><span class="when">2024–2025</span><div><h3>Volunteer UX Designer, Nkomor Healthcare</h3><p>Sole designer for a year, redesigning a medication platform into a two-sided marketplace.</p></div></div>
+      <div class="tl"><span class="when">2021–2025</span><div><h3>Measured Building Surveyor / BIM Coordinator, DPR &amp; SUMO Services</h3><p>Laser scanning, point cloud registration and processing, 2D and 3D deliverables, BIM coordination to ISO 19650. Wrote AutoLISP scripts that standardised 47+ CAD layers, my first go at fixing a process instead of working around it.</p></div></div>
+      <div class="tl"><span class="when">2021</span><div><h3>Master of Landscape Architecture, University of Zagreb</h3></div></div>
+    </div>
+    <div class="skills">
+      <div><b>Product &amp; design</b><span>User research, journey mapping, prototyping, Figma, Claude Code</span></div>
+      <div><b>Delivery</b><span>Stakeholders and clients, scoping, external teams, progress reporting</span></div>
+      <div><b>Survey &amp; digital</b><span>Measured survey, laser scanning, point clouds, BIM, ISO 19650, AutoCAD, AutoLISP</span></div>
+      <div><b>Languages</b><span>English (fluent), Croatian (native)</span></div>
+    </div>
+  </div>
+</template>
+
+<template id="t-hackathons">
+  <div class="term">
+    <div><span class="p">alex@moon:~$</span> cat hackathons.log</div>
+    <div class="row"><span>Oct 26</span><div><b>HuddleHive Hack</b> <span class="w">WINNER</span><small>Engine by Starling challenge · MoonMates · team of 5 · 24h</small></div></div>
+    <div class="row"><span>Jun 26</span><div><b>Wise Hackathon</b> <span class="w">TOP 6 / 19</span><small>Notice · pivoted mid-hackathon</small></div></div>
+    <div class="row"><span>Mar 26</span><div><b>HuddleHive NHS Hackathon</b> <span class="w">WINNER</span><small>Accurx challenge · CareLoop · led a team of 5 · 24h</small></div></div>
+    <div style="margin-top:10px"><span class="p">alex@moon:~$</span> <span style="opacity:.6">_</span></div>
+  </div>
+</template>
+
+<template id="t-qa">
+  <article class="stack-l">
+    <header class="stack" style="gap:10px">
+      <div class="pillrow"><span class="pill piloted">Piloted</span><span class="pill">Internal tool</span><span class="pill">DPR · measured survey</span></div>
+      <h1>Drawing QA tool</h1>
+      <p class="lead">Drawing QA at DPR ran through Outlook threads, with no shared standard and no record of who checked what. I designed one checklist that keeps the feedback and the record with the project, built it with Claude Code alongside my PM job, and piloted it in my team.</p>
+    </header>
+
+    <dl class="facts">
+      <div><dt>Where</dt><dd>DPR, London</dd></div>
+      <div><dt>When</dt><dd>Nov 2025 – Sep 2026</dd></div>
+      <div><dt>My role</dt><dd>Sole designer &amp; builder</dd></div>
+      <div><dt>Built with</dt><dd>Claude Code, Lovable</dd></div>
+    </dl>
+
+    <div class="hero-media">
+      <div class="qa-anim" role="img" aria-label="Illustration: a pile of feedback emails turns into one checklist that ticks off and produces a single report">
+          <span class="lab">Before</span>
+          <div class="mails">
+            <div class="mail m1"><i></i><span>RE: RE: FW: level 03 comments</span></div>
+            <div class="mail m2"><i></i><span>screenshot (4).png</span></div>
+            <div class="mail m3"><i></i><span>did anyone check grid D?</span></div>
+            <div class="mail m4"><i></i><span>updated markups attached</span></div>
+          </div>
+          <span class="cost">2 to 3 h rewriting per project</span>
+          <span class="lab after">After</span>
+          <div class="list">
+            <div class="row r1"><b></b><span>Point cloud aligned to OS grid</span></div>
+            <div class="row r2"><b></b><span>Attaches in AutoCAD without errors</span></div>
+            <div class="row r3 bad"><b></b><span>No double lines or duplicate points</span></div>
+            <div class="row r4"><b></b><span>Scan covers the surveyed area</span></div>
+            <div class="report">report.pdf · who checked what</div>
+          </div>
+        </div>
+      <div class="stack">
+        <span class="k">The problem</span>
+        <h3>Feedback lived in email, and there was no record of who had checked what.</h3>
+        <p>Drawings and 3D models came from our team and from external contractors. Before the tool, I timed the admin: rewriting feedback lost in email took 2 to 3 hours per project.</p>
+      </div>
+    </div>
+
+    <hr class="cut">
+
+    <section class="stack">
+      <span class="k">01 · Before and after</span>
+      <h2>One checklist instead of an email loop</h2>
+      <div class="diagram-wrap"><svg class="diagram" viewBox="0 0 760 376" role="img" aria-label="Before: feedback by email and rewritten by hand. After: one checklist, screenshots on their checks, one exported report." font-family="DM Sans, sans-serif" font-size="12.5"><defs><marker id="qa-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#16181F"/></marker></defs><text x="24" y="34" font-size="16" font-weight="700" font-family="Space Grotesk, sans-serif" fill="#16181F">Feedback moved from scattered emails to one report</text><text x="24" y="70" font-size="11" font-weight="600" letter-spacing="1.5" font-family="IBM Plex Mono, monospace" fill="#585D69">BEFORE</text><text x="24" y="236" font-size="11" font-weight="600" letter-spacing="1.5" font-family="IBM Plex Mono, monospace" fill="#585D69">AFTER</text><g fill="none" stroke="#16181F" stroke-width="1.5" marker-end="url(#qa-arrow)"><path d="M152 116H168"/><path d="M296 116H312"/><path d="M440 116H456"/><path d="M584 116H600"/><path d="M152 282H168"/><path d="M296 282H312"/><path d="M440 282H456"/></g><rect x="24" y="84" width="128" height="64" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="88" y="113">Drawing or</tspan><tspan x="88" y="129">model delivered</tspan></text><text x="88" y="166" text-anchor="middle" font-size="11.5" fill="#585D69">Author</text><rect x="168" y="84" width="128" height="64" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="232" y="113">Checked against</tspan><tspan x="232" y="129">guidelines</tspan></text><text x="232" y="166" text-anchor="middle" font-size="11.5" fill="#585D69">Reviewer</text><rect x="312" y="84" width="128" height="64" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="376" y="113">Screenshots</tspan><tspan x="376" y="129">sent by email</tspan></text><text x="376" y="166" text-anchor="middle" font-size="11.5" fill="#585D69">Reviewer</text><rect x="456" y="84" width="128" height="64" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="520" y="113">Fixes sent</tspan><tspan x="520" y="129">back by email</tspan></text><text x="520" y="166" text-anchor="middle" font-size="11.5" fill="#585D69">Author</text><rect x="600" y="84" width="128" height="64" rx="8" fill="rgba(255,107,74,.16)" stroke="#E2553A" stroke-width="2"/><text text-anchor="middle" fill="#16181F"><tspan x="664" y="113">Admin rewrites</tspan><tspan x="664" y="129">the feedback</tspan></text><text x="664" y="166" text-anchor="middle" font-size="11.5" fill="#585D69">Reviewer</text><text x="728" y="190" text-anchor="end" font-size="11.5" font-weight="700" fill="#C23F25">2 to 3 h of admin per project</text><text x="728" y="206" text-anchor="end" font-size="11.5" fill="#585D69">no record of who checked what</text><rect x="24" y="250" width="128" height="64" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="88" y="279">Drawing or</tspan><tspan x="88" y="295">model delivered</tspan></text><text x="88" y="332" text-anchor="middle" font-size="11.5" fill="#585D69">Author</text><rect x="168" y="250" width="128" height="64" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="232" y="279">One checklist</tspan><tspan x="232" y="295">per review type</tspan></text><text x="232" y="332" text-anchor="middle" font-size="11.5" fill="#585D69">Reviewer</text><rect x="312" y="250" width="128" height="64" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="376" y="279">Screenshot on</tspan><tspan x="376" y="295">its own check</tspan></text><text x="376" y="332" text-anchor="middle" font-size="11.5" fill="#585D69">Reviewer</text><rect x="456" y="250" width="128" height="64" rx="8" fill="rgba(63,193,176,.2)" stroke="#1F8F80" stroke-width="2"/><text text-anchor="middle" fill="#16181F" font-weight="700"><tspan x="520" y="279">Report exported</tspan><tspan x="520" y="295">as one file</tspan></text><text x="520" y="332" text-anchor="middle" font-size="11.5" fill="#585D69">Reviewer</text><text x="520" y="354" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1F8F80">the record of who checked what</text></svg></div>
+    </section>
+
+    <section class="stack">
+      <span class="k">02 · Who it's for, and my part</span>
+      <h2>Three groups moved work through QA</h2>
+      <div class="users">
+        <div class="user" style="--c:var(--teal)"><span class="ic">S</span><b>Survey team</b><p>My team. Checks drawings and models before they go out.</p></div>
+        <div class="user" style="--c:var(--coral)"><span class="ic">C</span><b>External contractors</b><p>Planned for phase 2: feedback tied to the check that failed.</p></div>
+        <div class="user" style="--c:var(--lilac)"><span class="ic">R</span><b>Rights of Light team</b><p>Asked for a QA report they could export.</p></div>
+      </div>
+      <p>I was the only person designing it, while running projects as a PM.</p>
+      <ul class="ticks" style="--accent:var(--teal)">
+        <li>Interviewed 5 people across the two QA teams</li>
+        <li>Mapped how work moved through QA for each group</li>
+        <li>Turned the teams' existing guidelines into one checklist</li>
+        <li>Built the working prototype with Claude Code</li>
+        <li>Checked feasibility with a business analyst, then tested it with both team leads</li>
+        <li>Designed a phase 2 concept and ran a usability test on it</li>
+      </ul>
+    </section>
+
+    <section class="stack">
+      <span class="k">03 · Key decisions</span>
+      <h2>Keeping it small enough to ship</h2>
+      <div class="decisions">
+        <div class="decision">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><rect x="3" y="7" width="17" height="30" rx="4" fill="none" stroke="#585D69" stroke-width="2" stroke-dasharray="3 3"/><rect x="24" y="7" width="17" height="30" rx="4" fill="#3FC1B0" stroke="#16181F" stroke-width="2"/></svg>
+          <h3>Build for QA, leave project management out</h3>
+          <p>Sorting the pain points by who raised them split them into two problems. QA happened on every project and rework started there, so I built for that.</p>
+        </div>
+      </div>
+      <div class="diagram-wrap"><svg class="diagram" viewBox="0 0 760 324" role="img" aria-label="Research found two problems, project management and quality assurance. Only quality assurance became the tool." font-family="DM Sans, sans-serif" font-size="13"><defs><marker id="scope-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#16181F"/></marker></defs><text x="24" y="34" font-size="16" font-weight="700" font-family="Space Grotesk, sans-serif" fill="#16181F">Research found two problems. I built for one.</text><rect x="24" y="56" width="340" height="156" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text x="40" y="82" font-size="15" font-weight="700" font-family="Space Grotesk, sans-serif" fill="#16181F">Project management</text><text x="40" y="100" font-size="11.5" fill="#585D69">raised by people managing contractors</text><text x="40" y="128" fill="#16181F">Deadlines missed without notice</text><text x="40" y="150" fill="#16181F">No view of the budget on a project</text><text x="40" y="172" fill="#16181F">Unclear stage when someone is on leave</text><text x="40" y="194" fill="#16181F">Progress tracked in separate spreadsheets</text><rect x="396" y="56" width="340" height="156" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text x="412" y="82" font-size="15" font-weight="700" font-family="Space Grotesk, sans-serif" fill="#16181F">Quality assurance</text><text x="412" y="100" font-size="11.5" fill="#585D69">raised by people doing the QA</text><text x="412" y="128" fill="#16181F">No shared QA process across teams</text><text x="412" y="150" fill="#16181F">Feedback sent as screenshots in emails</text><text x="412" y="172" fill="#16181F">No record of who checked what</text><text x="412" y="194" fill="#16181F">No shared examples of good practice</text><g fill="none" stroke="#16181F" stroke-width="1.5" marker-end="url(#scope-arrow)"><path d="M194 212V244"/><path d="M566 212V244"/></g><rect x="24" y="244" width="340" height="56" rx="8" fill="none" stroke="#585D69" stroke-width="1.5" stroke-dasharray="5 5"/><text x="194" y="268" text-anchor="middle" font-weight="700" fill="#585D69">Left out</text><text x="194" y="286" text-anchor="middle" font-size="11.5" fill="#585D69">needs a project management tool, not a QA tool</text><rect x="396" y="244" width="340" height="56" rx="8" fill="rgba(63,193,176,.2)" stroke="#1F8F80" stroke-width="2"/><text x="566" y="268" text-anchor="middle" font-weight="700" fill="#16181F">Built: QA tool</text><text x="566" y="286" text-anchor="middle" font-size="11.5" fill="#16181F">Checklist · Screenshots · Report</text></svg></div>
+      <div class="decisions">
+        <div class="decision">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><rect x="6" y="5" width="32" height="34" rx="4" fill="#FBF9F4" stroke="#16181F" stroke-width="2"/><path d="M12 15l3 3 6-6M12 26l3 3 6-6" fill="none" stroke="#1F8F80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M25 16h8M25 27h8" stroke="#16181F" stroke-width="2" stroke-linecap="round"/></svg>
+          <h3>Start from the rules people already use</h3>
+          <p>The checks come from the teams' own guidelines, in their words, like "Point cloud aligned to OS coordinate system". Each one is a pass, needs improvement or a fail.</p>
+        </div>
+        <div class="decision">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><rect x="4" y="6" width="36" height="28" rx="4" fill="#FBF9F4" stroke="#16181F" stroke-width="2"/><rect x="9" y="11" width="14" height="10" rx="2" fill="#FF6B4A" stroke="#16181F" stroke-width="1.5"/><path d="M27 13h8M27 19h6M9 27h26" stroke="#16181F" stroke-width="2" stroke-linecap="round"/></svg>
+          <h3>Keep feedback next to its check</h3>
+          <p>The team leads didn't want another tool to switch between, so reviewing, screenshots and the report sit on one screen.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="stack">
+      <span class="k">04 · The prototype</span>
+      <h2>One review, start to finish</h2>
+      <p class="small-note">Screens from the phase 2 concept, rebuilt in Lovable with made-up projects and people. Click a screen to enlarge it.</p>
+      <div class="strip wide" tabindex="0" aria-label="QA tool screens, scroll sideways"><figure><img class="zoom" src="media/qa_01_queue_filters.png" alt="The review queue with a filter open on the Team column" loading="lazy"><figcaption>The review queue. Every column sorts and filters.</figcaption></figure><figure><img class="zoom" src="media/qa_02_review_header_tree.png" alt="A drawing review with job details, progress and the checklist as a tree" loading="lazy"><figcaption>A review: job details, progress and the checklist as a tree.</figcaption></figure><figure><img class="zoom" src="media/qa_03_fail_check_conversation.png" alt="A failed check with the reviewer note, a screenshot slot and the conversation" loading="lazy"><figcaption>A failed check opens in place, with a note, a screenshot slot and the conversation.</figcaption></figure><figure><img class="zoom" src="media/qa_04_mention.png" alt="Typing @ in a comment suggests a colleague with role and team" loading="lazy"><figcaption>Typing @ suggests people with their role and team.</figcaption></figure><figure><img class="zoom" src="media/qa_05_report_summary.png" alt="Report summary counting issues, improvements and checks not done" loading="lazy"><figcaption>The report counts issues, improvements and checks not done.</figcaption></figure><figure><img class="zoom" src="media/qa_06_report_issue.png" alt="An issue in the report with Approve locked" loading="lazy"><figcaption>Approve stays locked until every check is done.</figcaption></figure></div>
+    </section>
+
+    <section class="stack">
+      <span class="k">05 · Outcome</span>
+      <h2>Piloted in my team</h2>
+      <p>We piloted it in my team, the measured survey team. Feedback was written once, next to its check, so the rewriting step I had measured at 2 to 3 hours per project went away. The next phase was planned to bring in the second QA team, then the contractors.</p>
+      <div class="reflect">From a demo: the head of the analyst team saw that the export could produce the reports they send to surveyors, so I kept the export flexible.</div>
+    </section>
+
+    <section class="stack">
+      <span class="k">06 · Testing the phase 2 concept</span>
+      <h2>Six changes from a usability test</h2>
+      <div class="changes"><div class="chg"><span class="k">Feedback</span><p>The To review and In progress tabs didn't look clickable</p><span class="k to">Change</span><p>Pointer and hover on everything you can click, and a whole row opens its review</p></div><div class="chg"><span class="k">Feedback</span><p>They wanted to sort and filter by clicking a column</p><span class="k to">Change</span><p>Every column header sorts and filters, and active filters show as chips</p></div><div class="chg"><span class="k">Feedback</span><p>Back didn't return them to where they had been</p><span class="k to">Change</span><p>Back keeps the tab, filters and sort, and so does the browser button</p></div><div class="chg"><span class="k">Feedback</span><p>They wanted to tag people and ask someone else to review</p><span class="k to">Change</span><p>Reviewers, assignee and contributors, Request review, and @mentions</p></div><div class="chg"><span class="k">Feedback</span><p>The checklist should branch like a tree</p><span class="k to">Change</span><p>Sections nest under the review type, with progress for each section</p></div><div class="chg"><span class="k">Feedback</span><p>It felt like a dull tool</p><span class="k to">Change</span><p>Loading states, a progress bar and short transitions between pages</p></div></div>
+    </section>
+
+    <section class="stack">
+      <span class="k">07 · Reflections</span>
+      <h2>What I'd do differently</h2>
+      <ul class="ticks" style="--accent:var(--gold)">
+        <li>Narrow earlier. I designed for six problems before asking which one mattered most.</li>
+        <li>Share rough work sooner. I thought my mind map wasn't good enough to show, and it was the most useful thing I shared.</li>
+        <li>Measure the whole loop. Next time I'd track the time from feedback to fix, not only admin time.</li>
+      </ul>
+    </section>
+  </article>
+</template>
+
+<template id="t-bagcheck">
+  <div class="bag">
+    <div class="stack">
+      <div class="pillrow"><span class="pill bonus">Bonus</span><span class="pill">Built over the hackathon weekend</span></div>
+      <h2>Bagcheck</h2>
+      <p class="lead">What did the hackathon do to your face?</p>
+      <p>A tongue-in-cheek app for the morning after. Scan a selfie on the first morning and again on the second, and Claude scores how tired you look: under-eye puffiness, dark circles, dull skin and red eyes. Then it gives you a 20-minute fix to be pitch-ready, and a slider puts Day 1 next to Day 2.</p>
+      <ul class="ticks" style="--accent:#F5B544">
+        <li>The practice scan works any time. Real scans open between 05:00 and 12:00.</li>
+        <li>Claude reads the photo you give it. Just for fun, not a medical reading.</li>
+      </ul>
+      <div class="btnrow"><a class="btn amber" href="https://claude.ai/artifact/NDdVrRZBABqCvBdyMomyNG" target="_blank" rel="noopener">Try Bagcheck ↗</a></div>
+    </div>
+    <img class="bagshot" src="media/bagcheck.jpg" alt="Bagcheck home screen: a dial for the morning window and two morning scans" loading="lazy">
+  </div>
+</template>
+
+<template id="t-cv">
+  <div class="stack">
+    <span class="k">CV.pdf · updated Oct 2026</span>
+    <h3>Product design CV</h3>
+    <p>One page: design work first, then delivery and survey experience.</p>
+    <div class="btnrow" style="align-items:center"><button class="btn primary" data-cv-dl hidden>Download PDF</button><span class="dlmsg" aria-live="polite"></span></div>
+    <img class="cvprev" src="media/cv_preview.jpg" alt="Preview of Alex's one-page product design CV" loading="lazy">
+  </div>
+</template>
+
+<template id="t-contact">
+  <div class="stack">
+    <span class="k">contact.txt</span>
+    <h3>Say hello</h3>
+    <div class="copyrow"><span class="lbl">Email</span><code>avugdragovic@gmail.com</code><button class="btn sm" data-copybtn>Copy</button></div>
+    <div class="copyrow"><span class="lbl">LinkedIn</span><a href="https://www.linkedin.com/in/avugdragovic/" target="_blank" rel="noopener"><code>linkedin.com/in/avugdragovic</code></a></div>
+    <p>Based in London, available to start immediately.</p>
+  </div>
+</template>
+
+<script>
+(function(){
+const DATA=JSON.parse(document.getElementById('data').textContent);
+const $=s=>document.querySelector(s);
+const PROJ=Object.fromEntries(DATA.projects.map(p=>[p.id,p]));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const CV_URL='media/Aleksandra_Vugdragovic_CV_Product_Design.pdf';
+let dlReady=Promise.resolve(null);try{if(window.claude&&typeof window.claude.use==='function')dlReady=window.claude.use('downloads').catch(()=>null)}catch(e){}
+
+/* ---------- window definitions ---------- */
+const WINS={
+  hello:{title:'hello.txt',accent:'var(--gold)',w:470,tpl:'t-hello'},
+  work:{title:'work/',accent:'var(--blue)',w:640,tpl:'t-work'},
+  moonmates:{title:'moonmates/case-study.md',right:'winner',accent:'var(--coral)',w:720,tall:true,tpl:'t-moonmates'},
+  'qa-tool':{title:'qa-tool/case-study.md',right:'piloted',accent:'var(--teal)',w:720,tall:true,tpl:'t-qa'},
+  about:{title:'about.txt',accent:'var(--lilac)',w:600,tpl:'t-about'},
+  hackathons:{title:'hackathons.log',accent:'var(--teal)',w:520,tpl:'t-hackathons',dark:true},
+  cv:{title:'CV.pdf',accent:'var(--blue)',w:560,tpl:'t-cv'},
+  bagcheck:{title:'bagcheck.app',right:'bonus',accent:'#F5B544',w:600,tpl:'t-bagcheck'},
+  contact:{title:'contact.txt',accent:'var(--teal)',w:400,tpl:'t-contact'}
+};
+DATA.projects.filter(p=>p.status!=='case').forEach(p=>{WINS[p.id]={title:p.id+'/README.md',accent:p.accent,w:480,project:p}});
+const DESKTOP=['hello','work','moonmates','qa-tool','about','hackathons','cv','contact','bagcheck'];
+const DOC_ORDER=['hello','moonmates','qa-tool','work',...DATA.projects.filter(p=>p.status!=='case').map(p=>p.id),'about','hackathons','cv','bagcheck','contact'];
+
+/* ---------- content ---------- */
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function projectBody(p){
+  const link=p.link==='notion'?`<a class="btn" href="${DATA.person.notion}" target="_blank" rel="noopener">Current write-up on Notion</a>`:'';
+  return `<div class="stack"><span class="k">${esc(p.meta)}</span><h2>${esc(p.title)}</h2>
+    <div class="pillrow">${p.badge?'<span class="pill win-p">Winner</span>':''}<span class="pill soon">Case study coming soon</span></div>
+    <p>${esc(p.summary)}</p>${p.facts?`<ul class="ticks" style="--accent:${p.accent}">${p.facts.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>`:''}
+    <div class="btnrow">${link}</div></div>`;
+}
+function fill(id,root){
+  if(id==='work'){const c=root.querySelector('#cards');c.removeAttribute('id');
+    c.innerHTML=DATA.projects.map(p=>`<button class="card" style="--c:${p.accent}" data-open="${p.id}"><span class="meta">${esc(p.meta)}</span><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p>
+      <span class="pillrow">${p.badge==='winner'?'<span class="pill win-p">Winner</span>':p.badge==='piloted'?'<span class="pill piloted">Piloted</span>':''}${p.status==='case'?'<span class="pill">Case study</span>':'<span class="pill soon">Coming soon</span>'}</span></button>`).join('');}
+  if(id==='contact')root.querySelectorAll('[data-copybtn]').forEach(btn=>{const code=btn.parentElement.querySelector('code');
+    btn.addEventListener('click',()=>{const done=()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1600)};
+      try{navigator.clipboard.writeText(code.textContent).then(done,()=>selectText(code))}catch(e){selectText(code)}})});
+  if(id==='cv'){const btn=root.querySelector('[data-cv-dl]'),msg=root.querySelector('.dlmsg');
+    dlReady.then(dl=>{
+      if(!dl){if(!window.claude){const a=document.createElement('a');a.className='btn primary';a.href=CV_URL;a.download='Aleksandra_Vugdragovic_CV_Product_Design.pdf';a.textContent='Download PDF';btn.replaceWith(a);return}msg.textContent="Download isn't available in this view. Email me and I'll send it.";return}
+      btn.hidden=false;
+      btn.addEventListener('click',async()=>{msg.textContent='';
+        try{const r=await fetch(CV_URL);if(!r.ok)throw{code:'unavailable'};
+          await dl.save({filename:'Aleksandra_Vugdragovic_CV_Product_Design.pdf',data:await r.blob()});msg.textContent='Sent to your downloads.'}
+        catch(e){const c=e&&e.code;if(c==='declined')return;if(c==='rate_limited'){msg.textContent='A download prompt is already open.';return}
+          btn.hidden=true;msg.textContent="Download isn't available here. Email me and I'll send it."}})});}
+  if(reduce)root.querySelectorAll('video').forEach(v=>{v.removeAttribute('autoplay');v.controls=true;v.pause()});
+}
+function selectText(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
+function bodyFor(id){
+  const d=WINS[id];const wrap=document.createElement('div');
+  if(d.tpl)wrap.appendChild(document.getElementById(d.tpl).content.cloneNode(true));else wrap.innerHTML=projectBody(d.project);
+  fill(id,wrap);return wrap;
+}
+function makeWin(id,docMode){
+  const d=WINS[id];const w=document.createElement('section');
+  w.className='win'+(d.dark?' dark':'');w.dataset.id=id;w.id=docMode?id:'win-'+id;w.style.setProperty('--accent',d.accent);
+  w.setAttribute('aria-label',d.title);
+  w.innerHTML=`<div class="bar">${docMode?'<i class="dot" style="background:var(--coral)"></i><i class="dot" style="background:var(--gold)"></i><i class="dot" style="background:var(--teal)"></i>':
+    `<button class="dot" data-act="close" aria-label="Close ${esc(d.title)}" style="background:var(--coral)"></button><button class="dot" data-act="min" aria-label="Minimise" style="background:var(--gold)"></button><button class="dot" data-act="max" aria-label="Maximise" style="background:var(--teal)"></button>`}
+    <span class="ttl">${esc(d.title)}</span>${d.right?`<span class="r">${esc(d.right)}</span>`:''}</div><div class="body"></div>`;
+  w.querySelector('.body').appendChild(bodyFor(id));return w;
+}
+
+/* ---------- desktop ---------- */
+const desk=$('#desk'),tabs=$('#tabs');const open={};let z=10,cascade=0;
+function deskSize(){return{W:desk.clientWidth,H:desk.clientHeight}}
+function place(id,w){
+  const{W,H}=deskSize();const d=WINS[id];const L=($('#icons').offsetWidth||96)+30;let width=Math.min(d.w,W-L-12);if(d.tall)width=Math.max(Math.min(520,W-L-12),Math.min(d.w,W-L-470-40-24));w.style.width=width+'px';
+  let x,y,h;
+  if(id==='hello'){x=L;y=24}
+  else if(d.tall){const o=id==='moonmates'?0:(open.moonmates?30:0);x=Math.max(L,Math.min(W-width-24,L+470+40))+o;y=14+o}
+  else{x=Math.min(W-width-20,L+40+cascade*34);y=Math.min(H-200,40+cascade*30);cascade=(cascade+1)%6}
+  h=d.tall?H-34:Math.min(H-y-20,680);
+  w.style.left=x+'px';w.style.top=y+'px';w.style.maxHeight=(H-y-14)+'px';if(d.tall)w.style.height=h+'px';
+}
+function focusWin(id){Object.values(open).forEach(o=>o.el.classList.remove('focus'));const o=open[id];if(!o)return;o.el.style.zIndex=++z;o.el.classList.add('focus');renderTabs(id)}
+function openWin(id){
+  if(!WINS[id])return;
+  if(document.body.classList.contains('docmode')){const t=document.getElementById(id)||document.getElementById('work');t&&t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});return}
+  if(!open[id]){const el=makeWin(id,false);place(id,el);desk.appendChild(el);open[id]={el,min:false};wire(el,id)}
+  const o=open[id];o.el.hidden=false;o.min=false;focusWin(id);
+}
+function closeWin(id){const o=open[id];if(!o)return;o.el.remove();delete open[id];renderTabs()}
+function renderTabs(active){tabs.innerHTML=Object.keys(open).map(id=>`<button class="tab${open[id].min?' min':''}${id===active?' on':''}" data-tab="${id}">${esc(WINS[id].title)}</button>`).join('')}
+function wire(el,id){
+  el.addEventListener('pointerdown',()=>focusWin(id));
+  el.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const a=b.dataset.act;
+    if(a==='close')closeWin(id);if(a==='min'){open[id].min=true;el.hidden=true;renderTabs()}if(a==='max')el.classList.toggle('max')}));
+  const bar=el.querySelector('.bar');let sx,sy,ox,oy,drag=false;
+  bar.addEventListener('pointerdown',e=>{if(e.target.closest('[data-act]')||el.classList.contains('max'))return;drag=true;sx=e.clientX;sy=e.clientY;ox=el.offsetLeft;oy=el.offsetTop;bar.setPointerCapture(e.pointerId)});
+  bar.addEventListener('pointermove',e=>{if(!drag)return;const{W,H}=deskSize();
+    el.style.left=Math.max(-el.offsetWidth+120,Math.min(W-80,ox+e.clientX-sx))+'px';el.style.top=Math.max(0,Math.min(H-40,oy+e.clientY-sy))+'px'});
+  bar.addEventListener('pointerup',()=>{drag=false});
+  bar.addEventListener('dblclick',e=>{if(!e.target.closest('[data-act]'))el.classList.toggle('max')});
+}
+tabs.addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(!t)return;const id=t.dataset.tab;const o=open[id];
+  if(o.min||!o.el.classList.contains('focus'))openWin(id);else{o.min=true;o.el.hidden=true;renderTabs()}});
+document.addEventListener('click',e=>{const t=e.target.closest('[data-open]');if(t&&!t.closest('.icon')){e.preventDefault();openWin(t.dataset.open)}});
+const lb=$('#lb');
+function closeLb(){lb.hidden=true;lb.querySelector('img').removeAttribute('src')}
+document.addEventListener('click',e=>{const im=e.target.closest('img.zoom');if(im){lb.querySelector('img').src=im.src;lb.querySelector('img').alt=im.alt;lb.hidden=false;$('#lbClose').focus();return}
+  if(!lb.hidden&&(e.target===lb||e.target.id==='lbClose'))closeLb()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){closeLb();return}if(e.key==='Escape'&&!document.body.classList.contains('docmode')){const top=Object.entries(open).filter(([,o])=>!o.el.hidden).sort((a,b)=>b[1].el.style.zIndex-a[1].el.style.zIndex)[0];if(top)closeWin(top[0])}});
+
+/* desktop icons */
+const ICON_SYM={hello:['TXT','#F2C14E'],work:['DIR','#6FA8FF'],moonmates:['DIR','#FF6B4A'],'qa-tool':['DIR','#3FC1B0'],about:['TXT','#B79CFF'],hackathons:['LOG','#3FC1B0'],cv:['PDF','#FF6B4A'],contact:['TXT','#3FC1B0'],bagcheck:['APP','#F5B544']};
+const LABEL={hello:'hello.txt',work:'work/',moonmates:'moonmates/','qa-tool':'qa-tool/',about:'about.txt',hackathons:'hackathons.log',cv:'CV.pdf',contact:'contact.txt',bagcheck:'bagcheck.app'};
+function iconSvg(kind,c){
+  if(kind==='APP')return `<svg width="50" height="50" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="${c}" stroke="#0C0F15" stroke-width="2"/><path d="M8 15 Q16 9 24 15" stroke="#1A1405" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M9.5 20 Q16 25 22.5 20" stroke="#1A1405" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`;
+  if(kind==='DIR')return `<svg width="54" height="46" viewBox="0 0 54 46" aria-hidden="true"><path d="M3 9 h17 l5 6 h26 v28 H3 Z" fill="${c}" stroke="#0C0F15" stroke-width="2.5" stroke-linejoin="round"/><path d="M3 19 H51" stroke="#0C0F15" stroke-width="2.5"/></svg>`;
+  return `<svg width="46" height="56" viewBox="0 0 46 56" aria-hidden="true"><path d="M3 3 H31 L43 15 V53 H3 Z" fill="#F4F1EA" stroke="#0C0F15" stroke-width="2.5" stroke-linejoin="round"/><path d="M31 3 V15 H43" fill="none" stroke="#0C0F15" stroke-width="2.5" stroke-linejoin="round"/><rect x="3" y="32" width="40" height="14" fill="${c}" stroke="#0C0F15" stroke-width="2.5"/><text x="23" y="43" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" fill="#0C0F15">${kind}</text></svg>`;
+}
+$('#icons').innerHTML=DESKTOP.map(id=>`<button class="icon" data-icon="${id}" aria-label="Open ${LABEL[id]}">${iconSvg(...ICON_SYM[id])}<span>${LABEL[id]}</span>${id==='moonmates'?'<i class="badge">winner</i>':''}${id==='bagcheck'?'<i class="badge" style="background:#F5B544">try me</i>':''}</button>`).join('');
+$('#icons').addEventListener('click',e=>{const b=e.target.closest('.icon');if(!b)return;document.querySelectorAll('.icon').forEach(i=>i.classList.toggle('sel',i===b));openWin(b.dataset.icon)});
+$('#icons').addEventListener('dblclick',e=>{const b=e.target.closest('.icon');if(b)openWin(b.dataset.icon)});
+
+/* ---------- document mode ---------- */
+let docBuilt=false;
+function buildDoc(){if(docBuilt)return;docBuilt=true;const doc=$('#doc');DOC_ORDER.forEach(id=>doc.appendChild(makeWin(id,true)))}
+function setMode(m){
+  const docm=m==='doc'||innerWidth<=760;document.body.classList.toggle('docmode',docm);
+  $('#modeBtn').textContent=docm?'Open the desktop':'Read as a document';
+  if(docm)buildDoc();
+  try{localStorage.setItem('alex-mode',m)}catch(e){}
+}
+$('#modeBtn').addEventListener('click',()=>setMode(document.body.classList.contains('docmode')?'desk':'doc'));
+
+/* ---------- tonight's moon (real phase) ---------- */
+(function(){const syn=29.530588853,ref=Date.UTC(2000,0,6,18,14)/864e5;const age=((Date.now()/864e5-ref)%syn+syn)%syn;
+  const k=(1-Math.cos(2*Math.PI*age/syn))/2,wax=age<syn/2,r=8,cx=10,cy=10;
+  let lit='';if(k>.98)lit=`<circle cx="10" cy="10" r="8" fill="#F2C14E"/>`;else if(k>.02){const rx=Math.abs(1-2*k)*r;const s1=wax?1:0;const s2=(k<.5)===wax?0:1;
+    lit=`<path d="M${cx} ${cy-r} A${r} ${r} 0 0 ${s1} ${cx} ${cy+r} A${rx} ${r} 0 0 ${s2} ${cx} ${cy-r}Z" fill="#F2C14E"/>`}
+  const toFull=Math.round(((syn/2-age)+syn)%syn);const txt=k>.98?'full moon tonight':k<.02?'new moon tonight':toFull===0?'full moon tonight':`full moon in ${toFull} day${toFull===1?'':'s'}`;
+  $('#phase').innerHTML=`<svg width="15" height="15" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="#232A3B" stroke="#0C0F15" stroke-width="1.5"/>${lit}</svg>${txt}`})();
+
+/* ---------- stars ---------- */
+(function(){const s=$('#stars');let seed=7;const rnd=()=>(seed=seed*16807%2147483647)/2147483647;let h='';
+  for(let i=0;i<120;i++)h+=`<circle cx="${(rnd()*100).toFixed(2)}%" cy="${(rnd()*100).toFixed(2)}%" r="${(.5+rnd()*1.3).toFixed(2)}" fill="#F4F1EA" opacity="${(.2+rnd()*.6).toFixed(2)}"/>`;s.innerHTML=h})();
+
+/* ---------- start ---------- */
+let saved=null;try{saved=localStorage.getItem('alex-mode')}catch(e){}
+setMode(saved==='doc'?'doc':'desk');
+const start=(location.hash||'').slice(1);
+if(!document.body.classList.contains('docmode')){openWin('hello');openWin('moonmates');if(start&&WINS[start]&&start!=='moonmates')openWin(start)}
+else if(start)setTimeout(()=>openWin(start),50);
+let wasNarrow=innerWidth<=760;addEventListener('resize',()=>{const n=innerWidth<=760;if(n!==wasNarrow){wasNarrow=n;let m='desk';try{m=localStorage.getItem('alex-mode')||'desk'}catch(e){}setMode(m);if(!n&&!Object.keys(open).length){openWin('hello');openWin('moonmates')}}});
+addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(WINS[id])openWin(id)});
+})();
+</script>
