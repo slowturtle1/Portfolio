@@ -56,7 +56,10 @@ a{color:inherit}
 /* desktop */
 .desk{position:fixed;left:0;right:0;top:calc(var(--barH) + env(safe-area-inset-top,0px));bottom:calc(var(--taskH) + env(safe-area-inset-bottom,0px));z-index:1;overflow:hidden}
 .icons{position:absolute;left:14px;top:14px;bottom:14px;display:grid;gap:6px;z-index:2;grid-auto-flow:column;grid-template-rows:repeat(auto-fill,88px);align-content:start}
-.icon{width:96px;display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px 2px;border-radius:8px;position:relative}
+.icon{width:96px;display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px 2px;border-radius:8px;position:relative;user-select:none;-webkit-user-select:none;touch-action:none}
+.icons.free{display:block}
+.icons.free .icon{position:absolute}
+.icon.dragging{z-index:5;opacity:.85;cursor:grabbing}
 .icon:hover,.icon.sel{background:rgba(244,241,234,.08)}
 .icon span{font:500 12px var(--mono);background:rgba(12,15,21,.85);padding:1px 6px;border-radius:3px;white-space:nowrap}
 .icon .badge{position:absolute;top:0;right:6px;font:700 10px var(--mono);background:var(--coral);color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:1px 6px;transform:rotate(8deg)}
@@ -126,6 +129,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .hero-media{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px;align-items:center}
 .vidframe{background:var(--ink);border:2px solid var(--text);border-radius:12px;overflow:hidden;box-shadow:6px 6px 0 var(--coral)}
 .vidframe video{display:block;width:100%;aspect-ratio:4/5;background:#000}
+.vidframe img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
 .team{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 .team figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
 .team img{width:100%;max-width:92px;aspect-ratio:1;border-radius:50%;padding:4px;background:var(--c);box-shadow:0 0 0 2px var(--text)}
@@ -287,6 +291,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
     <button data-open="work">Work</button>
     <button data-open="moonmates">MoonMates</button>
     <button data-open="qa-tool">QA tool</button>
+    <button data-open="careloop">CareLoop</button>
     <button data-open="about">About</button>
     <button data-open="contact">Contact</button>
   </nav>
@@ -325,9 +330,8 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
      "summary":"A shared savings app for the friends you keep meaning to see. Won the Engine by Starling challenge at HuddleHive Hack."},
     {"id":"qa-tool","title":"Drawing QA tool","accent":"#3FC1B0","status":"case","meta":"DPR · internal tool · 2025–2026","badge":"piloted",
      "summary":"Drawing QA at DPR ran through Outlook, with no shared standard and no record of who checked what. I designed one checklist that keeps the feedback with the project, built it with Claude Code and piloted it in my team."},
-    {"id":"careloop","title":"CareLoop","accent":"#6FA8FF","status":"soon","meta":"Hackathon · Mar 2026","badge":"winner",
-     "summary":"A voice-first symptom diary. I led a team of five to a working prototype in 24 hours, and we won the Accurx challenge at the HuddleHive NHS Hackathon.",
-     "facts":["Team of 5","24 hours","Winner, Accurx challenge"]},
+    {"id":"careloop","title":"CareLoop","accent":"#6FA8FF","status":"case","meta":"Hackathon · Mar 2026","badge":"winner",
+     "summary":"A voice-first symptom diary. I led a team of five to a working prototype in 24 hours, and we won the Accurx challenge at the HuddleHive NHS Hackathon."},
     {"id":"cow-compass","title":"Cow Compass","accent":"#3FC1B0","status":"soon","meta":"Personal project · 2024",
      "summary":"Started when my family's bulls went missing in 2024. Four interviews with farmers in rural Croatia, mapped into a user journey and a user flow.",
      "facts":["4 interviews","Journey map and user flow"]}
@@ -500,6 +504,104 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       </div>
       <p>The feature would work the same way without tracking anyone. We spotted this too late to rebuild it within the 24 hours, so the demo kept the mocked data and the fix went on its own slide.</p>
       <div class="reflect">Next time I'll check what data each API gives us, and what that means for the people in it, before designing a feature around it.</div>
+    </section>
+  </article>
+</template>
+
+<template id="t-careloop">
+  <article class="stack-l">
+    <header class="stack" style="gap:10px">
+      <div class="pillrow"><span class="pill win-p">Winner</span><span class="pill">Accurx challenge</span><span class="pill">HuddleHive NHS Hackathon 2026</span></div>
+      <h1>CareLoop</h1>
+      <p class="lead">A voice-first symptom diary for patients waiting for specialist care. Patients say how they feel instead of typing it, CareLoop fills in the GP form for them, and the practice can see when someone is getting worse.</p>
+    </header>
+
+    <dl class="facts">
+      <div><dt>Team</dt><dd>5 people</dd></div>
+      <div><dt>Time</dt><dd>24 hours</dd></div>
+      <div><dt>My role</dt><dd>Product &amp; project lead</dd></div>
+      <div><dt>Built with</dt><dd>Claude Code</dd></div>
+    </dl>
+
+    <div class="hero-media">
+      <div class="vidframe" style="box-shadow:6px 6px 0 var(--blue)"><img src="media/careloop_hero.jpg" alt="CareLoop on a phone: the patient records how they feel and Scribe transcribes it"></div>
+      <div class="stack">
+        <span class="k">The idea</span>
+        <h3>Saying how you feel is easier than filling in a form when you're unwell.</h3>
+        <p>Patients waiting for a specialist are often asked to keep a symptom diary. CareLoop lets them talk instead of type, then turns what they said into the eConsult form their GP practice already uses.</p>
+      </div>
+    </div>
+
+    <hr class="cut">
+
+    <section class="stack">
+      <span class="k">01 · Context &amp; problem</span>
+      <h2>Symptom diaries are hard to keep when you feel ill</h2>
+      <p>Writing a symptom down means stopping, opening a form and typing, often when you feel worst. In our prototype the patient is waiting 84 days for a cardiology appointment, so the diary is also how the GP practice would notice if they got worse.</p>
+    </section>
+
+    <section class="stack">
+      <span class="k">02 · My role</span>
+      <h2>Product and project lead, and I built the prototype</h2>
+      <ul class="ticks" style="--accent:var(--blue)">
+        <li>I led a team of five from the problem to a working AI prototype in 24 hours.</li>
+        <li>I built the prototype myself in Claude Code.</li>
+        <li>We based the idea on user research rather than assumptions.</li>
+      </ul>
+    </section>
+
+    <section class="stack">
+      <span class="k">03 · Key decisions</span>
+      <h2>Decisions that shaped the product</h2>
+      <div class="decisions">
+        <div class="decision">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><rect x="15" y="5" width="14" height="22" rx="7" fill="#FF6B4A" stroke="#16181F" stroke-width="2"/><path d="M9 20a13 13 0 0 0 26 0M22 33v6M15 39h14" fill="none" stroke="#16181F" stroke-width="2.5" stroke-linecap="round"/></svg>
+          <h3>Let patients talk</h3>
+          <p>Typing is the barrier, so voice is the main input. Patients can speak while lying down or holding the phone in one hand, and anyone who prefers typing can switch.</p>
+        </div>
+        <div class="decision">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><rect x="6" y="5" width="32" height="34" rx="4" fill="#FBF9F4" stroke="#16181F" stroke-width="2"/><rect x="11" y="11" width="22" height="6" rx="2" fill="#6FA8FF" stroke="#16181F" stroke-width="1.5"/><rect x="11" y="21" width="22" height="6" rx="2" fill="#6FA8FF" stroke="#16181F" stroke-width="1.5"/><path d="M12 33h12" stroke="#16181F" stroke-width="2" stroke-linecap="round"/></svg>
+          <h3>Fill in the form the GP already uses</h3>
+          <p>Scribe maps what the patient says onto NHS eConsult fields, so the practice gets a format it already reads. The patient checks and edits every field before anything is sent.</p>
+        </div>
+        <div class="decision">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><rect x="5" y="24" width="34" height="14" rx="4" fill="#3FC1B0" stroke="#16181F" stroke-width="2"/><rect x="11" y="8" width="22" height="14" rx="4" fill="#6FA8FF" stroke="#16181F" stroke-width="2"/></svg>
+          <h3>Build on Scribe instead of competing with it</h3>
+          <p>Halfway through the build we found out Accurx already had Scribe, an AI transcription tool used in consultations. We reframed CareLoop as an extension of it: the same transcription, pointed at the patient and used across weeks rather than one appointment.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="stack">
+      <span class="k">04 · The prototype</span>
+      <h2>From a voice note to an escalation flag</h2>
+      <div class="strip" tabindex="0" aria-label="CareLoop screens, scroll sideways. Click a screen to enlarge it.">
+        <figure><img class="zoom" src="media/careloop_01.png" alt="Start screen: Tell us how you're feeling" loading="lazy"><figcaption>Start by talking. Typing is one tap away.</figcaption></figure>
+        <figure><img class="zoom" src="media/careloop_02.png" alt="Recording with a live transcript" loading="lazy"><figcaption>Scribe transcribes as the patient talks.</figcaption></figure>
+        <figure><img class="zoom" src="media/careloop_03.png" alt="Scribe mapping clinical keywords to eConsult fields" loading="lazy"><figcaption>Scribe picks out the clinical details and maps them to eConsult fields.</figcaption></figure>
+        <figure><img class="zoom" src="media/careloop_04.png" alt="Review your form with six pre-filled fields" loading="lazy"><figcaption>The patient checks every pre-filled field before sending.</figcaption></figure>
+        <figure><img class="zoom" src="media/careloop_05.png" alt="Sent to your GP practice, with a reference number" loading="lazy"><figcaption>The form goes to the GP practice with a reference number.</figcaption></figure>
+        <figure><img class="zoom" src="media/careloop_06.png" alt="Patient view of the symptom journal" loading="lazy"><figcaption>While waiting for cardiology, the patient keeps logging symptoms.</figcaption></figure>
+        <figure><img class="zoom" src="media/careloop_07.png" alt="Practice view with an escalation flag" loading="lazy"><figcaption>The practice sees an escalation flag when severity rises.</figcaption></figure>
+        <figure><img class="zoom" src="media/careloop_08.png" alt="Practice view with the severity trend and entries" loading="lazy"><figcaption>The severity trend and every entry in one view.</figcaption></figure>
+        <figure><img class="zoom" src="media/careloop_09.png" alt="Symptom timeline with the GP escalation" loading="lazy"><figcaption>The timeline shows when the GP escalation was raised.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="stack">
+      <span class="k">05 · Outcome</span>
+      <h2>We won the Accurx challenge</h2>
+      <p>We pitched a working prototype after 24 hours. It was judged in the room and no patient has used it, so it shows how I scope and decide under time pressure, not that the product works.</p>
+    </section>
+
+    <section class="stack">
+      <span class="k">06 · Reflections</span>
+      <h2>What I'd do differently</h2>
+      <ul class="ticks" style="--accent:var(--gold)">
+        <li>Test the voice assumption. Many patients on long waiting lists are older, and we never checked whether they would want to talk to an app.</li>
+        <li>Ask a GP about the flags. A timeline means more information for clinicians who are already busy, and I'd want to know if it helps them or adds to the pile.</li>
+        <li>Look at the challenge partner's products first. We found Scribe halfway through and had to reframe the idea.</li>
+      </ul>
     </section>
   </article>
 </template>
@@ -709,6 +811,7 @@ const WINS={
   work:{title:'work/',accent:'var(--blue)',w:640,tpl:'t-work'},
   moonmates:{title:'moonmates/case-study.md',right:'winner',accent:'var(--coral)',w:720,tall:true,tpl:'t-moonmates'},
   'qa-tool':{title:'qa-tool/case-study.md',right:'piloted',accent:'var(--teal)',w:720,tall:true,tpl:'t-qa'},
+  careloop:{title:'careloop/case-study.md',right:'winner',accent:'var(--blue)',w:720,tall:true,tpl:'t-careloop'},
   about:{title:'about.txt',accent:'var(--lilac)',w:600,tpl:'t-about'},
   hackathons:{title:'hackathons.log',accent:'var(--teal)',w:520,tpl:'t-hackathons',dark:true},
   cv:{title:'CV.pdf',accent:'var(--blue)',w:560,tpl:'t-cv'},
@@ -716,8 +819,8 @@ const WINS={
   contact:{title:'contact.txt',accent:'var(--teal)',w:400,tpl:'t-contact'}
 };
 DATA.projects.filter(p=>p.status!=='case').forEach(p=>{WINS[p.id]={title:p.id+'/README.md',accent:p.accent,w:480,project:p}});
-const DESKTOP=['hello','work','moonmates','qa-tool','about','hackathons','cv','contact','bagcheck'];
-const DOC_ORDER=['hello','moonmates','qa-tool','work',...DATA.projects.filter(p=>p.status!=='case').map(p=>p.id),'about','hackathons','cv','bagcheck','contact'];
+const DESKTOP=['hello','work','moonmates','qa-tool','careloop','about','hackathons','cv','contact','bagcheck'];
+const DOC_ORDER=['hello','moonmates','qa-tool','careloop','work',...DATA.projects.filter(p=>p.status!=='case').map(p=>p.id),'about','hackathons','cv','bagcheck','contact'];
 
 /* ---------- content ---------- */
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -804,16 +907,38 @@ document.addEventListener('click',e=>{const im=e.target.closest('img.zoom');if(i
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){closeLb();return}if(e.key==='Escape'&&!document.body.classList.contains('docmode')){const top=Object.entries(open).filter(([,o])=>!o.el.hidden).sort((a,b)=>b[1].el.style.zIndex-a[1].el.style.zIndex)[0];if(top)closeWin(top[0])}});
 
 /* desktop icons */
-const ICON_SYM={hello:['TXT','#F2C14E'],work:['DIR','#6FA8FF'],moonmates:['DIR','#FF6B4A'],'qa-tool':['DIR','#3FC1B0'],about:['TXT','#B79CFF'],hackathons:['LOG','#3FC1B0'],cv:['PDF','#FF6B4A'],contact:['TXT','#3FC1B0'],bagcheck:['APP','#F5B544']};
-const LABEL={hello:'hello.txt',work:'work/',moonmates:'moonmates/','qa-tool':'qa-tool/',about:'about.txt',hackathons:'hackathons.log',cv:'CV.pdf',contact:'contact.txt',bagcheck:'bagcheck.app'};
+const ICON_SYM={hello:['TXT','#F2C14E'],work:['DIR','#6FA8FF'],moonmates:['DIR','#FF6B4A'],'qa-tool':['DIR','#3FC1B0'],careloop:['DIR','#6FA8FF'],about:['TXT','#B79CFF'],hackathons:['LOG','#3FC1B0'],cv:['PDF','#FF6B4A'],contact:['TXT','#3FC1B0'],bagcheck:['APP','#F5B544']};
+const LABEL={hello:'hello.txt',work:'work/',moonmates:'moonmates/','qa-tool':'qa-tool/',careloop:'careloop/',about:'about.txt',hackathons:'hackathons.log',cv:'CV.pdf',contact:'contact.txt',bagcheck:'bagcheck.app'};
 function iconSvg(kind,c){
   if(kind==='APP')return `<svg width="50" height="50" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="${c}" stroke="#0C0F15" stroke-width="2"/><path d="M8 15 Q16 9 24 15" stroke="#1A1405" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M9.5 20 Q16 25 22.5 20" stroke="#1A1405" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`;
   if(kind==='DIR')return `<svg width="54" height="46" viewBox="0 0 54 46" aria-hidden="true"><path d="M3 9 h17 l5 6 h26 v28 H3 Z" fill="${c}" stroke="#0C0F15" stroke-width="2.5" stroke-linejoin="round"/><path d="M3 19 H51" stroke="#0C0F15" stroke-width="2.5"/></svg>`;
   return `<svg width="46" height="56" viewBox="0 0 46 56" aria-hidden="true"><path d="M3 3 H31 L43 15 V53 H3 Z" fill="#F4F1EA" stroke="#0C0F15" stroke-width="2.5" stroke-linejoin="round"/><path d="M31 3 V15 H43" fill="none" stroke="#0C0F15" stroke-width="2.5" stroke-linejoin="round"/><rect x="3" y="32" width="40" height="14" fill="${c}" stroke="#0C0F15" stroke-width="2.5"/><text x="23" y="43" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" fill="#0C0F15">${kind}</text></svg>`;
 }
-$('#icons').innerHTML=DESKTOP.map(id=>`<button class="icon" data-icon="${id}" aria-label="Open ${LABEL[id]}">${iconSvg(...ICON_SYM[id])}<span>${LABEL[id]}</span>${id==='moonmates'?'<i class="badge">winner</i>':''}${id==='bagcheck'?'<i class="badge" style="background:#F5B544">try me</i>':''}</button>`).join('');
-$('#icons').addEventListener('click',e=>{const b=e.target.closest('.icon');if(!b)return;document.querySelectorAll('.icon').forEach(i=>i.classList.toggle('sel',i===b));openWin(b.dataset.icon)});
-$('#icons').addEventListener('dblclick',e=>{const b=e.target.closest('.icon');if(b)openWin(b.dataset.icon)});
+$('#icons').innerHTML=DESKTOP.map(id=>`<button class="icon" data-icon="${id}" aria-label="Open ${LABEL[id]}">${iconSvg(...ICON_SYM[id])}<span>${LABEL[id]}</span>${id==='moonmates'||id==='careloop'?'<i class="badge">winner</i>':''}${id==='bagcheck'?'<i class="badge" style="background:#F5B544">try me</i>':''}</button>`).join('');
+let iconClickBlock=0;
+$('#icons').addEventListener('click',e=>{const b=e.target.closest('.icon');if(!b||Date.now()<iconClickBlock)return;document.querySelectorAll('.icon').forEach(i=>i.classList.toggle('sel',i===b));openWin(b.dataset.icon)});
+$('#icons').addEventListener('dblclick',e=>{const b=e.target.closest('.icon');if(b&&Date.now()>=iconClickBlock)openWin(b.dataset.icon)});
+/* draggable icons: positions are a per-viewer convenience */
+(function(){
+  const box=$('#icons');let freed=false,drag=null;
+  const key='alex-icons';
+  function free(){if(freed)return;freed=true;const base=box.getBoundingClientRect();
+    const pos=[...box.children].map(b=>{const r=b.getBoundingClientRect();return[b,r.left-base.left,r.top-base.top]});
+    box.classList.add('free');pos.forEach(([b,x,y])=>{b.style.left=x+'px';b.style.top=y+'px'})}
+  function clamp(b,x,y){const{W,H}=deskSize();const ox=box.offsetLeft,oy=box.offsetTop;
+    return[Math.max(-ox,Math.min(W-ox-b.offsetWidth,x)),Math.max(-oy,Math.min(H-oy-b.offsetHeight,y))]}
+  function save(){const o={};[...box.children].forEach(b=>{o[b.dataset.icon]=[b.offsetLeft,b.offsetTop]});try{localStorage.setItem(key,JSON.stringify(o))}catch(e){}}
+  let saved=null;try{saved=JSON.parse(localStorage.getItem(key)||'null')}catch(e){}
+  if(saved&&typeof saved==='object'&&box.offsetWidth>0){free();[...box.children].forEach(b=>{const p=saved[b.dataset.icon];if(Array.isArray(p)){const[x,y]=clamp(b,+p[0]||0,+p[1]||0);b.style.left=x+'px';b.style.top=y+'px'}})}
+  box.addEventListener('pointerdown',e=>{const b=e.target.closest('.icon');if(!b||e.button!==0)return;drag={b,sx:e.clientX,sy:e.clientY,moved:false,pid:e.pointerId}});
+  addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;
+    if(!drag.moved){if(Math.hypot(dx,dy)<6)return;free();drag.moved=true;drag.ox=drag.b.offsetLeft;drag.oy=drag.b.offsetTop;drag.b.classList.add('dragging');try{drag.b.setPointerCapture(drag.pid)}catch(_){}}
+    const[x,y]=clamp(drag.b,drag.ox+dx,drag.oy+dy);drag.b.style.left=x+'px';drag.b.style.top=y+'px'});
+  function end(){if(!drag)return;if(drag.moved){drag.b.classList.remove('dragging');iconClickBlock=Date.now()+350;save()}drag=null}
+  addEventListener('pointerup',end);addEventListener('pointercancel',end);
+  addEventListener('resize',()=>{if(!freed)return;[...box.children].forEach(b=>{const[x,y]=clamp(b,b.offsetLeft,b.offsetTop);b.style.left=x+'px';b.style.top=y+'px'})});
+})();
+
 
 /* ---------- document mode ---------- */
 let docBuilt=false;
