@@ -817,7 +817,7 @@ const $=s=>document.querySelector(s);
 const PROJ=Object.fromEntries(DATA.projects.map(p=>[p.id,p]));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const CV_URL='media/Aleksandra_Vugdragovic_CV_Product_Design.pdf';
-const NUDGE_TOPIC=''; // ntfy.sh topic; empty means the nudge only shakes the window
+const NUDGE_TOPIC='alex-nudge-7kq2'; // ntfy.sh topic that pushes nudges to Alex's phone
 function buzz(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const ac=new C(),t=ac.currentTime;
   const o=ac.createOscillator(),g=ac.createGain(),l=ac.createOscillator(),lg=ac.createGain();
   o.type='square';o.frequency.value=110;l.frequency.value=26;lg.gain.value=55;l.connect(lg);lg.connect(o.frequency);
@@ -858,11 +858,14 @@ function fill(id,root){
   if(id==='contact'){const nb=root.querySelector('[data-nudge]'),nm=root.querySelector('.nudge-msg');let last=0;
     nb.addEventListener('click',()=>{const now=Date.now();if(now-last<2500)return;last=now;
       const w=nb.closest('.win');if(w&&!reduce){w.classList.remove('nudging');void w.offsetWidth;w.classList.add('nudging');w.addEventListener('animationend',()=>w.classList.remove('nudging'),{once:true})}
-      buzz();let sent=false;
-      if(NUDGE_TOPIC){let prev=0;try{prev=+localStorage.getItem('alex-nudge')||0}catch(e){}
-        if(now-prev>300000){sent=true;try{localStorage.setItem('alex-nudge',String(now))}catch(e){}
-          fetch('https://ntfy.sh/'+NUDGE_TOPIC,{method:'POST',body:'Someone nudged you from your portfolio'}).catch(()=>{})}}
-      nm.textContent=!NUDGE_TOPIC?"You nudged me! I won't feel it from here, so send a WhatsApp too.":sent?"Nudge sent to my phone! Send a WhatsApp too so I know who you are.":"I already got your nudge. Send a WhatsApp too so I know who you are."})}
+      buzz();const offline="You nudged me! I won't feel it from here, so send a WhatsApp too.";
+      if(!NUDGE_TOPIC){nm.textContent=offline;return}
+      let prev=0;try{prev=+localStorage.getItem('alex-nudge')||0}catch(e){}
+      if(now-prev<300000){nm.textContent="I already got your nudge. Send a WhatsApp too so I know who you are.";return}
+      nm.textContent='Sending your nudge…';
+      fetch('https://ntfy.sh/'+NUDGE_TOPIC,{method:'POST',body:'Someone nudged you from your portfolio'}).then(r=>{if(!r.ok)throw r;
+        try{localStorage.setItem('alex-nudge',String(Date.now()))}catch(e){}
+        nm.textContent="Nudge sent to my phone! Send a WhatsApp too so I know who you are."}).catch(()=>{nm.textContent=offline})})}
   if(id==='contact')root.querySelectorAll('[data-copybtn]').forEach(btn=>{const code=btn.parentElement.querySelector('code');
     btn.addEventListener('click',()=>{const done=()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1600)};
       try{navigator.clipboard.writeText(code.textContent).then(done,()=>selectText(code))}catch(e){selectText(code)}})});
