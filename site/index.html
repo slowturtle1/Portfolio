@@ -3,7 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Alex Vugdragovic: product design portfolio. MoonMates, a hackathon win, and a drawing QA tool piloted at DPR.">
+<meta name="description" content="Alex Vugdragovic: product design portfolio. A drawing QA tool piloted at DPR, and MoonMates, a hackathon win.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://slowturtle1.github.io/Portfolio/">
+<meta property="og:title" content="Alex Vugdragovic, product design portfolio">
+<meta property="og:description" content="A drawing QA tool piloted at DPR, and MoonMates, a hackathon win.">
+<meta property="og:image" content="https://slowturtle1.github.io/Portfolio/media/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8.5' fill='%230C0F15'/%3E%3Cpath d='M10 1.5 A8.5 8.5 0 0 1 10 18.5 A4 8.5 0 0 0 10 1.5Z' fill='%23F2C14E'/%3E%3C/svg%3E">
 <title>Alex Vugdragovic</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@600;700&display=swap">
@@ -293,8 +301,8 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
   <button class="brand" data-open="hello" aria-label="Open hello.txt"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="#0C0F15"/><path d="M10 1.5 A8.5 8.5 0 0 1 10 18.5 A4 8.5 0 0 0 10 1.5Z" fill="#F2C14E"/></svg>Alex</button>
   <nav aria-label="Main">
     <button data-open="work">Work</button>
-    <button data-open="moonmates">MoonMates</button>
     <button data-open="qa-tool">QA tool</button>
+    <button data-open="moonmates">MoonMates</button>
     <button data-open="careloop">CareLoop</button>
     <button data-open="about">About</button>
     <button data-open="contact">Contact</button>
@@ -330,10 +338,10 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
     "notion": "https://avugdragovic.notion.site/portfolio"
   },
   "projects": [
+    {"id":"qa-tool","title":"Drawing QA tool","accent":"#3FC1B0","status":"case","meta":"DPR · internal tool · 2025–2026","badge":"piloted",
+     "summary":"Drawing QA at DPR ran through Outlook, with no shared standard and no record of who checked what. I designed one checklist that keeps the feedback with the project, built the prototype with Lovable and Claude, and piloted it on about 10 projects in my team."},
     {"id":"moonmates","title":"MoonMates","accent":"#FF6B4A","status":"case","meta":"Hackathon · Oct 2026","badge":"winner",
      "summary":"A shared savings app for the friends you keep meaning to see. Won the Engine by Starling challenge at HuddleHive Hack."},
-    {"id":"qa-tool","title":"Drawing QA tool","accent":"#3FC1B0","status":"case","meta":"DPR · internal tool · 2025–2026","badge":"piloted",
-     "summary":"Drawing QA at DPR ran through Outlook, with no shared standard and no record of who checked what. I designed one checklist that keeps the feedback with the project, built it with Claude Code and piloted it in my team."},
     {"id":"careloop","title":"CareLoop","accent":"#6FA8FF","status":"case","meta":"Hackathon · Mar 2026","badge":"winner",
      "summary":"A voice-first symptom diary. I led a team of five to a working prototype in 24 hours, and we won the Accurx challenge at the HuddleHive NHS Hackathon."},
     {"id":"cow-compass","title":"Cow Compass","accent":"#3FC1B0","status":"soon","meta":"Personal project · 2024",
@@ -353,10 +361,10 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       </div>
     </div>
     <p class="lead">After five years working with spatial data and delivering projects, I now design products. Along the way I kept finding <span class="hl">processes worth fixing</span>, which is how I started designing and building tools.</p>
-    <p>This desktop is my portfolio. Start with <b>MoonMates</b>, a hackathon win, or the <b>QA tool</b> I designed and piloted at DPR. Everything else is in <b>work/</b>.</p>
+    <p>This desktop is my portfolio. Start with the <b>QA tool</b> I designed and piloted at DPR, or <b>MoonMates</b>, a hackathon win. Everything else is in <b>work/</b>.</p>
     <div class="btnrow">
-      <button class="btn primary" data-open="moonmates">Open MoonMates</button>
       <button class="btn primary" data-open="qa-tool">Open QA tool</button>
+      <button class="btn primary" data-open="moonmates">Open MoonMates</button>
       <button class="btn" data-open="work">See all work</button>
       <button class="btn" data-open="cv">CV</button>
       <button class="btn" data-open="contact">Contact</button>
@@ -450,7 +458,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
     <section class="stack">
       <span class="k">04 · How the idea evolved</span>
       <h2>From a coffee pot to a moon</h2>
-      <p>I prototyped two earlier ideas before MoonMates. Coffee Pot put 10p aside every time you bought a coffee alone, towards a coffee with a friend. Full Moon Pizza turned saving into a monthly ritual inside a bank's Spaces. MoonMates kept the ritual and added the friends and a place to meet.</p>
+      <p>I prototyped two earlier ideas before MoonMates. Coffee Pot put 10p aside every time you bought a coffee alone, towards a coffee with a friend. The judges told us the problem wasn't clear and asked if we knew anyone who would use it. After that we stopped tying the idea to coffee, because the pot could pay for any night out, from pizza to bowling. Full Moon Pizza turned saving into a monthly ritual inside a bank's Spaces. MoonMates kept the ritual, added the friends and a place to meet, and lets the circle pick what they save for.</p>
       <div class="evo">
         <figure><div class="shot"><img src="media/concept_coffee.jpg" alt="Coffee Pot prototype: every coffee alone saves 10p for a coffee together" loading="lazy"></div><figcaption><b>Coffee Pot</b><span>Every coffee alone saves 10p towards a coffee together.</span></figcaption></figure>
         <figure><div class="shot"><img src="media/concept_pizza.jpg" alt="Full Moon Pizza: a Moon Pot inside a bank's Spaces" loading="lazy"></div><figcaption><b>Full Moon Pizza</b><span>A ritual pot inside your bank's Spaces that unlocks on the full moon.</span></figcaption></figure>
@@ -462,11 +470,11 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       <span class="k">05 · The prototype</span>
       <h2>One moon, start to finish</h2>
       <div class="strip" tabindex="0" aria-label="Prototype screens, scroll sideways. Click a screen to enlarge it.">
-        <figure><img class="zoom" src="media/proto_1.jpg" alt="" loading="lazy"><figcaption>Day 6. Lena and Nina's weeks cross at Liverpool Street.</figcaption></figure>
-        <figure><img class="zoom" src="media/proto_2.jpg" alt="" loading="lazy"><figcaption>Day 12. Maya, Alex and Sofia meet at London Bridge.</figcaption></figure>
-        <figure><img class="zoom" src="media/proto_3.jpg" alt="" loading="lazy"><figcaption>Full moon. The app drafts the invite, and 4 of 5 yeses books it.</figcaption></figure>
-        <figure><img class="zoom" src="media/proto_4.jpg" alt="" loading="lazy"><figcaption>A single-use Pizza Card for the four who said yes.</figcaption></figure>
-        <figure><img class="zoom" src="media/proto_5.jpg" alt="" loading="lazy"><figcaption>Pizza night. Nina's £15 stays in the Space for the next moon.</figcaption></figure>
+        <figure><img class="zoom" src="media/proto_1.jpg" alt="Day 6 of 30: a crescent moon, £15 of £75 saved, and a TfL alert that Lena and Nina crossed paths at Liverpool Street" loading="lazy"><figcaption>Day 6. Lena and Nina's weeks cross at Liverpool Street.</figcaption></figure>
+        <figure><img class="zoom" src="media/proto_2.jpg" alt="Day 12: the moon is filling, £30 saved, and Maya, Alex and Sofia crossed paths at London Bridge" loading="lazy"><figcaption>Day 12. Maya, Alex and Sofia meet at London Bridge.</figcaption></figure>
+        <figure><img class="zoom" src="media/proto_3.jpg" alt="Full moon: £75 is ready and an AI-drafted invite suggests pizza at Liverpool Street on Thursday, with I'm in and Can't this time buttons" loading="lazy"><figcaption>Full moon. The app drafts the invite, and 4 of 5 yeses books it.</figcaption></figure>
+        <figure><img class="zoom" src="media/proto_4.jpg" alt="A single-use Pizza Card for £60 for Maya, Lena, Alex and Sofia, valid on Thursday from 19:00 to 23:00" loading="lazy"><figcaption>A single-use Pizza Card for the four who said yes.</figcaption></figure>
+        <figure><img class="zoom" src="media/proto_5.jpg" alt="Pizza night: full moon number 4 together, and Nina's £15 stays in the Space" loading="lazy"><figcaption>Pizza night. Nina's £15 stays in the Space for the next moon.</figcaption></figure>
       </div>
     </section>
 
@@ -540,7 +548,13 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 
     <section class="stack">
       <span class="k">01 · Context &amp; problem</span>
-      <h2>Symptom diaries are hard to keep when you feel ill</h2>
+      <h2>Patients are told to track symptoms, with nowhere to do it</h2>
+      <p>We chose the problem after talking to the hackathon coordinators. One of them works at Accurx and told us what the company struggles with, and about her own experience of the NHS. Together with NHS waiting list data, that pointed to three problems.</p>
+      <ul class="ticks" style="--accent:var(--blue)">
+        <li>Patients waiting for an appointment are told to track their symptoms, but there is no system to do it in.</li>
+        <li>Patients repeat their symptoms to every NHS service they see.</li>
+        <li>Clinicians get scattered information and see one snapshot, even when the patient has seen several professionals since the last visit.</li>
+      </ul>
       <p>Writing a symptom down means stopping, opening a form and typing, often when you feel worst. In our prototype the patient is waiting 84 days for a cardiology appointment, so the diary is also how the GP practice would notice if they got worse.</p>
     </section>
 
@@ -549,8 +563,8 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       <h2>Product and project lead, and I built the prototype</h2>
       <ul class="ticks" style="--accent:var(--blue)">
         <li>I led a team of five from the problem to a working AI prototype in 24 hours.</li>
-        <li>I built the prototype myself in Claude Code.</li>
-        <li>We based the idea on user research rather than assumptions.</li>
+        <li>I ran the ideation. After the conversations with the coordinators we picked a few problems and narrowed them down to one.</li>
+        <li>Once we had the problem, I built a quick prototype in Claude Code. The team followed its UI to the end.</li>
       </ul>
     </section>
 
@@ -604,7 +618,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       <ul class="ticks" style="--accent:var(--gold)">
         <li>Test the voice assumption. Many patients on long waiting lists are older, and we never checked whether they would want to talk to an app.</li>
         <li>Ask a GP about the flags. A timeline means more information for clinicians who are already busy, and I'd want to know if it helps them or adds to the pile.</li>
-        <li>Look at the challenge partner's products first. We found Scribe halfway through and had to reframe the idea.</li>
+        <li>Look at the challenge partner's products before ideation, not halfway through the build.</li>
       </ul>
     </section>
   </article>
@@ -643,14 +657,14 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
     <header class="stack" style="gap:10px">
       <div class="pillrow"><span class="pill piloted">Piloted</span><span class="pill">Internal tool</span><span class="pill">DPR · measured survey</span></div>
       <h1>Drawing QA tool</h1>
-      <p class="lead">Drawing QA at DPR ran through Outlook threads, with no shared standard and no record of who checked what. I designed one checklist that keeps the feedback and the record with the project, built it with Claude Code alongside my PM job, and piloted it in my team.</p>
+      <p class="lead">Drawing QA at DPR ran through Outlook threads, with no shared standard and no record of who checked what. I designed one checklist that keeps the feedback and the record with the project, built the prototype with Lovable and Claude alongside my PM job, and piloted it on about 10 projects in my team.</p>
     </header>
 
     <dl class="facts">
       <div><dt>Where</dt><dd>DPR, London</dd></div>
       <div><dt>When</dt><dd>Nov 2025 – Sep 2026</dd></div>
       <div><dt>My role</dt><dd>Sole designer &amp; builder</dd></div>
-      <div><dt>Built with</dt><dd>Claude Code, Lovable</dd></div>
+      <div><dt>Built with</dt><dd>Lovable, Claude</dd></div>
     </dl>
 
     <div class="hero-media">
@@ -700,9 +714,9 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
         <li>Interviewed 5 people across the two QA teams</li>
         <li>Mapped how work moved through QA for each group</li>
         <li>Turned the teams' existing guidelines into one checklist</li>
-        <li>Built the working prototype with Claude Code</li>
+        <li>Built the prototype with Lovable and Claude, and piloted it on about 10 projects</li>
         <li>Checked feasibility with a business analyst, then tested it with both team leads</li>
-        <li>Designed a phase 2 concept and ran a usability test on it</li>
+        <li>Designed a phase 2 concept and tested it with someone from outside the industry</li>
       </ul>
     </section>
 
@@ -736,20 +750,22 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       <span class="k">04 · The prototype</span>
       <h2>One review, start to finish</h2>
       <figure class="uifig"><div class="diagram-wrap"><svg class="diagram" viewBox="0 0 760 270" role="img" aria-label="QA flow: project review, QA checklist for internal or external work, review summary, then a decision that either exports the report or sends the work back to the checklist." font-family="DM Sans, sans-serif" font-size="12.5"><defs><marker id="flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#16181F"/></marker></defs><text x="24" y="34" font-size="16" font-weight="700" font-family="Space Grotesk, sans-serif" fill="#16181F">A review ends in a report or goes back for another round</text><rect x="16" y="118" width="104" height="44" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="68" y="144.5">Project review</tspan></text><rect x="150" y="118" width="104" height="44" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F" font-weight="700"><tspan x="202" y="144.5">QA checklist</tspan></text><rect x="290" y="70" width="110" height="44" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="345" y="88">Internal</tspan><tspan x="345" y="104" font-size="11" fill="#585D69">survey, RoL teams</tspan></text><rect x="290" y="166" width="110" height="44" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="345" y="184">External</tspan><tspan x="345" y="200" font-size="11" fill="#585D69">contractors</tspan></text><rect x="434" y="118" width="110" height="44" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="489" y="144.5">Review summary</tspan></text><rect x="576" y="118" width="84" height="44" rx="8" fill="rgba(63,193,176,.2)" stroke="#1F8F80" stroke-width="2"/><text text-anchor="middle" fill="#16181F" font-weight="700"><tspan x="618" y="144.5">Decision</tspan></text><rect x="684" y="118" width="70" height="44" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="719" y="136.5">Export</tspan><tspan x="719" y="152.5">report</tspan></text><g fill="none" stroke="#16181F" stroke-width="1.5"><path d="M120 140H148" marker-end="url(#flow-arrow)"/><path d="M254 140H270V92H288" marker-end="url(#flow-arrow)"/><path d="M270 140V188H288" marker-end="url(#flow-arrow)"/><path d="M400 92H417V140H432" marker-end="url(#flow-arrow)"/><path d="M400 188H417V140"/><path d="M544 140H574" marker-end="url(#flow-arrow)"/><path d="M660 140H682" marker-end="url(#flow-arrow)"/><path d="M618 162V236H202V164" marker-end="url(#flow-arrow)"/></g><text x="410" y="254" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1F8F80">back to the checklist</text></svg></div><figcaption>From my research board. Internal work comes from the survey and Rights of Light teams, external work from contractors. The decision either exports the report or sends the work back to the checklist.</figcaption></figure>
-      <p class="small-note">Screens from the phase 2 concept, rebuilt in Lovable with made-up projects and people. Click a screen to enlarge it.</p>
-      <div class="strip wide" tabindex="0" aria-label="QA tool screens, scroll sideways"><figure><img class="zoom" src="media/qa_01_queue_filters.png" alt="The review queue with a filter open on the Team column" loading="lazy"><figcaption>The review queue. Every column sorts and filters.</figcaption></figure><figure><img class="zoom" src="media/qa_02_review_header_tree.png" alt="A drawing review with job details, progress and the checklist as a tree" loading="lazy"><figcaption>A review: job details, progress and the checklist as a tree.</figcaption></figure><figure><img class="zoom" src="media/qa_03_fail_check_conversation.png" alt="A failed check with the reviewer note, a screenshot slot and the conversation" loading="lazy"><figcaption>A failed check opens in place, with a note, a screenshot slot and the conversation.</figcaption></figure><figure><img class="zoom" src="media/qa_04_mention.png" alt="Typing @ in a comment suggests a colleague with role and team" loading="lazy"><figcaption>Typing @ suggests people with their role and team.</figcaption></figure><figure><img class="zoom" src="media/qa_05_report_summary.png" alt="Report summary counting issues, improvements and checks not done" loading="lazy"><figcaption>The report counts issues, improvements and checks not done.</figcaption></figure><figure><img class="zoom" src="media/qa_06_report_issue.png" alt="An issue in the report with Approve locked" loading="lazy"><figcaption>Approve stays locked until every check is done.</figcaption></figure></div>
+      <p class="small-note">Screens from the phase 2 concept, rebuilt in Lovable with made-up projects and people. The two report screens are from the version my team piloted. The queue, the tree, @mentions and the failed check came after the usability test. Click a screen to enlarge it.</p>
+      <div class="strip wide" tabindex="0" aria-label="QA tool screens, scroll sideways"><figure><img class="zoom" src="media/qa_01_queue_filters.png" alt="The review queue with a filter open on the Team column" loading="lazy"><figcaption><b>After the test.</b> The review queue. Every column sorts and filters.</figcaption></figure><figure><img class="zoom" src="media/qa_02_review_header_tree.png" alt="A drawing review with job details, progress and the checklist as a tree" loading="lazy"><figcaption><b>After the test.</b> A review: job details, progress and the checklist as a tree.</figcaption></figure><figure><img class="zoom" src="media/qa_03_fail_check_conversation.png" alt="A failed check with the reviewer note, a screenshot slot and the conversation" loading="lazy"><figcaption><b>After the test.</b> A failed check opens in place, with a note, a screenshot slot and the conversation.</figcaption></figure><figure><img class="zoom" src="media/qa_04_mention.png" alt="Typing @ in a comment suggests a colleague with role and team" loading="lazy"><figcaption><b>After the test.</b> Typing @ suggests people with their role and team.</figcaption></figure><figure><img class="zoom" src="media/qa_05_report_summary.png" alt="Report summary counting issues, improvements and checks not done" loading="lazy"><figcaption><b>In the pilot.</b> The report counts issues, improvements and checks not done.</figcaption></figure><figure><img class="zoom" src="media/qa_06_report_issue.png" alt="An issue in the report with Approve locked" loading="lazy"><figcaption><b>In the pilot.</b> Approve stays locked until every check is done.</figcaption></figure></div>
     </section>
 
     <section class="stack">
       <span class="k">05 · Outcome</span>
-      <h2>Piloted in my team</h2>
-      <p>We piloted it in my team, the measured survey team. Feedback was written once, next to its check, so the rewriting step I had measured at 2 to 3 hours per project went away. The next phase was planned to bring in the second QA team, then the contractors.</p>
+      <h2>Piloted on about 10 projects</h2>
+      <p>My team, the measured survey team, used it on about 10 projects. Each piece of feedback was written once, next to its check, so nobody had to rewrite it. Before the tool, that rewriting took 2 to 3 hours per project. I didn't time it again during the pilot, so the saving is an estimate.</p>
+      <p>DPR decided not to take the tool further. It wasn't a priority, and the one engineer who would have maintained it already covered everything else. Phase 2, with the second QA team and the contractors, didn't go ahead.</p>
       <div class="reflect">From a demo: the head of the analyst team saw that the export could produce the reports they send to surveyors, so I kept the export flexible.</div>
     </section>
 
     <section class="stack">
       <span class="k">06 · Testing the phase 2 concept</span>
       <h2>Six changes from a usability test</h2>
+      <p>I tested the phase 2 concept with one person from outside the industry. They had never done drawing QA, so they got stuck on things my team had stopped noticing.</p>
       <div class="changes"><div class="chg"><span class="k">Feedback</span><p>The To review and In progress tabs didn't look clickable</p><span class="k to">Change</span><p>Pointer and hover on everything you can click, and a whole row opens its review</p></div><div class="chg"><span class="k">Feedback</span><p>They wanted to sort and filter by clicking a column</p><span class="k to">Change</span><p>Every column header sorts and filters, and active filters show as chips</p></div><div class="chg"><span class="k">Feedback</span><p>Back didn't return them to where they had been</p><span class="k to">Change</span><p>Back keeps the tab, filters and sort, and so does the browser button</p></div><div class="chg"><span class="k">Feedback</span><p>They wanted to tag people and ask someone else to review</p><span class="k to">Change</span><p>Reviewers, assignee and contributors, Request review, and @mentions</p></div><div class="chg"><span class="k">Feedback</span><p>The checklist should branch like a tree</p><span class="k to">Change</span><p>Sections nest under the review type, with progress for each section</p></div><div class="chg"><span class="k">Feedback</span><p>It felt like a dull tool</p><span class="k to">Change</span><p>Loading states, a progress bar and short transitions between pages</p></div></div>
     </section>
 
@@ -759,9 +775,10 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       <ul class="ticks" style="--accent:var(--gold)">
         <li>Narrow earlier. I designed for six problems before asking which one mattered most.</li>
         <li>Share rough work sooner. I thought my mind map wasn't good enough to show, and it was the most useful thing I shared.</li>
-        <li>Measure the whole loop. Next time I'd track the time from feedback to fix, not only admin time.</li>
+        <li>Measure during the pilot, not only before. I timed the admin before the tool but not after, so the saving is still an estimate. I'd also track the time from feedback to fix.</li>
+        <li>Ask who will maintain it before building. DPR stopped partly because its one engineer already covered everything else, and I could have found that out in the first week.</li>
       </ul>
-      <figure class="uifig"><div class="diagram-wrap"><svg class="diagram" viewBox="0 0 760 316" role="img" aria-label="My first information architecture had a dashboard, project tracking, a QA review and a resource library. Only the QA review branch was built and piloted." font-family="DM Sans, sans-serif" font-size="12.5"><defs><marker id="ia-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#16181F"/></marker></defs><text x="24" y="34" font-size="16" font-weight="700" font-family="Space Grotesk, sans-serif" fill="#16181F">My first information architecture</text><rect x="285" y="52" width="190" height="40" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F" font-weight="700"><tspan x="380" y="76.5">Project management tool</tspan></text><g fill="none" stroke="#16181F" stroke-width="1.5"><path d="M380 92V110M95 110H665"/><path d="M95 110V126" marker-end="url(#ia-arrow)"/><path d="M285 110V126" marker-end="url(#ia-arrow)"/><path d="M475 110V126" marker-end="url(#ia-arrow)"/><path d="M665 110V126" marker-end="url(#ia-arrow)"/></g><rect x="10" y="128" width="170" height="36" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text text-anchor="middle" fill="#585D69" font-weight="700"><tspan x="95" y="150.5">Dashboard</tspan></text><rect x="10" y="172" width="170" height="112" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text x="24" y="196" font-size="12" fill="#585D69">Ongoing projects</text><text x="24" y="220" font-size="12" fill="#585D69">KPI metrics</text><text x="24" y="244" font-size="12" fill="#585D69">Critical deadlines</text><text x="24" y="268" font-size="12" fill="#585D69">Notifications</text><text x="95" y="304" text-anchor="middle" font-size="11.5" font-weight="700" fill="#585D69">left out</text><rect x="200" y="128" width="170" height="36" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text text-anchor="middle" fill="#585D69" font-weight="700"><tspan x="285" y="150.5">Projects</tspan></text><rect x="200" y="172" width="170" height="112" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text x="214" y="196" font-size="12" fill="#585D69">Project brief</text><text x="214" y="220" font-size="12" fill="#585D69">Deadline and progress</text><text x="214" y="244" font-size="12" fill="#585D69">Interactive mark-up</text><text x="214" y="268" font-size="12" fill="#585D69">Who's working on it</text><text x="285" y="304" text-anchor="middle" font-size="11.5" font-weight="700" fill="#585D69">left out</text><rect x="390" y="128" width="170" height="36" rx="8" fill="rgba(63,193,176,.2)" stroke="#1F8F80" stroke-width="2"/><text text-anchor="middle" fill="#16181F" font-weight="700"><tspan x="475" y="150.5">QA review</tspan></text><rect x="390" y="172" width="170" height="112" rx="8" fill="#FBF9F4" stroke="#1F8F80" stroke-width="2"/><text x="404" y="196" font-size="12" fill="#16181F">Pass / fail / N/A checks</text><text x="404" y="220" font-size="12" fill="#16181F">Completion and export</text><text x="404" y="244" font-size="12" fill="#16181F">Reviewer feedback</text><text x="404" y="268" font-size="12" fill="#16181F">Contractor feedback</text><text x="475" y="304" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1F8F80">built and piloted</text><rect x="580" y="128" width="170" height="36" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text text-anchor="middle" fill="#585D69" font-weight="700"><tspan x="665" y="150.5">Resources</tspan></text><rect x="580" y="172" width="170" height="112" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text x="594" y="196" font-size="12" fill="#585D69">MBS 2D rules</text><text x="594" y="220" font-size="12" fill="#585D69">RoL 3D rules</text><text x="594" y="244" font-size="12" fill="#585D69">Examples for every rule</text><text x="665" y="304" text-anchor="middle" font-size="11.5" font-weight="700" fill="#585D69">left out</text></svg></div><figcaption>From my research board. I started with a dashboard, project tracking and a resource library. The pilot kept only the QA review branch.</figcaption></figure>
+      <figure class="uifig"><div class="diagram-wrap"><svg class="diagram" viewBox="0 0 760 316" role="img" aria-label="My first information architecture had a dashboard, project tracking, a QA review and a resource library. Only the QA review branch was built and piloted." font-family="DM Sans, sans-serif" font-size="12.5"><defs><marker id="ia-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#16181F"/></marker></defs><text x="24" y="34" font-size="16" font-weight="700" font-family="Space Grotesk, sans-serif" fill="#16181F">My first information architecture</text><rect x="285" y="52" width="190" height="40" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F" font-weight="700"><tspan x="380" y="76.5">Project management tool</tspan></text><g fill="none" stroke="#16181F" stroke-width="1.5"><path d="M380 92V110M95 110H665"/><path d="M95 110V126" marker-end="url(#ia-arrow)"/><path d="M285 110V126" marker-end="url(#ia-arrow)"/><path d="M475 110V126" marker-end="url(#ia-arrow)"/><path d="M665 110V126" marker-end="url(#ia-arrow)"/></g><rect x="10" y="128" width="170" height="36" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text text-anchor="middle" fill="#585D69" font-weight="700"><tspan x="95" y="150.5">Dashboard</tspan></text><rect x="10" y="172" width="170" height="112" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text x="24" y="196" font-size="12" fill="#585D69">Ongoing projects</text><text x="24" y="220" font-size="12" fill="#585D69">KPI metrics</text><text x="24" y="244" font-size="12" fill="#585D69">Critical deadlines</text><text x="24" y="268" font-size="12" fill="#585D69">Notifications</text><text x="95" y="304" text-anchor="middle" font-size="11.5" font-weight="700" fill="#585D69">left out</text><rect x="200" y="128" width="170" height="36" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text text-anchor="middle" fill="#585D69" font-weight="700"><tspan x="285" y="150.5">Projects</tspan></text><rect x="200" y="172" width="170" height="112" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text x="214" y="196" font-size="12" fill="#585D69">Project brief</text><text x="214" y="220" font-size="12" fill="#585D69">Deadline and progress</text><text x="214" y="244" font-size="12" fill="#585D69">Interactive mark-up</text><text x="214" y="268" font-size="12" fill="#585D69">Who's working on it</text><text x="285" y="304" text-anchor="middle" font-size="11.5" font-weight="700" fill="#585D69">left out</text><rect x="390" y="128" width="170" height="36" rx="8" fill="rgba(63,193,176,.2)" stroke="#1F8F80" stroke-width="2"/><text text-anchor="middle" fill="#16181F" font-weight="700"><tspan x="475" y="150.5">QA review</tspan></text><rect x="390" y="172" width="170" height="112" rx="8" fill="#FBF9F4" stroke="#1F8F80" stroke-width="2"/><text x="404" y="196" font-size="12" fill="#16181F">Pass / fail / N/A checks</text><text x="404" y="220" font-size="12" fill="#16181F">Completion and export</text><text x="404" y="244" font-size="12" fill="#16181F">Reviewer feedback</text><text x="404" y="268" font-size="12" fill="#16181F">Contractor feedback</text><text x="475" y="304" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1F8F80">built and piloted</text><rect x="580" y="128" width="170" height="36" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text text-anchor="middle" fill="#585D69" font-weight="700"><tspan x="665" y="150.5">Resources</tspan></text><rect x="580" y="172" width="170" height="112" rx="8" fill="none" stroke="#9AA3B5" stroke-width="1.5" stroke-dasharray="5 4"/><text x="594" y="196" font-size="12" fill="#585D69">MBS 2D rules</text><text x="594" y="220" font-size="12" fill="#585D69">RoL 3D rules</text><text x="594" y="244" font-size="12" fill="#585D69">Examples for every rule</text><text x="665" y="304" text-anchor="middle" font-size="11.5" font-weight="700" fill="#585D69">left out</text></svg></div><figcaption>From my research board. After the interviews I started with a dashboard, project tracking and a resource library. The pilot kept only the QA review branch.</figcaption></figure>
     </section>
   </article>
 </template>
@@ -827,8 +844,8 @@ const WINS={
   contact:{title:'contact.txt',accent:'var(--teal)',w:400,tpl:'t-contact'}
 };
 DATA.projects.filter(p=>p.status!=='case').forEach(p=>{WINS[p.id]={title:p.id+'/README.md',accent:p.accent,w:480,project:p}});
-const DESKTOP=['hello','work','moonmates','qa-tool','careloop','about','hackathons','cv','contact','bagcheck'];
-const DOC_ORDER=['hello','moonmates','qa-tool','careloop','work',...DATA.projects.filter(p=>p.status!=='case').map(p=>p.id),'about','hackathons','cv','bagcheck','contact'];
+const DESKTOP=['hello','work','qa-tool','moonmates','careloop','about','hackathons','cv','contact','bagcheck'];
+const DOC_ORDER=['hello','qa-tool','moonmates','careloop','work',...DATA.projects.filter(p=>p.status!=='case').map(p=>p.id),'about','hackathons','cv','bagcheck','contact'];
 
 /* ---------- content ---------- */
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
