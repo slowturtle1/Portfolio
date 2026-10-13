@@ -265,7 +265,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .nudge-msg{flex:1 1 100%;font-size:13.5px;color:var(--sub)}
 .nudge-msg:empty{display:none}
 @keyframes nudge{0%,100%{translate:0 0}10%{translate:-9px 4px}20%{translate:8px -5px}30%{translate:-7px -4px}40%{translate:9px 3px}50%{translate:-6px 5px}60%{translate:7px -3px}70%{translate:-5px -2px}80%{translate:4px 2px}90%{translate:-2px 1px}}
-.win.nudging{animation:nudge .45s linear 2}
+.win.nudging{animation:nudge .5s linear 2}
 .cvprev{width:100%;display:block;border:2px solid var(--text);border-radius:8px;box-shadow:5px 5px 0 var(--blue);background:#fff}
 .dlmsg{font-size:13.5px;color:var(--sub)}
 .dummy{color:var(--sub);font-style:italic}
@@ -818,11 +818,8 @@ const PROJ=Object.fromEntries(DATA.projects.map(p=>[p.id,p]));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const CV_URL='media/Aleksandra_Vugdragovic_CV_Product_Design.pdf';
 const NUDGE_TOPIC='alex-nudge-7kq2'; // ntfy.sh topic that pushes nudges to Alex's phone
-function buzz(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const ac=new C(),t=ac.currentTime;
-  const o=ac.createOscillator(),g=ac.createGain(),l=ac.createOscillator(),lg=ac.createGain();
-  o.type='square';o.frequency.value=110;l.frequency.value=26;lg.gain.value=55;l.connect(lg);lg.connect(o.frequency);
-  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05,t+.02);g.gain.setValueAtTime(.05,t+.75);g.gain.linearRampToValueAtTime(0,t+.9);
-  o.connect(g);g.connect(ac.destination);o.start(t);l.start(t);o.stop(t+.92);l.stop(t+.92);setTimeout(()=>ac.close(),1200)}catch(e){}}
+let nudgeAudio=null;
+function buzz(){try{if(!nudgeAudio){nudgeAudio=new Audio('media/nudge.mp3');nudgeAudio.volume=.7}nudgeAudio.currentTime=0;const p=nudgeAudio.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
 let dlReady=Promise.resolve(null);try{if(window.claude&&typeof window.claude.use==='function')dlReady=window.claude.use('downloads').catch(()=>null)}catch(e){}
 
 /* ---------- window definitions ---------- */
