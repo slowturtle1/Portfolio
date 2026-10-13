@@ -261,11 +261,6 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .pill.bonus{background:#F5B544;border-color:var(--ink);color:var(--ink)}
 .btn.amber{background:#F5B544;text-decoration:none}
 .copyrow a.btn.wa{flex:none;background:#25D366;text-decoration:none}
-.btn.nudge{flex:none;background:var(--gold)}
-.nudge-msg{flex:1 1 100%;font-size:13.5px;color:var(--sub)}
-.nudge-msg:empty{display:none}
-@keyframes nudge{0%,100%{translate:0 0}10%{translate:-9px 4px}20%{translate:8px -5px}30%{translate:-7px -4px}40%{translate:9px 3px}50%{translate:-6px 5px}60%{translate:7px -3px}70%{translate:-5px -2px}80%{translate:4px 2px}90%{translate:-2px 1px}}
-.win.nudging{animation:nudge .5s linear 2}
 .cvprev{width:100%;display:block;border:2px solid var(--text);border-radius:8px;box-shadow:5px 5px 0 var(--blue);background:#fff}
 .dlmsg{font-size:13.5px;color:var(--sub)}
 .dummy{color:var(--sub);font-style:italic}
@@ -805,7 +800,6 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
     <div class="copyrow"><span class="lbl">Email</span><code>avugdragovic@gmail.com</code><button class="btn sm" data-copybtn>Copy</button></div>
     <div class="copyrow"><span class="lbl">LinkedIn</span><a href="https://www.linkedin.com/in/avugdragovic/" target="_blank" rel="noopener"><code>linkedin.com/in/avugdragovic</code></a></div>
     <div class="copyrow"><span class="lbl">WhatsApp</span><a class="btn sm wa" href="https://wa.me/447729672124?text=Hi%20Alex%2C%20I%20saw%20your%20portfolio." target="_blank" rel="noopener">Send me a message ↗</a></div>
-    <div class="copyrow"><span class="lbl">Nudge</span><button class="btn sm nudge" data-nudge>Nudge me</button><span class="nudge-msg" aria-live="polite"></span></div>
     <p>Based in London, available to start immediately.</p>
   </div>
 </template>
@@ -817,9 +811,6 @@ const $=s=>document.querySelector(s);
 const PROJ=Object.fromEntries(DATA.projects.map(p=>[p.id,p]));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const CV_URL='media/Aleksandra_Vugdragovic_CV_Product_Design.pdf';
-const NUDGE_TOPIC='alex-nudge-7kq2'; // ntfy.sh topic that pushes nudges to Alex's phone
-let nudgeAudio=null;
-function buzz(){try{if(!nudgeAudio){nudgeAudio=new Audio('media/nudge.mp3');nudgeAudio.volume=.7}nudgeAudio.currentTime=0;const p=nudgeAudio.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
 let dlReady=Promise.resolve(null);try{if(window.claude&&typeof window.claude.use==='function')dlReady=window.claude.use('downloads').catch(()=>null)}catch(e){}
 
 /* ---------- window definitions ---------- */
@@ -852,17 +843,6 @@ function fill(id,root){
   if(id==='work'){const c=root.querySelector('#cards');c.removeAttribute('id');
     c.innerHTML=DATA.projects.map(p=>`<button class="card" style="--c:${p.accent}" data-open="${p.id}"><span class="meta">${esc(p.meta)}</span><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p>
       <span class="pillrow">${p.badge==='winner'?'<span class="pill win-p">Winner</span>':p.badge==='piloted'?'<span class="pill piloted">Piloted</span>':''}${p.status==='case'?'<span class="pill">Case study</span>':'<span class="pill soon">Coming soon</span>'}</span></button>`).join('');}
-  if(id==='contact'){const nb=root.querySelector('[data-nudge]'),nm=root.querySelector('.nudge-msg');let last=0;
-    nb.addEventListener('click',()=>{const now=Date.now();if(now-last<2500)return;last=now;
-      const w=nb.closest('.win');if(w&&!reduce){w.classList.remove('nudging');void w.offsetWidth;w.classList.add('nudging');w.addEventListener('animationend',()=>w.classList.remove('nudging'),{once:true})}
-      buzz();const offline="You nudged me! I won't feel it from here, so send a WhatsApp too.";
-      if(!NUDGE_TOPIC){nm.textContent=offline;return}
-      let prev=0;try{prev=+localStorage.getItem('alex-nudge')||0}catch(e){}
-      if(now-prev<300000){nm.textContent="I already got your nudge. Send a WhatsApp too so I know who you are.";return}
-      nm.textContent='Sending your nudge…';
-      fetch('https://ntfy.sh/'+NUDGE_TOPIC,{method:'POST',body:'Someone nudged you from your portfolio'}).then(r=>{if(!r.ok)throw r;
-        try{localStorage.setItem('alex-nudge',String(Date.now()))}catch(e){}
-        nm.textContent="Nudge sent to my phone! Send a WhatsApp too so I know who you are."}).catch(()=>{nm.textContent=offline})})}
   if(id==='contact')root.querySelectorAll('[data-copybtn]').forEach(btn=>{const code=btn.parentElement.querySelector('code');
     btn.addEventListener('click',()=>{const done=()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1600)};
       try{navigator.clipboard.writeText(code.textContent).then(done,()=>selectText(code))}catch(e){selectText(code)}})});
