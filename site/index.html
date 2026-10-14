@@ -326,10 +326,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 <header class="menubar">
   <button class="brand" data-open="hello" aria-label="Open hello.txt"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="#0C0F15"/><path d="M10 1.5 A8.5 8.5 0 0 1 10 18.5 A4 8.5 0 0 0 10 1.5Z" fill="#F2C14E"/></svg>Alex</button>
   <nav aria-label="Main">
-    <button data-open="work">Work</button>
-    <button data-open="qa-tool">QA tool</button>
-    <button data-open="moonmates">MoonMates</button>
-    <button data-open="careloop">CareLoop</button>
+    <button data-open="work">Projects</button>
     <button data-open="about">About</button>
     <button data-open="contact">Contact</button>
   </nav>
@@ -397,8 +394,9 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       <button class="btn primary" data-open="qa-tool">Open QA tool</button>
       <button class="btn primary" data-open="moonmates">Open MoonMates</button>
       <button class="btn" data-open="work">See all work</button>
-      <button class="btn" data-open="cv">CV</button>
+      <button class="btn" data-open="about">About</button>
       <button class="btn" data-open="contact">Contact</button>
+      <button class="btn" data-cv-quick>Download CV</button>
     </div>
     <div class="handnote">Currently: open to product design roles · London</div>
   </div>
@@ -916,6 +914,12 @@ const PROJ=Object.fromEntries(DATA.projects.map(p=>[p.id,p]));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const CV_URL='media/Aleksandra_Vugdragovic_CV_Product_Design.pdf';
 let dlReady=Promise.resolve(null);try{if(window.claude&&typeof window.claude.use==='function')dlReady=window.claude.use('downloads').catch(()=>null)}catch(e){}
+const CV_NAME='Aleksandra_Vugdragovic_CV_Product_Design.pdf';
+async function downloadCV(){const dl=await dlReady;
+  if(dl){try{const r=await fetch(CV_URL);if(!r.ok)throw{code:'unavailable'};await dl.save({filename:CV_NAME,data:await r.blob()});return}catch(e){if(e&&(e.code==='declined'||e.code==='rate_limited'))return}}
+  if(!window.claude){const a=document.createElement('a');a.href=CV_URL;a.download=CV_NAME;document.body.appendChild(a);a.click();a.remove();return}
+  openWin('cv')}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-cv-quick]');if(!b)return;e.preventDefault();e.stopPropagation();if(!mnav.hidden)setMenu(false);downloadCV()});
 
 /* ---------- window definitions ---------- */
 const WINS={
@@ -1085,7 +1089,8 @@ $('#modeBtn').addEventListener('click',()=>setMode(document.body.classList.conta
 const mnav=$('#mnav'),mbtn=$('#menuBtn'),mscrim=$('#mnavScrim'),curTab=$('#curTab');
 $('#mnavList').innerHTML='<li class="mlab">Projects</li>'+DATA.projects.filter(p=>p.status==='case').map(p=>
   `<li><a href="#${p.id}" data-go="${p.id}">${esc(p.title)}${p.badge?`<span class="tag ${p.badge}">${p.badge}</span>`:''}</a></li>`).join('')+
-  '<li class="sep" role="presentation"></li><li><a href="#about" data-go="about">About &amp; contact</a></li>';
+  '<li class="sep" role="presentation"></li><li><a href="#about" data-go="about">About</a></li><li><a href="#contact" data-go="contact">Contact</a></li>'+
+  `<li><a href="${CV_URL}" data-cv-quick>Download CV</a></li>`;
 function setMenu(on){mnav.hidden=!on;mscrim.hidden=!on;mbtn.setAttribute('aria-expanded',String(on));
   if(on){const a=mnav.querySelector('[aria-current="true"]')||mnav.querySelector('a');a.scrollIntoView({block:'nearest'});a.focus({preventScroll:true})}}
 mbtn.addEventListener('click',()=>setMenu(mnav.hidden));
@@ -1118,9 +1123,9 @@ requestAnimationFrame(spy);
 let saved=null;try{saved=localStorage.getItem('alex-mode')}catch(e){}
 setMode(saved==='doc'?'doc':'desk');
 const start=(location.hash||'').slice(1);
-if(!document.body.classList.contains('docmode')){openWin('hello');openWin('moonmates');if(start&&WINS[start]&&start!=='moonmates')openWin(start)}
+if(!document.body.classList.contains('docmode')){openWin('hello');if(start&&WINS[start]&&start!=='hello')openWin(start)}
 else if(start)setTimeout(()=>openWin(start),50);
-let wasNarrow=innerWidth<=760;addEventListener('resize',()=>{const n=innerWidth<=760;if(n!==wasNarrow){wasNarrow=n;let m='desk';try{m=localStorage.getItem('alex-mode')||'desk'}catch(e){}setMode(m);if(!n&&!Object.keys(open).length){openWin('hello');openWin('moonmates')}}});
+let wasNarrow=innerWidth<=760;addEventListener('resize',()=>{const n=innerWidth<=760;if(n!==wasNarrow){wasNarrow=n;let m='desk';try{m=localStorage.getItem('alex-mode')||'desk'}catch(e){}setMode(m);if(!n&&!Object.keys(open).length){openWin('hello')}}});
 addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(WINS[id])openWin(id)});
 })();
 </script>
