@@ -278,23 +278,20 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .menubtn .bars{width:14px;height:10px;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);position:relative}
 .menubtn .bars::after{content:"";position:absolute;left:0;right:0;top:2px;border-top:2px solid var(--ink)}
 .menubtn[aria-expanded="true"]{background:var(--gold)}
-.mnav{position:fixed;left:0;right:0;top:calc(var(--barH) + env(safe-area-inset-top,0px));z-index:60;background:var(--paper);color:var(--ink);border-bottom:2px solid var(--ink);max-height:calc(100dvh - var(--barH) - env(safe-area-inset-top,0px) - 40px);overflow:auto;overscroll-behavior:contain;padding:8px 10px 12px}
+.mnav{position:fixed;left:8px;top:calc(var(--barH) + 6px + env(safe-area-inset-top,0px));z-index:60;width:min(260px,calc(100vw - 16px));background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink);padding:6px}
 .mnav ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
-.mnav a{display:flex;align-items:center;gap:12px;padding:8px;border-radius:8px;text-decoration:none;color:inherit}
+.mnav a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;text-decoration:none;color:inherit;font:700 16px/1.2 var(--display)}
 .mnav a:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
 .mnav a[aria-current="true"]{background:var(--gold)}
-.mnav .ico{flex:none;width:36px;height:32px;display:grid;place-items:center}
-.mnav .ico svg{max-width:32px;max-height:32px;width:auto;height:auto}
-.mnav .txt{min-width:0}
-.mnav b{display:block;font:700 16px/1.2 var(--display)}
-.mnav small{display:block;font:500 11.5px var(--mono);color:var(--sub)}
+.mnav .mlab{font:600 11px var(--mono);letter-spacing:1.4px;text-transform:uppercase;color:var(--sub);padding:6px 10px 2px}
+.mnav .sep{border-top:1.5px dashed #D9D3C7;margin:4px 6px}
 .mnav .tag{margin-left:auto;flex:none;font:700 10px var(--mono);border:1.5px solid var(--ink);border-radius:999px;padding:1px 7px;background:var(--coral);color:var(--ink)}
 .mnav .tag.piloted{background:var(--teal)}
 .mnav .tag.soon{background:transparent;border-style:dashed;border-color:var(--sub);color:var(--sub)}
-.mnav-scrim{position:fixed;inset:0;z-index:55;background:rgba(12,15,21,.5)}
+.mnav-scrim{position:fixed;inset:0;z-index:55;background:rgba(12,15,21,.3)}
 .curtab{display:none}
 .swipe-hint{display:none;font:600 11px var(--mono);letter-spacing:.8px;color:var(--sub)}
-.doc .win{scroll-margin-top:calc(var(--barH) + 14px + env(safe-area-inset-top,0px))}
+.doc .win,.doc .about-contact{scroll-margin-top:calc(var(--barH) + 14px + env(safe-area-inset-top,0px))}
 @media (min-width:761px){.mnav,.mnav-scrim{display:none!important}}
 
 @media (max-width:760px){
@@ -315,9 +312,10 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
   .uigrid.two-one{grid-template-columns:1fr}
   .bagshot{max-width:240px;margin:0 auto}
   .menubar nav,.menubar .toggle,.taskbar .tabs,.taskbar .credit{display:none}
-  .menubtn{display:inline-flex}
+  .menubtn{display:inline-flex;order:-1}
   .taskbar .curtab{display:block;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
   .swipe-hint{display:block}
+  .copyrow .lbl{width:100%}
 }
 @media (max-width:480px){.phase-t{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -697,6 +695,13 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       <div><b>Survey &amp; digital</b><span>Measured survey, laser scanning, point clouds, BIM, ISO 19650, AutoCAD, AutoLISP</span></div>
       <div><b>Languages</b><span>English (fluent), Croatian (native)</span></div>
     </div>
+    <div class="stack about-contact" style="gap:10px">
+      <span class="k">Contact</span>
+      <div class="copyrow"><span class="lbl">Email</span><code>avugdragovic@gmail.com</code><button class="btn sm" data-copybtn>Copy</button></div>
+      <div class="copyrow"><span class="lbl">LinkedIn</span><a href="https://www.linkedin.com/in/avugdragovic/" target="_blank" rel="noopener"><code>linkedin.com/in/avugdragovic</code></a></div>
+      <div class="copyrow"><span class="lbl">WhatsApp</span><a class="btn sm wa" href="https://wa.me/447729672124?text=Hi%20Alex%2C%20I%20saw%20your%20portfolio." target="_blank" rel="noopener">Send me a message ↗</a></div>
+      <p>Based in London, available to start immediately.</p>
+    </div>
   </div>
 </template>
 
@@ -927,7 +932,7 @@ const WINS={
 };
 DATA.projects.filter(p=>p.status!=='case').forEach(p=>{WINS[p.id]={title:p.id+'/README.md',accent:p.accent,w:480,project:p}});
 const DESKTOP=['hello','work','qa-tool','moonmates','careloop','about','hackathons','cv','contact','bagcheck'];
-const DOC_ORDER=['hello','qa-tool','moonmates','careloop','work',...DATA.projects.filter(p=>p.status!=='case').map(p=>p.id),'about','hackathons','cv','bagcheck','contact'];
+const DOC_ORDER=['hello','qa-tool','moonmates','careloop','work',...DATA.projects.filter(p=>p.status!=='case').map(p=>p.id),'hackathons','cv','bagcheck','about'];
 
 /* ---------- content ---------- */
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -942,7 +947,7 @@ function fill(id,root){
   if(id==='work'){const c=root.querySelector('#cards');c.removeAttribute('id');
     c.innerHTML=DATA.projects.map(p=>`<button class="card" style="--c:${p.accent}" data-open="${p.id}"><span class="meta">${esc(p.meta)}</span><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p>
       <span class="pillrow">${p.badge==='winner'?'<span class="pill win-p">Winner</span>':p.badge==='piloted'?'<span class="pill piloted">Piloted</span>':''}${p.status==='case'?'<span class="pill">Case study</span>':'<span class="pill soon">Coming soon</span>'}</span></button>`).join('');}
-  if(id==='contact')root.querySelectorAll('[data-copybtn]').forEach(btn=>{const code=btn.parentElement.querySelector('code');
+  if(id==='contact'||id==='about')root.querySelectorAll('[data-copybtn]').forEach(btn=>{const code=btn.parentElement.querySelector('code');
     btn.addEventListener('click',()=>{const done=()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1600)};
       try{navigator.clipboard.writeText(code.textContent).then(done,()=>selectText(code))}catch(e){selectText(code)}})});
   if(id==='cv'){const btn=root.querySelector('[data-cv-dl]'),msg=root.querySelector('.dlmsg');
@@ -988,12 +993,12 @@ function place(id,w){
 function focusWin(id){Object.values(open).forEach(o=>o.el.classList.remove('focus'));const o=open[id];if(!o)return;o.el.style.zIndex=++z;o.el.classList.add('focus');renderTabs(id)}
 function openWin(id){
   if(!WINS[id])return;
-  if(document.body.classList.contains('docmode')){goTo(document.getElementById(id)?id:'work');return}
+  if(document.body.classList.contains('docmode')){if(id==='contact'){goTo(document.querySelector('#doc .about-contact')||'about');return}goTo(document.getElementById(id)?id:'work');return}
   if(!open[id]){const el=makeWin(id,false);place(id,el);desk.appendChild(el);open[id]={el,min:false};wire(el,id)}
   const o=open[id];o.el.hidden=false;o.min=false;focusWin(id);
 }
 /* in document mode, jump straight to a window and correct the position while lazy images above it load */
-function goTo(id){const t=document.getElementById(id);if(!t)return;t.scrollIntoView({block:'start'});
+function goTo(id){const t=typeof id==='string'?document.getElementById(id):id;if(!t)return;t.scrollIntoView({block:'start'});
   let n=0,stop=false;const quit=()=>{stop=true};addEventListener('touchstart',quit,{once:true,passive:true});addEventListener('wheel',quit,{once:true,passive:true});
   const fix=()=>{if(stop)return;const off=t.getBoundingClientRect().top-(parseFloat(getComputedStyle(t).scrollMarginTop)||0);if(Math.abs(off)>4)t.scrollIntoView({block:'start'});if(++n<8)setTimeout(fix,250)};setTimeout(fix,250)}
 function closeWin(id){const o=open[id];if(!o)return;o.el.remove();delete open[id];renderTabs()}
@@ -1077,11 +1082,10 @@ function setMode(m){
 $('#modeBtn').addEventListener('click',()=>setMode(document.body.classList.contains('docmode')?'desk':'doc'));
 
 /* ---------- phone menu ---------- */
-const MNAV_T={hello:'Hello',work:'All work',about:'About',hackathons:'Hackathons',cv:'CV',bagcheck:'Bagcheck',contact:'Contact'};
 const mnav=$('#mnav'),mbtn=$('#menuBtn'),mscrim=$('#mnavScrim'),curTab=$('#curTab');
-$('#mnavList').innerHTML=DOC_ORDER.map(id=>{const p=PROJ[id];const sym=ICON_SYM[id]||['DIR',p?p.accent:'#3FC1B0'];
-  const tag=p?(p.status==='soon'?'soon':p.badge||''):'';
-  return `<li><a href="#${id}" data-go="${id}"><span class="ico">${iconSvg(sym[0],sym[1],'-m')}</span><span class="txt"><b>${esc(p?p.title:MNAV_T[id])}</b><small>${esc(LABEL[id]||id+'/')}</small></span>${tag?`<span class="tag ${tag}">${tag}</span>`:''}</a></li>`}).join('');
+$('#mnavList').innerHTML='<li class="mlab">Projects</li>'+DATA.projects.filter(p=>p.status==='case').map(p=>
+  `<li><a href="#${p.id}" data-go="${p.id}">${esc(p.title)}${p.badge?`<span class="tag ${p.badge}">${p.badge}</span>`:''}</a></li>`).join('')+
+  '<li class="sep" role="presentation"></li><li><a href="#about" data-go="about">About &amp; contact</a></li>';
 function setMenu(on){mnav.hidden=!on;mscrim.hidden=!on;mbtn.setAttribute('aria-expanded',String(on));
   if(on){const a=mnav.querySelector('[aria-current="true"]')||mnav.querySelector('a');a.scrollIntoView({block:'nearest'});a.focus({preventScroll:true})}}
 mbtn.addEventListener('click',()=>setMenu(mnav.hidden));
