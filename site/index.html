@@ -273,6 +273,30 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .dlmsg{font-size:13.5px;color:var(--sub)}
 .dummy{color:var(--sub);font-style:italic}
 
+/* phone navigation */
+.menubtn{display:none;align-items:center;gap:7px;font:600 12.5px var(--mono);border:1.5px solid var(--ink);border-radius:6px;padding:4px 10px;background:#fff;white-space:nowrap}
+.menubtn .bars{width:14px;height:10px;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);position:relative}
+.menubtn .bars::after{content:"";position:absolute;left:0;right:0;top:2px;border-top:2px solid var(--ink)}
+.menubtn[aria-expanded="true"]{background:var(--gold)}
+.mnav{position:fixed;left:0;right:0;top:calc(var(--barH) + env(safe-area-inset-top,0px));z-index:60;background:var(--paper);color:var(--ink);border-bottom:2px solid var(--ink);max-height:calc(100dvh - var(--barH) - env(safe-area-inset-top,0px) - 40px);overflow:auto;overscroll-behavior:contain;padding:8px 10px 12px}
+.mnav ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.mnav a{display:flex;align-items:center;gap:12px;padding:8px;border-radius:8px;text-decoration:none;color:inherit}
+.mnav a:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+.mnav a[aria-current="true"]{background:var(--gold)}
+.mnav .ico{flex:none;width:36px;height:32px;display:grid;place-items:center}
+.mnav .ico svg{max-width:32px;max-height:32px;width:auto;height:auto}
+.mnav .txt{min-width:0}
+.mnav b{display:block;font:700 16px/1.2 var(--display)}
+.mnav small{display:block;font:500 11.5px var(--mono);color:var(--sub)}
+.mnav .tag{margin-left:auto;flex:none;font:700 10px var(--mono);border:1.5px solid var(--ink);border-radius:999px;padding:1px 7px;background:var(--coral);color:var(--ink)}
+.mnav .tag.piloted{background:var(--teal)}
+.mnav .tag.soon{background:transparent;border-style:dashed;border-color:var(--sub);color:var(--sub)}
+.mnav-scrim{position:fixed;inset:0;z-index:55;background:rgba(12,15,21,.5)}
+.curtab{display:none}
+.swipe-hint{display:none;font:600 11px var(--mono);letter-spacing:.8px;color:var(--sub)}
+.doc .win{scroll-margin-top:calc(var(--barH) + 14px + env(safe-area-inset-top,0px))}
+@media (min-width:761px){.mnav,.mnav-scrim{display:none!important}}
+
 @media (max-width:760px){
   h1{font-size:32px} h2{font-size:25px}
   .win .body{padding:18px 16px 22px}
@@ -291,7 +315,11 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
   .uigrid.two-one{grid-template-columns:1fr}
   .bagshot{max-width:240px;margin:0 auto}
   .menubar nav,.menubar .toggle,.taskbar .tabs,.taskbar .credit{display:none}
+  .menubtn{display:inline-flex}
+  .taskbar .curtab{display:block;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .swipe-hint{display:block}
 }
+@media (max-width:480px){.phase-t{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -310,7 +338,10 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
   <span class="sp"></span>
   <span class="phase" id="phase" title="Tonight's moon over London"></span>
   <button class="toggle" id="modeBtn">Read as a document</button>
+  <button class="menubtn" id="menuBtn" aria-expanded="false" aria-controls="mnav"><span class="bars" aria-hidden="true"></span>Menu</button>
 </header>
+<nav class="mnav" id="mnav" hidden aria-label="Sections"><ul id="mnavList"></ul></nav>
+<div class="mnav-scrim" id="mnavScrim" hidden></div>
 
 <main class="desk" id="desk" aria-label="Desktop">
   <div class="icons" id="icons" role="toolbar" aria-label="Files"></div>
@@ -323,6 +354,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 <footer class="taskbar">
   <button class="start" data-open="hello"><svg width="15" height="15" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="#0C0F15"/><path d="M10 1.5 A8.5 8.5 0 0 1 10 18.5 A4 8.5 0 0 0 10 1.5Z" fill="#F4F1EA"/></svg>Alex</button>
   <div class="tabs" id="tabs"></div>
+  <button class="tab on curtab" id="curTab" aria-controls="mnav" aria-label="Current section. Opens the menu">hello.txt</button>
   <span class="sp"></span>
   <span class="credit">built with Claude Code · London · 2026</span>
 </footer>
@@ -922,6 +954,7 @@ function fill(id,root){
           await dl.save({filename:'Aleksandra_Vugdragovic_CV_Product_Design.pdf',data:await r.blob()});msg.textContent='Sent to your downloads.'}
         catch(e){const c=e&&e.code;if(c==='declined')return;if(c==='rate_limited'){msg.textContent='A download prompt is already open.';return}
           btn.hidden=true;msg.textContent="Download isn't available here. Email me and I'll send it."}})});}
+  root.querySelectorAll('.diagram-wrap').forEach(w=>w.insertAdjacentHTML('afterend','<p class="swipe-hint">Swipe sideways to see the whole diagram →</p>'));
   if(reduce)root.querySelectorAll('video').forEach(v=>{v.removeAttribute('autoplay');v.controls=true;v.pause()});
 }
 function selectText(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
@@ -955,10 +988,14 @@ function place(id,w){
 function focusWin(id){Object.values(open).forEach(o=>o.el.classList.remove('focus'));const o=open[id];if(!o)return;o.el.style.zIndex=++z;o.el.classList.add('focus');renderTabs(id)}
 function openWin(id){
   if(!WINS[id])return;
-  if(document.body.classList.contains('docmode')){const t=document.getElementById(id)||document.getElementById('work');t&&t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});return}
+  if(document.body.classList.contains('docmode')){goTo(document.getElementById(id)?id:'work');return}
   if(!open[id]){const el=makeWin(id,false);place(id,el);desk.appendChild(el);open[id]={el,min:false};wire(el,id)}
   const o=open[id];o.el.hidden=false;o.min=false;focusWin(id);
 }
+/* in document mode, jump straight to a window and correct the position while lazy images above it load */
+function goTo(id){const t=document.getElementById(id);if(!t)return;t.scrollIntoView({block:'start'});
+  let n=0,stop=false;const quit=()=>{stop=true};addEventListener('touchstart',quit,{once:true,passive:true});addEventListener('wheel',quit,{once:true,passive:true});
+  const fix=()=>{if(stop)return;const off=t.getBoundingClientRect().top-(parseFloat(getComputedStyle(t).scrollMarginTop)||0);if(Math.abs(off)>4)t.scrollIntoView({block:'start'});if(++n<8)setTimeout(fix,250)};setTimeout(fix,250)}
 function closeWin(id){const o=open[id];if(!o)return;o.el.remove();delete open[id];renderTabs()}
 function renderTabs(active){tabs.innerHTML=Object.keys(open).map(id=>`<button class="tab${open[id].min?' min':''}${id===active?' on':''}" data-tab="${id}">${esc(WINS[id].title)}</button>`).join('')}
 function wire(el,id){
@@ -984,8 +1021,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){closeLb
 /* desktop icons */
 const ICON_SYM={hello:['TXT','#F2C14E'],work:['DIR','#6FA8FF'],moonmates:['DIR','#FF6B4A'],'qa-tool':['DIR','#3FC1B0'],careloop:['DIR','#6FA8FF'],about:['TXT','#B79CFF'],hackathons:['LOG','#3FC1B0'],cv:['PDF','#FF6B4A'],contact:['MSN','#3FC1B0'],bagcheck:['APP','#F5B544']};
 const LABEL={hello:'hello.txt',work:'work/',moonmates:'moonmates/','qa-tool':'qa-tool/',careloop:'careloop/',about:'about.txt',hackathons:'hackathons.log',cv:'CV.pdf',contact:'contact.txt',bagcheck:'bagcheck.app'};
-function iconSvg(kind,c){
-  if(kind==='MSN')return `<svg width="52" height="50" viewBox="0 0 52 50" aria-hidden="true"><defs><radialGradient id="buddyB" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#A8DBFF"/><stop offset=".5" stop-color="#2E8BE6"/><stop offset="1" stop-color="#15529E"/></radialGradient><radialGradient id="buddyG" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#C6F58E"/><stop offset=".5" stop-color="#4DB52A"/><stop offset="1" stop-color="#22731A"/></radialGradient></defs><g stroke="#0C0F15" stroke-width="2" stroke-linejoin="round"><path d="M22 40c0-11 5-17 12-17s12 6 12 17z" fill="url(#buddyB)"/><circle cx="34" cy="13" r="8" fill="url(#buddyB)"/><path d="M5 48c0-12 6-18 14-18s14 6 14 18z" fill="url(#buddyG)"/><circle cx="19" cy="19" r="9" fill="url(#buddyG)"/></g><ellipse cx="16" cy="15" rx="3.6" ry="2.2" fill="#fff" opacity=".55" transform="rotate(-25 16 15)"/><ellipse cx="31.5" cy="9.5" rx="3" ry="1.8" fill="#fff" opacity=".55" transform="rotate(-25 31.5 9.5)"/></svg>`;
+function iconSvg(kind,c,sfx=''){
+  if(kind==='MSN')return `<svg width="52" height="50" viewBox="0 0 52 50" aria-hidden="true"><defs><radialGradient id="buddyB${sfx}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#A8DBFF"/><stop offset=".5" stop-color="#2E8BE6"/><stop offset="1" stop-color="#15529E"/></radialGradient><radialGradient id="buddyG${sfx}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#C6F58E"/><stop offset=".5" stop-color="#4DB52A"/><stop offset="1" stop-color="#22731A"/></radialGradient></defs><g stroke="#0C0F15" stroke-width="2" stroke-linejoin="round"><path d="M22 40c0-11 5-17 12-17s12 6 12 17z" fill="url(#buddyB${sfx})"/><circle cx="34" cy="13" r="8" fill="url(#buddyB${sfx})"/><path d="M5 48c0-12 6-18 14-18s14 6 14 18z" fill="url(#buddyG${sfx})"/><circle cx="19" cy="19" r="9" fill="url(#buddyG${sfx})"/></g><ellipse cx="16" cy="15" rx="3.6" ry="2.2" fill="#fff" opacity=".55" transform="rotate(-25 16 15)"/><ellipse cx="31.5" cy="9.5" rx="3" ry="1.8" fill="#fff" opacity=".55" transform="rotate(-25 31.5 9.5)"/></svg>`;
   if(kind==='APP')return `<svg width="50" height="50" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="${c}" stroke="#0C0F15" stroke-width="2"/><path d="M8 15 Q16 9 24 15" stroke="#1A1405" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M9.5 20 Q16 25 22.5 20" stroke="#1A1405" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`;
   if(kind==='DIR')return `<svg width="54" height="46" viewBox="0 0 54 46" aria-hidden="true"><path d="M3 9 h17 l5 6 h26 v28 H3 Z" fill="${c}" stroke="#0C0F15" stroke-width="2.5" stroke-linejoin="round"/><path d="M3 19 H51" stroke="#0C0F15" stroke-width="2.5"/></svg>`;
   return `<svg width="46" height="56" viewBox="0 0 46 56" aria-hidden="true"><path d="M3 3 H31 L43 15 V53 H3 Z" fill="#F4F1EA" stroke="#0C0F15" stroke-width="2.5" stroke-linejoin="round"/><path d="M31 3 V15 H43" fill="none" stroke="#0C0F15" stroke-width="2.5" stroke-linejoin="round"/><rect x="3" y="32" width="40" height="14" fill="${c}" stroke="#0C0F15" stroke-width="2.5"/><text x="23" y="43" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" fill="#0C0F15">${kind}</text></svg>`;
@@ -1039,13 +1076,35 @@ function setMode(m){
 }
 $('#modeBtn').addEventListener('click',()=>setMode(document.body.classList.contains('docmode')?'desk':'doc'));
 
+/* ---------- phone menu ---------- */
+const MNAV_T={hello:'Hello',work:'All work',about:'About',hackathons:'Hackathons',cv:'CV',bagcheck:'Bagcheck',contact:'Contact'};
+const mnav=$('#mnav'),mbtn=$('#menuBtn'),mscrim=$('#mnavScrim'),curTab=$('#curTab');
+$('#mnavList').innerHTML=DOC_ORDER.map(id=>{const p=PROJ[id];const sym=ICON_SYM[id]||['DIR',p?p.accent:'#3FC1B0'];
+  const tag=p?(p.status==='soon'?'soon':p.badge||''):'';
+  return `<li><a href="#${id}" data-go="${id}"><span class="ico">${iconSvg(sym[0],sym[1],'-m')}</span><span class="txt"><b>${esc(p?p.title:MNAV_T[id])}</b><small>${esc(LABEL[id]||id+'/')}</small></span>${tag?`<span class="tag ${tag}">${tag}</span>`:''}</a></li>`}).join('');
+function setMenu(on){mnav.hidden=!on;mscrim.hidden=!on;mbtn.setAttribute('aria-expanded',String(on));
+  if(on){const a=mnav.querySelector('[aria-current="true"]')||mnav.querySelector('a');a.scrollIntoView({block:'nearest'});a.focus({preventScroll:true})}}
+mbtn.addEventListener('click',()=>setMenu(mnav.hidden));
+curTab.addEventListener('click',()=>setMenu(mnav.hidden));
+mscrim.addEventListener('click',()=>setMenu(false));
+mnav.addEventListener('click',e=>{const a=e.target.closest('[data-go]');if(!a)return;e.preventDefault();setMenu(false);openWin(a.dataset.go);try{history.replaceState(null,'','#'+a.dataset.go)}catch(_){}});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!mnav.hidden){setMenu(false);mbtn.focus()}});
+let spyQ=false;
+function spy(){spyQ=false;if(!document.body.classList.contains('docmode'))return;let cur=DOC_ORDER[0];
+  const wins=document.querySelectorAll('#doc > .win');wins.forEach(w=>{if(w.getBoundingClientRect().top<innerHeight*.35)cur=w.id});
+  if(wins.length&&innerHeight+scrollY>=document.documentElement.scrollHeight-2)cur=wins[wins.length-1].id;
+  mnav.querySelectorAll('[data-go]').forEach(a=>a.setAttribute('aria-current',String(a.dataset.go===cur)));
+  curTab.textContent=WINS[cur]?WINS[cur].title:cur}
+addEventListener('scroll',()=>{if(!spyQ){spyQ=true;requestAnimationFrame(spy)}},{passive:true});
+requestAnimationFrame(spy);
+
 /* ---------- tonight's moon (real phase) ---------- */
 (function(){const syn=29.530588853,ref=Date.UTC(2000,0,6,18,14)/864e5;const age=((Date.now()/864e5-ref)%syn+syn)%syn;
   const k=(1-Math.cos(2*Math.PI*age/syn))/2,wax=age<syn/2,r=8,cx=10,cy=10;
   let lit='';if(k>.98)lit=`<circle cx="10" cy="10" r="8" fill="#F2C14E"/>`;else if(k>.02){const rx=Math.abs(1-2*k)*r;const s1=wax?1:0;const s2=(k<.5)===wax?0:1;
     lit=`<path d="M${cx} ${cy-r} A${r} ${r} 0 0 ${s1} ${cx} ${cy+r} A${rx} ${r} 0 0 ${s2} ${cx} ${cy-r}Z" fill="#F2C14E"/>`}
   const toFull=Math.round(((syn/2-age)+syn)%syn);const txt=k>.98?'full moon tonight':k<.02?'new moon tonight':toFull===0?'full moon tonight':`full moon in ${toFull} day${toFull===1?'':'s'}`;
-  $('#phase').innerHTML=`<svg width="15" height="15" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="#232A3B" stroke="#0C0F15" stroke-width="1.5"/>${lit}</svg>${txt}`})();
+  $('#phase').innerHTML=`<svg width="15" height="15" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="#232A3B" stroke="#0C0F15" stroke-width="1.5"/>${lit}</svg><span class="phase-t">${txt}</span>`})();
 
 /* ---------- stars ---------- */
 (function(){const s=$('#stars');let seed=7;const rnd=()=>(seed=seed*16807%2147483647)/2147483647;let h='';
