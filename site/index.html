@@ -231,6 +231,16 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .cmp-b ul.ticks li::before{border-color:var(--paper)}
 .reflect{background:var(--gold);color:var(--ink);padding:18px 18px 14px;transform:rotate(-.6deg);box-shadow:5px 6px 0 rgba(0,0,0,.2);font:700 23px/1.15 var(--hand);max-width:520px}
 
+.cc-anim{position:relative;aspect-ratio:4/5;background:#CFE7A6}
+.cc-anim svg{display:block;width:100%;height:100%}
+.cc-card{position:absolute;left:10px;right:10px;bottom:10px;display:flex;gap:10px;align-items:center;background:#FFFBEF;color:var(--text);border:2px solid var(--text);border-radius:12px;box-shadow:3px 3px 0 var(--text);padding:8px 11px;line-height:1.25}
+.cc-card .dot{flex:none;width:10px;height:10px;border-radius:50%;background:#2C9A58;box-shadow:0 0 0 3px #DBF2E1}
+.cc-card.alert .dot{background:#FF5A36;box-shadow:0 0 0 3px #FFE2D8}
+.cc-card b{display:block;font:700 14px var(--display)}
+.cc-card small{display:block;font-size:12px;color:var(--sub)}
+.cc-card.pop{animation:cc-pop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes cc-pop{from{transform:translateY(14px) scale(.96);opacity:0}}
+
 /* folder (work) */
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
 .card{text-align:left;border:2px solid var(--text);border-radius:12px;background:var(--paper);padding:14px 14px 12px;display:flex;flex-direction:column;gap:8px;box-shadow:4px 4px 0 var(--c,var(--teal))}
@@ -693,7 +703,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
     </dl>
 
     <div class="hero-media">
-      <div class="vidframe" style="box-shadow:6px 6px 0 #7DC46A"><img src="media/cowcompass_hero.jpg" alt="Cow Compass on a phone: Daisy is outside the field, 420 metres away, with a route from the farmer to her"></div>
+      <div class="vidframe cc-anim" style="box-shadow:6px 6px 0 #7DC46A" role="img" aria-label="Animation of the prototype's farm: sixteen cows graze in the North field, Daisy walks out through the north gate, the app raises an alert, and she walks back in."><svg viewBox="10 62 360 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect x="-300" y="-300" width="990" height="1220" fill="#CFE7A6"/><g fill="none" stroke="#AFCF80" stroke-width="1.6"><path d="M-10 470c60-30 120-10 170 20s130 40 240-10"/><path d="M-10 505c70-24 130-2 180 24s140 30 230-14"/><path d="M200 -10c-10 60 40 90 110 100s90 30 100 70"/><path d="M240 -10c-6 44 34 66 90 74s70 26 80 56"/></g><path d="M-300 22L0 34C90 52 170 64 250 58S360 40 400 50L700 44V-300H-300Z" fill="#E6E0C8"/><path d="M-300 34L-10 46C90 66 170 76 250 70S360 52 400 62L700 56" fill="none" stroke="#52524C" stroke-width="18" stroke-linecap="round"/><path d="M-300 34L-10 46C90 66 170 76 250 70S360 52 400 62L700 56" fill="none" stroke="#FFFBEF" stroke-width="1.6" stroke-dasharray="10 10"/><g fill="#5F9B4F" stroke="#17200F" stroke-width="1.6"><path d="M262 96c18-14 44-12 58 0 22-10 54 0 62 18 12 8 14 30 4 42-4 22-34 26-50 18-16 14-46 12-58-4-22 2-36-20-28-38-6-18 2-32 12-36z"/><path d="M-4 200c16-8 34-2 40 10 10 10 6 30-6 36-4 16-24 20-34 12z"/></g><g fill="#4C8540" stroke="#17200F" stroke-width="1.2"><circle cx="282" cy="112" r="7"/><circle cx="306" cy="104" r="7"/><circle cx="336" cy="118" r="7"/><circle cx="358" cy="134" r="7"/><circle cx="290" cy="140" r="7"/><circle cx="318" cy="146" r="7"/><circle cx="344" cy="158" r="7"/><circle cx="300" cy="170" r="7"/><circle cx="10" cy="214" r="7"/><circle cx="20" cy="236" r="7"/></g><path d="M-10 280c40 10 50 40 34 80s-10 90 30 120 50 80 40 150" fill="none" stroke="#8FD0EA" stroke-width="12" stroke-linecap="round"/><rect x="286" y="318" width="30" height="12" rx="5" fill="#8FD0EA" stroke="#17200F" stroke-width="1.6"/><path d="M70 175L180 150L300 150L338 250L322 385L205 440L112 425L56 320Z" fill="rgba(255,251,239,.22)" stroke="#FFFBEF" stroke-width="7" stroke-linejoin="round"/><path d="M70 175L180 150L300 150L338 250L322 385L205 440L112 425L56 320Z" fill="none" stroke="#17200F" stroke-width="2" stroke-dasharray="7 6" stroke-linejoin="round"/><g fill="#FFFBEF" stroke="#17200F" stroke-width="1.6"><circle cx="70" cy="175" r="3.6"/><circle cx="180" cy="150" r="3.6"/><circle cx="300" cy="150" r="3.6"/><circle cx="338" cy="250" r="3.6"/><circle cx="322" cy="385" r="3.6"/><circle cx="205" cy="440" r="3.6"/><circle cx="112" cy="425" r="3.6"/><circle cx="56" cy="320" r="3.6"/></g><g font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1.2"><text x="300" y="196" fill="#FFFBEF">FOREST</text><text x="274" y="346" fill="#17200F" opacity=".7">WATER</text><text x="226" y="454" fill="#17200F" opacity=".6">NORTH FIELD</text></g><path class="cc-trail" d="" fill="none" stroke="#FF5A36" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/><g transform="translate(180 150)"><rect x="-13" y="-6" width="26" height="12" rx="3" fill="#F2B33A" stroke="#17200F" stroke-width="1.6"/><text y="-12" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600" fill="#17200F">NORTH GATE</text></g><g class="cc-cows"></g></svg><div class="cc-card" aria-hidden="true"><span class="dot"></span><span><b>All 16 cows are safe</b><small>North field · updated just now</small></span></div></div>
       <div class="stack">
         <span class="k">The idea</span>
         <h3>When a cow gets out, the farmer needs to know where she is, how old that position is, and how to reach her.</h3>
@@ -1110,6 +1120,47 @@ function projectBody(p){
     <p>${esc(p.summary)}</p>${p.facts?`<ul class="ticks" style="--accent:${p.accent}">${p.facts.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>`:''}
     <div class="btnrow">${link}</div></div>`;
 }
+/* Cow Compass hero: the farm from the prototype. The herd grazes, Daisy gets out through the north gate and comes back. */
+function ccAnim(root){const box=root.querySelector('.cc-anim');if(!box)return;
+  const g=box.querySelector('.cc-cows'),trail=box.querySelector('.cc-trail'),card=box.querySelector('.cc-card');
+  const F=[[70,175],[180,150],[300,150],[338,250],[322,385],[205,440],[112,425],[56,320]];
+  const inside=(x,y)=>{let c=false;for(let i=0,j=F.length-1;i<F.length;j=i++){const[a,b]=F[i],[p,q]=F[j];if((b>y)!==(q>y)&&x<(p-a)*(y-b)/(q-b)+a)c=!c}return c};
+  let seed=11;const rnd=()=>(seed=seed*16807%2147483647)/2147483647;
+  const herd=[];
+  const spot=(cx,cy,r,self,gap)=>{for(let k=0;k<80;k++){const x=cx+(rnd()*2-1)*r,y=cy+(rnd()*2-1)*r;
+    if([[0,0],[12,0],[-12,0],[0,12],[0,-12]].every(([a,b])=>inside(x+a,y+b))&&herd.every(c=>c===self||Math.hypot(c.tx-x,c.ty-y)>=gap))return[x,y]}return[cx,cy]};
+  for(let i=0;i<16;i++){const[x,y]=i===0?[196,228]:spot(200,300,140,null,34);herd.push({x,y,tx:x,ty:y,h:rnd()*360,sp:9+rnd()*7,wait:rnd()*3})}
+  const COW='<ellipse cx="0" cy="4" rx="9" ry="12" fill="#FFFBEF" stroke="#17200F" stroke-width="1.8"/><path d="M-6 0c2-3 6-2 6 1s-4 4-6 2z" fill="#17200F"/><circle cx="4.5" cy="9" r="3" fill="#17200F"/><path d="M2 -3c2 0 3 1 3 2s-2 1-3 0z" fill="#17200F"/><ellipse cx="-6.5" cy="-11.5" rx="3" ry="1.6" fill="#FFFBEF" stroke="#17200F" stroke-width="1.4" transform="rotate(-20 -6.5 -11.5)"/><ellipse cx="6.5" cy="-11.5" rx="3" ry="1.6" fill="#FFFBEF" stroke="#17200F" stroke-width="1.4" transform="rotate(20 6.5 -11.5)"/><ellipse cx="0" cy="-11" rx="5.2" ry="6" fill="#F6C6B4" stroke="#17200F" stroke-width="1.8"/><circle cx="-1.8" cy="-14" r=".9" fill="#17200F"/><circle cx="1.8" cy="-14" r=".9" fill="#17200F"/>';
+  const RING='<g class="cc-ring" visibility="hidden"><circle r="12" fill="#FF5A36" opacity=".5"><animate attributeName="r" values="10;26" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".6;0" dur="1.6s" repeatCount="indefinite"/></circle><circle r="15" fill="none" stroke="#FF5A36" stroke-width="3"/></g>';
+  const NAME='<text class="cc-name" visibility="hidden" y="-21" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" font-weight="700" paint-order="stroke" stroke="#FFFBEF" stroke-width="3.5" fill="#17200F">Daisy</text>';
+  g.innerHTML=herd.map((c,i)=>`<g>${i===0?RING:''}<g class="b">${COW}</g>${i===0?NAME:''}</g>`).join('');
+  const els=[...g.children],bodies=els.map(e=>e.querySelector('.b')),D=herd[0],ring=g.querySelector('.cc-ring'),name=g.querySelector('.cc-name');
+  const paint=()=>herd.forEach((c,i)=>{els[i].setAttribute('transform',`translate(${c.x.toFixed(1)} ${c.y.toFixed(1)})`);bodies[i].setAttribute('transform',`rotate(${c.h.toFixed(0)})`)});
+  const say=(kind,b,s)=>{card.className='cc-card '+kind;card.innerHTML=`<span class="dot"></span><span><b>${b}</b><small>${s}</small></span>`;void card.offsetWidth;card.classList.add('pop')};
+  const steer=(c,dt,speed)=>{const dx=c.tx-c.x,dy=c.ty-c.y,d=Math.hypot(dx,dy);if(d<1.2)return true;
+    const want=Math.atan2(dy,dx)*180/Math.PI+90;const diff=((want-c.h+540)%360)-180;c.h+=Math.max(-200*dt,Math.min(200*dt,diff));
+    const step=Math.min(d,speed*dt);c.x+=dx/d*step;c.y+=dy/d*step;return false};
+  const OUT=[[184,186],[180,150],[188,130],[202,114],[222,104],[244,100]];
+  let phase='graze',pt=0,path=null,pi=0,trailPts=[],alerted=false,back=false;
+  const follow=(dt,speed)=>{D.tx=path[pi][0];D.ty=path[pi][1];if(steer(D,dt,speed)){pi++;return pi>=path.length}return false};
+  function tick(dt){pt+=dt;
+    herd.forEach((c,i)=>{if(i===0&&phase!=='graze'&&phase!=='home')return;
+      if(c.wait>0){c.wait-=dt;return}
+      if(steer(c,dt,c.sp)){const[x,y]=spot(c.x,c.y,50,c,26);c.tx=x;c.ty=y;c.wait=1+rnd()*3.5}});
+    if(phase==='graze'&&pt>3){phase='out';pt=0;path=OUT;pi=0;alerted=false;trailPts=[];trail.style.opacity=1}
+    else if(phase==='out'){if(D.y<150){trailPts.push([D.x,D.y]);if(!alerted){alerted=true;ring.setAttribute('visibility','visible');name.setAttribute('visibility','visible');say('alert','Daisy left the North field','Near the north gate · just now')}}
+      if(follow(dt,28)){phase='lost';pt=0;say('alert','Daisy is 420 m from you','At the forest edge · updated 20 s ago')}}
+    else if(phase==='lost'&&pt>2.8){phase='back';pt=0;path=[...OUT].reverse().concat([[194,214]]);pi=0;back=false}
+    else if(phase==='back'){if(!back&&D.y>162){back=true;ring.setAttribute('visibility','hidden');name.setAttribute('visibility','hidden');trail.style.transition='opacity 1.2s';trail.style.opacity=0;say('safe','Daisy is back inside','All 16 safe · logged in 10 seconds')}
+      if(follow(dt,32)){phase='home';pt=0;D.tx=D.x;D.ty=D.y;D.wait=2}}
+    else if(phase==='home'&&pt>4){phase='graze';pt=0;trail.style.transition='';trail.setAttribute('d','');say('safe','All 16 cows are safe','North field · updated just now')}
+    if(trailPts.length>1&&phase!=='home'&&phase!=='graze')trail.setAttribute('d','M'+trailPts.filter((p,i)=>i%3===0||i===trailPts.length-1).map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L'))}
+  paint();
+  if(reduce||!('IntersectionObserver' in window))return;
+  let last=0,raf=0,vis=false;
+  const frame=t=>{raf=0;if(!vis)return;const dt=last?Math.min(.05,(t-last)/1000):0;last=t;tick(dt);paint();raf=requestAnimationFrame(frame)};
+  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis&&!raf){last=0;raf=requestAnimationFrame(frame)}}).observe(box);
+}
 function fill(id,root){
   if(id==='work'){const c=root.querySelector('#cards');c.removeAttribute('id');
     c.innerHTML=DATA.projects.map(p=>`<button class="card" style="--c:${p.accent}" data-open="${p.id}"><span class="meta">${esc(p.meta)}</span><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p>
@@ -1127,6 +1178,7 @@ function fill(id,root){
         catch(e){const c=e&&e.code;if(c==='declined')return;if(c==='rate_limited'){msg.textContent='A download prompt is already open.';return}
           btn.hidden=true;msg.textContent="Download isn't available here. Email me and I'll send it."}})});}
   root.querySelectorAll('.diagram-wrap').forEach(w=>w.insertAdjacentHTML('afterend','<p class="swipe-hint">Swipe sideways to see the whole diagram →</p>'));
+  if(id==='cow-compass')ccAnim(root);
   if(window.claude)root.querySelectorAll('[data-proto]').forEach(a=>a.href='https://claude.ai/artifact/SB7LjSxWTgQRXPyY1fi15Z');
   if(reduce)root.querySelectorAll('video').forEach(v=>{v.removeAttribute('autoplay');v.controls=true;v.pause()});
 }
