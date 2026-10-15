@@ -371,9 +371,8 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
      "summary":"A shared savings app for the friends you keep meaning to see. Won the Engine by Starling challenge at HuddleHive Hack."},
     {"id":"careloop","title":"CareLoop","accent":"#6FA8FF","status":"case","meta":"Hackathon · Mar 2026","badge":"winner",
      "summary":"A voice-first symptom diary. I led a team of five to a working prototype in 24 hours, and we won the Accurx challenge at the HuddleHive NHS Hackathon."},
-    {"id":"cow-compass","title":"Cow Compass","accent":"#3FC1B0","status":"soon","meta":"Personal project · 2024",
-     "summary":"Started when my family's bulls went missing in 2024. Four interviews with farmers in rural Croatia, mapped into a user journey and a user flow.",
-     "facts":["4 interviews","Journey map and user flow"]}
+    {"id":"cow-compass","title":"Cow Compass","accent":"#7DC46A","status":"case","meta":"Personal project · 2026",
+     "summary":"A herd tracker for small farms with patchy signal. I interviewed four farming households in rural Croatia and designed a clickable prototype for the moment a cow gets out."}
   ]
 }
 </script>
@@ -678,6 +677,169 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
   </article>
 </template>
 
+<template id="t-cow-compass">
+  <article class="stack-l">
+    <header class="stack" style="gap:10px">
+      <div class="pillrow"><span class="pill">Personal project</span><span class="pill">Concept</span><span class="pill">Rural Croatia</span></div>
+      <h1>Cow Compass</h1>
+      <p class="lead">A herd tracker for small farms where the signal comes and goes. It started when my family's bulls went missing for nearly two weeks. I interviewed four farming households in rural Croatia and designed a clickable prototype for the moment a cow gets out.</p>
+    </header>
+
+    <dl class="facts">
+      <div><dt>Research</dt><dd>4 interviews</dd></div>
+      <div><dt>Where</dt><dd>Gornji Skrad and Lasinjski Sjeničak</dd></div>
+      <div><dt>My role</dt><dd>Everything, from research to prototype</dd></div>
+      <div><dt>Built with</dt><dd>Paper, FigJam, Claude Code</dd></div>
+    </dl>
+
+    <div class="hero-media">
+      <div class="vidframe" style="box-shadow:6px 6px 0 #7DC46A"><img src="media/cowcompass_hero.jpg" alt="Cow Compass on a phone: Daisy is outside the field, 420 metres away, with a route from the farmer to her"></div>
+      <div class="stack">
+        <span class="k">The idea</span>
+        <h3>When a cow gets out, the farmer needs to know where she is, how old that position is, and how to reach her.</h3>
+        <p>Cow Compass answers those three things on one screen. It keeps working when the phone loses signal, because on a hill farm that happens all the time.</p>
+        <div class="btnrow"><a class="btn primary" data-proto href="cow-compass/" target="_blank" rel="noopener">Try the prototype</a></div>
+      </div>
+    </div>
+
+    <hr class="cut">
+
+    <section class="stack">
+      <span class="k">01 · Context &amp; problem</span>
+      <h2>Small farms lose animals and look for them the old way</h2>
+      <p>In spring 2024 two bulls got out of my family's farm and were missing for nearly two weeks. My parents and the neighbours searched for them and lost time and money. The bulls damaged nearby properties, and when they were found they were thinner, stressed and confused. My family said they wished they had something that could track them.</p>
+      <p>That became the problem I wanted to understand. Farmers struggle to keep track of their animals and to get them back when they escape, and every escape costs money, time and stress.</p>
+      <p>Farms like ours are common. About 90% of the world's 570 million farms are run by families. In Croatia, 69.5% of farms are smaller than 5 hectares and a third of farm managers are 65 or older. In rural parts of the EU, fewer than half of people have basic digital skills. Livestock trackers on the market are built for large commercial herds, priced per collar with a monthly fee.</p>
+      <p class="small-note">Sources: <a href="https://openknowledge.fao.org/items/0c402799-d523-4164-b953-75f262fb7fbe" target="_blank" rel="noopener">FAO, The State of Food and Agriculture 2014</a>. <a href="https://ec.europa.eu/eurostat/documents/2995521/9028470/5-28062018-AP-EN.pdf" target="_blank" rel="noopener">Eurostat, Farm Structure Survey 2016</a>. <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Urban-rural_Europe_-_digital_society" target="_blank" rel="noopener">Eurostat, Urban-rural Europe: digital society, 2023</a>.</p>
+    </section>
+
+    <section class="stack">
+      <span class="k">02 · Research</span>
+      <h2>I talked to four farming households</h2>
+      <p>I interviewed farmers in Gornji Skrad and Lasinjski Sjeničak, two villages in rural Croatia. They keep bulls, cows and calves, between 5 and 20 animals. Some use apps every day and others farm without them. Today they find their animals by looking, by listening for the bell, with food as bait, with help from neighbours and with fences.</p>
+      <h3>What they told me</h3>
+      <ul class="ticks" style="--accent:#7DC46A">
+        <li>Animals get out and move unpredictably, and nobody knows where they are until someone finds them.</li>
+        <li>A search brings panic and helplessness, and the fear that the animal will hurt someone or damage a neighbour's property.</li>
+        <li>Searching means long walks over rough ground, sometimes every day.</li>
+        <li>They rely on other people and old methods, and they want a better way to track their animals.</li>
+        <li>An animal that has been out loses weight or gets hurt, and a small farm feels every loss.</li>
+      </ul>
+      <p>From the interviews I made one persona: a small-scale farmer, 50, with a herd of 5 to 25 cows in a remote village with poor signal and little technology.</p>
+      <h3>What's on the market</h3>
+      <p>I looked at eShepherd by Gallagher, Nofence, mOOvement and Monil. Some of what they do well made it into my prototype: map views farmers already know, night-time battery saving and alerts about the collars themselves. They are built for commercial herds in developed markets, and cost is where smallholders stop. One small farmer wrote online that a $60 tag already hurts.</p>
+      <p>My SWOT turned into three decisions for the concept.</p>
+      <ul class="ticks" style="--accent:#7DC46A">
+        <li>Keep the first version to animal safety and escape alerts rather than heavy analytics.</li>
+        <li>Design for poor connectivity from the start, because a weak signal is normal in these villages.</li>
+        <li>Treat the collar as a dependency I don't control, and be honest on screen about what it can and can't see.</li>
+      </ul>
+    </section>
+
+    <section class="stack">
+      <span class="k">03 · Journey map and user flow</span>
+      <h2>Following Daisy from the alert to the log</h2>
+      <p>I mapped one escape, Daisy, cow number 7, from a normal morning to the moment the farmer looks back on it. Every stage has what the farmer is thinking and the opportunity for the app.</p>
+      <figure class="uifig"><div class="diagram-wrap"><svg class="diagram" viewBox="0 0 760 452" role="img" aria-label="Journey map of one escape in six stages: monitoring, event trigger, assessment, action, resolution and reflection, each with what the farmer thinks and the opportunity for the app." font-family="DM Sans, sans-serif" font-size="12.5"><defs><marker id="cc-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#16181F"/></marker></defs><text x="24" y="34" font-size="16" font-weight="700" font-family="Space Grotesk, sans-serif" fill="#16181F">One escape, from a normal morning to looking back</text><rect x="16" y="60" width="232" height="176" rx="10" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><rect x="26" y="70" width="212" height="26" rx="13" fill="#DBF2E1" stroke="#16181F" stroke-width="1.2"/><text x="38" y="87.5" font-weight="700" font-size="13" fill="#16181F">1 · Monitoring</text><text x="28" y="116" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">THINKS</text><text font-style="italic" fill="#16181F"><tspan x="28" y="134">“Ok, everything looks normal.”</tspan></text><text x="28" y="178" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">OPPORTUNITY</text><text fill="#16181F"><tspan x="28" y="196">All cows, the boundary and</tspan><tspan x="28" y="212">the last sync on one screen.</tspan></text><rect x="264" y="60" width="232" height="176" rx="10" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><rect x="274" y="70" width="212" height="26" rx="13" fill="#FFE2D8" stroke="#16181F" stroke-width="1.2"/><text x="286" y="87.5" font-weight="700" font-size="13" fill="#16181F">2 · Event trigger</text><text x="276" y="116" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">THINKS</text><text font-style="italic" fill="#16181F"><tspan x="276" y="134">“Oh no, Daisy got out!”</tspan></text><text x="276" y="178" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">OPPORTUNITY</text><text fill="#16181F"><tspan x="276" y="196">The alert says “Daisy left the</tspan><tspan x="276" y="212">boundary. 3 minutes ago.”</tspan></text><rect x="512" y="60" width="232" height="176" rx="10" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><rect x="522" y="70" width="212" height="26" rx="13" fill="#FFF0C9" stroke="#16181F" stroke-width="1.2"/><text x="534" y="87.5" font-weight="700" font-size="13" fill="#16181F">3 · Assessment</text><text x="524" y="116" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">THINKS</text><text font-style="italic" fill="#16181F"><tspan x="524" y="134">“How far did she go? Is she</tspan><tspan x="524" y="150">going towards the roads?”</tspan></text><text x="524" y="178" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">OPPORTUNITY</text><text fill="#16181F"><tspan x="524" y="196">Always say when the position</tspan><tspan x="524" y="212">was last updated.</tspan></text><rect x="16" y="262" width="232" height="176" rx="10" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><rect x="26" y="272" width="212" height="26" rx="13" fill="#FFF0C9" stroke="#16181F" stroke-width="1.2"/><text x="38" y="289.5" font-weight="700" font-size="13" fill="#16181F">4 · Action</text><text x="28" y="318" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">THINKS</text><text font-style="italic" fill="#16181F"><tspan x="28" y="336">“She’s not far! I can get to her</tspan><tspan x="28" y="352">in 10 minutes.”</tspan></text><text x="28" y="380" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">OPPORTUNITY</text><text fill="#16181F"><tspan x="28" y="398">Show me next to her, how far,</tspan><tspan x="28" y="414">and whether she’s moving.</tspan></text><rect x="264" y="262" width="232" height="176" rx="10" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><rect x="274" y="272" width="212" height="26" rx="13" fill="#DBF2E1" stroke="#16181F" stroke-width="1.2"/><text x="286" y="289.5" font-weight="700" font-size="13" fill="#16181F">5 · Resolution</text><text x="276" y="318" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">THINKS</text><text font-style="italic" fill="#16181F"><tspan x="276" y="336">“All animals are safe.”</tspan></text><text x="276" y="380" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">OPPORTUNITY</text><text fill="#16181F"><tspan x="276" y="398">Mark as resolved, add a note.</tspan></text><rect x="512" y="262" width="232" height="176" rx="10" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><rect x="522" y="272" width="212" height="26" rx="13" fill="#E6E9F3" stroke="#16181F" stroke-width="1.2"/><text x="534" y="289.5" font-weight="700" font-size="13" fill="#16181F">6 · Reflection</text><text x="524" y="318" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">THINKS</text><text font-style="italic" fill="#16181F"><tspan x="524" y="336">“This is when they are escaping,</tspan><tspan x="524" y="352">they might be lactating.”</tspan></text><text x="524" y="380" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1" fill="#585D69">OPPORTUNITY</text><text fill="#16181F"><tspan x="524" y="398">Patterns per cow: when, where</tspan><tspan x="524" y="414">and what might be behind it.</tspan></text><g fill="none" stroke="#16181F" stroke-width="1.5"><path d="M248 148.0H262" marker-end="url(#cc-arrow)"/><path d="M496 148.0H510" marker-end="url(#cc-arrow)"/><path d="M248 350.0H262" marker-end="url(#cc-arrow)"/><path d="M496 350.0H510" marker-end="url(#cc-arrow)"/><path d="M628.0 236V249H132.0V260" marker-end="url(#cc-arrow)"/></g></svg></div><figcaption>Redrawn from my FigJam board. The thoughts are the farmer's as I imagined them after the interviews, not quotes.</figcaption></figure>
+      <figure class="uifig"><div class="diagram-wrap"><svg class="diagram" viewBox="0 0 760 312" role="img" aria-label="User flow when a cow leaves the boundary: dashboard, geofence breach, push alert, a choice to see where she is, a choice to sync the latest position, then share, navigate or mark as found, and the cow is found." font-family="DM Sans, sans-serif" font-size="12.5"><defs><marker id="cc-arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#16181F"/></marker></defs><text x="24" y="34" font-size="16" font-weight="700" font-family="Space Grotesk, sans-serif" fill="#16181F">When a cow leaves the boundary</text><rect x="16" y="62" width="90" height="48" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="61.0" y="90.5">Open app</tspan></text><rect x="124" y="62" width="118" height="48" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="183.0" y="82.5">Dashboard:</tspan><tspan x="183.0" y="98.5">all inside</tspan></text><rect x="260" y="62" width="118" height="48" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="319.0" y="82.5">Cow leaves</tspan><tspan x="319.0" y="98.5">the geofence</tspan></text><rect x="396" y="62" width="112" height="48" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="452.0" y="82.5">Push alert</tspan><tspan x="452.0" y="98.5">(can be ignored)</tspan></text><rect x="526" y="62" width="112" height="48" rx="8" fill="rgba(125,196,106,.25)" stroke="#3E8A33" stroke-width="2"/><text text-anchor="middle" fill="#16181F" font-weight="700"><tspan x="582.0" y="82.5">See where</tspan><tspan x="582.0" y="98.5">she is?</tspan></text><rect x="660" y="62" width="86" height="48" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="703.0" y="82.5">Stay on</tspan><tspan x="703.0" y="98.5">dashboard</tspan></text><rect x="16" y="198" width="140" height="48" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="86.0" y="218.5">Map centres on her,</tspan><tspan x="86.0" y="234.5">next to the herd</tspan></text><rect x="178" y="198" width="124" height="48" rx="8" fill="rgba(125,196,106,.25)" stroke="#3E8A33" stroke-width="2"/><text text-anchor="middle" fill="#16181F" font-weight="700"><tspan x="240.0" y="218.5">Sync the latest</tspan><tspan x="240.0" y="234.5">position?</tspan></text><rect x="326" y="158" width="126" height="44" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="389.0" y="184.5">Zoom to latest</tspan></text><rect x="326" y="240" width="126" height="48" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="389.0" y="260.5">Last known</tspan><tspan x="389.0" y="276.5">position</tspan></text><rect x="476" y="198" width="154" height="48" rx="8" fill="#FBF9F4" stroke="#16181F" stroke-width="1.5"/><text text-anchor="middle" fill="#16181F"><tspan x="553.0" y="218.5">Share · Navigate ·</tspan><tspan x="553.0" y="234.5">Mark as found</tspan></text><rect x="652" y="198" width="94" height="48" rx="8" fill="rgba(125,196,106,.45)" stroke="#3E8A33" stroke-width="2"/><text text-anchor="middle" fill="#16181F" font-weight="700"><tspan x="699.0" y="226.5">Cow found</tspan></text><g fill="none" stroke="#16181F" stroke-width="1.5"><path d="M106 86H122" marker-end="url(#cc-arrow2)"/><path d="M242 86H258" marker-end="url(#cc-arrow2)"/><path d="M378 86H394" marker-end="url(#cc-arrow2)"/><path d="M508 86H524" marker-end="url(#cc-arrow2)"/><path d="M638 86H658" marker-end="url(#cc-arrow2)"/><path d="M582 110V150H86V196" marker-end="url(#cc-arrow2)"/><path d="M156 222H176" marker-end="url(#cc-arrow2)"/><path d="M302 222H312V180H324" marker-end="url(#cc-arrow2)"/><path d="M312 222V264H324" marker-end="url(#cc-arrow2)"/><path d="M452 180H464V222H474" marker-end="url(#cc-arrow2)"/><path d="M452 264H464V222"/><path d="M630 222H650" marker-end="url(#cc-arrow2)"/></g><g font-size="11.5" font-weight="700" fill="#3E8A33"><text x="642" y="80">no</text><text x="590" y="132">yes</text><text x="296" y="172">yes</text><text x="296" y="282">no</text></g></svg></div><figcaption>Redrawn from my FigJam board. The “no” branch of the sync question became the offline state in the prototype: the last known position, labelled with its time.</figcaption></figure>
+    </section>
+
+    <section class="stack">
+      <span class="k">04 · From paper to prototype</span>
+      <h2>Sketches first, then lo-fi wireframes</h2>
+      <p>I sketched on paper first. My offline sketches show the dashboard when the connection drops: the time of the last sync, the last known status of each animal, and a note that live updates are paused. The animal status sketch lets the farmer log a manual check, add a voice memo, and see it queued for upload. Then I drew lo-fi wireframes in FigJam for the escape.</p>
+      <div class="strip" tabindex="0" aria-label="Sketches and wireframes, scroll sideways. Click one to enlarge it.">
+        <figure style="width:240px"><img class="zoom" src="media/cowcompass_sketch_offline.jpg" alt="Paper sketch of offline mode: no connection, last sync 7:54, live updates are paused, the app keeps the last known status of each animal" loading="lazy"><figcaption>Offline mode on paper. Last sync, last known status, and a note that live updates are paused.</figcaption></figure>
+        <figure style="width:240px"><img class="zoom" src="media/cowcompass_sketch_status.jpg" alt="Paper sketch of animal status: last location, activity summary, a pop-up that real time updates are unavailable, and a manual check with a voice memo queued for upload" loading="lazy"><figcaption>Animal status. Without signal the farmer can still log a check, and it waits for upload.</figcaption></figure>
+        <figure style="width:340px"><img class="zoom" src="media/cowcompass_lofi_wireframes.jpg" alt="Three lo-fi wireframes: the push notification Daisy left the boundary, the map centred on the lost cow about 1 km away, and the route to her 38 metres away" loading="lazy"><figcaption>Lo-fi wireframes in FigJam. The alert, the map centred on the lost cow, and the route to her.</figcaption></figure>
+      </div>
+      <p>In 2026 I built a clickable prototype from these with Claude Code, with a playful look of its own: an illustrated farm with a road, a forest, a stream and sixteen cows that graze and wander.</p>
+    </section>
+
+    <section class="stack">
+      <span class="k">05 · Key decisions</span>
+      <h2>Decisions that shaped the prototype</h2>
+      <div class="decisions">
+        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="17" fill="#7DC46A" stroke="#16181F" stroke-width="2"/><path d="m14 22.5 5.5 5.5L30 17" fill="none" stroke="#16181F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Answer the first question first</h3><p>My dashboard sketches started from what a farmer asks in the morning: are my animals safe, does anything need me now, what happened overnight. The Today screen opens with one answer, all 16 safe or who is out, before any map or list.</p></div>
+        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="17" fill="#E6E9F3" stroke="#16181F" stroke-width="2"/><path d="M22 12v10l7 5" fill="none" stroke="#16181F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Show how old every position is</h3><p>A position from 40 minutes ago looks like a live one unless the app says so. Every position carries a time. A cow that isn't live turns grey, and the wording changes from “updated” to “seen”, as in my wireframes.</p></div>
+        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="17" fill="#FBF9F4" stroke="#16181F" stroke-width="2"/><path d="M22 8 27 22 22 36 17 22Z" fill="#6E7AA0" stroke="#16181F" stroke-width="1.8" stroke-linejoin="round"/><circle cx="22" cy="22" r="2.6" fill="#16181F"/></svg><h3>Keep the walk going without signal</h3><p>A phone's GPS works without mobile signal, and my notes planned for maps downloaded on wifi. So when the signal drops, the compass keeps pointing at Daisy's last known spot. It turns grey and says which time it points to.</p></div>
+        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><rect x="15" y="5" width="14" height="22" rx="7" fill="#7DC46A" stroke="#16181F" stroke-width="2"/><path d="M9 20a13 13 0 0 0 26 0M22 33v6M15 39h14" fill="none" stroke="#16181F" stroke-width="2.5" stroke-linecap="round"/></svg><h3>Log it in ten seconds</h3><p>After an escape the farmer taps a reason, records a voice note or skips. Everything is saved on the phone first and sent when there is signal. The log is what makes patterns possible later, like three escapes at the same gate.</p></div>
+        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><path d="M11 31V21a11 11 0 0 1 22 0v10l3 4H8Z" fill="#F2C14E" stroke="#16181F" stroke-width="2" stroke-linejoin="round"/><path d="M18 38a4 4 0 0 0 8 0" fill="none" stroke="#16181F" stroke-width="2"/></svg><h3>Only alert for real problems</h3><p>GPS wobbles near a fence, so the app waits two minutes before calling it an escape. Two cows that leave together get one alert. A low collar battery waits for a sensible moment. Red is kept for escapes.</p></div>
+      </div>
+    </section>
+
+    <section class="stack">
+      <span class="k">06 · The prototype</span>
+      <h2>Four flows on one farm</h2>
+      <p>The prototype has four flows: a morning check, Daisy getting out, no signal, and the herd with its history. There is also a phone signal switch, so any screen can lose signal while you look at it.</p>
+      <div class="btnrow"><a class="btn primary" data-proto href="cow-compass/" target="_blank" rel="noopener">Try the prototype</a></div>
+      <h3>Daisy gets out</h3>
+      <div class="strip" tabindex="0" aria-label="Escape flow screens, scroll sideways. Click a screen to enlarge it.">
+        <figure><img class="zoom" src="media/cowcompass_01_morning.jpg" alt="Today screen: all 16 cows are safe, with the North field map" loading="lazy"><figcaption>A normal morning. One answer first: all 16 are safe.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_02_alert.jpg" alt="Lock screen alert: Daisy left the North field, near the north gate, 3 minutes ago" loading="lazy"><figcaption>The alert names the cow, the place and the time.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_03_track.jpg" alt="Map with Daisy outside the field, 420 metres from the farmer, updated 20 seconds ago" loading="lazy"><figcaption>How far, which way, and how fresh the position is.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_04_walk.jpg" alt="Compass screen pointing to Daisy, 406 metres away, about 6 minutes walk" loading="lazy"><figcaption>A big arrow and a distance for walking, readable at arm’s length.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_05_found.jpg" alt="Daisy is back inside, with reasons to choose from, voice note, photo and save" loading="lazy"><figcaption>Back inside. Tap a reason or say it, or skip.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_06_log.jpg" alt="Log screen: 4 of 6 escapes were at the north gate" loading="lazy"><figcaption>The log points at the north gate.</figcaption></figure>
+      </div>
+      <h3>No signal</h3>
+      <div class="strip" tabindex="0" aria-label="No signal screens, scroll sideways. Click a screen to enlarge it.">
+        <figure><img class="zoom" src="media/cowcompass_07_off_today.jpg" alt="Today screen without signal: Daisy was outside the field at 06:41, last known positions in grey" loading="lazy"><figcaption>No signal. The last picture, with its time, and grey cows.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_08_off_track.jpg" alt="Daisy was seen 6 minutes ago, live updates paused, I found her still works" loading="lazy"><figcaption>“Seen” instead of “updated”. Marking her as found still works.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_09_off_walk.jpg" alt="Compass in grey: the arrow points to where Daisy was at 06:47, the phone GPS still works" loading="lazy"><figcaption>Signal drops mid-walk. The compass keeps going to her last spot.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_10_off_found.jpg" alt="You found Daisy, waiting to send, saved on your phone" loading="lazy"><figcaption>Saved on the phone, and sent when the signal is back.</figcaption></figure>
+      </div>
+      <h3>Herd and history</h3>
+      <div class="strip" tabindex="0" aria-label="Herd screens, scroll sideways. Click a screen to enlarge it.">
+        <figure><img class="zoom" src="media/cowcompass_11_herd.jpg" alt="Herd list with cows that need attention at the top: collar battery, fence line, not moved for 3 hours" loading="lazy"><figcaption>Cows that need something come first.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_12_cow.jpg" alt="Daisy’s profile: 3 escapes in 4 weeks, all early in the morning at the north gate" loading="lazy"><figcaption>Patterns per cow turn escapes into a fix: the gate latch.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="stack">
+      <span class="k">07 · States &amp; edge cases</span>
+      <h2>Not every alert is an escape</h2>
+      <h3>Handled in the prototype</h3>
+      <ul class="ticks" style="--accent:#7DC46A">
+        <li>A collar goes quiet in a dip where it can't reach the network. The cow shows as last seen, with the time, until it reports again.</li>
+        <li>A cow stands right on the fence line. GPS can be off by a few metres, so the app waits two minutes before it calls an escape.</li>
+        <li>Two cows leave together. They get one alert and one route.</li>
+        <li>A cow heads for the road. This is the most urgent alert, with a button to call a neighbour who is closer.</li>
+        <li>At night the collars save battery and update every 30 minutes. Escape alerts still come straight away, and the app says so.</li>
+        <li>A collar battery runs low. The app offers to remind the farmer at the evening feed.</li>
+        <li>A cow hasn't moved for 3 hours. She could be resting, calving or hurt, so she gets a calm amber nudge.</li>
+        <li>The signal drops on any screen. Positions turn grey with a time, actions wait on the phone, and when the signal comes back the app says what changed.</li>
+      </ul>
+      <div class="strip" tabindex="0" aria-label="Edge case screens, scroll sideways. Click a screen to enlarge it.">
+        <figure><img class="zoom" src="media/cowcompass_e_stale.jpg" alt="Bella’s collar has gone quiet, last seen 47 minutes ago" loading="lazy"><figcaption>A quiet collar shows as last seen.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_e_fence.jpg" alt="Gemma is right on the fence line, watching, 1 minute 40 left" loading="lazy"><figcaption>On the fence line. Two minutes before it counts as an escape.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_e_together.jpg" alt="Lenna and Femke are out together, one alert for both" loading="lazy"><figcaption>Two out together, one alert.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_e_road.jpg" alt="Urgent: Daisy is 80 metres from the road, call a neighbour now" loading="lazy"><figcaption>Heading for the road. The most urgent alert.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_e_night.jpg" alt="Night saving: updates every 30 minutes until 05:00, escape alerts still instant" loading="lazy"><figcaption>Night saving, and alerts that still come straight away.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_e_battery.jpg" alt="Bella’s collar needs charging, 2 days left, remind me tonight" loading="lazy"><figcaption>A low battery waits for the evening feed.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_e_still.jpg" alt="Zlatka has been still since 03:50, could be resting, calving or hurt" loading="lazy"><figcaption>A cow that hasn’t moved gets a calm nudge.</figcaption></figure>
+      </div>
+      <h3>What I'd design next</h3>
+      <p>The biggest gap is the alert itself. If the farmer's phone has no signal, the escape alert can't reach it. The prototype shows what was missed once the signal is back, but that can be too late. I'd send escape alerts to a second person as well, a family member or a neighbour, which builds on the shared search from my second phase. That is a concept and isn't in the prototype.</p>
+    </section>
+
+    <section class="stack">
+      <span class="k">08 · Outcome</span>
+      <h2>A concept, not tested with farmers yet</h2>
+      <p>The research is real: four interviews, a persona, a journey map and a user flow. I built the prototype in 2026 from that research, and no farmer has used it yet. It shows how I design for people who work outside with patchy signal, rather than proving that the product works.</p>
+    </section>
+
+    <section class="stack">
+      <span class="k">09 · Next steps</span>
+      <h2>What I'd test first</h2>
+      <ul class="ticks" style="--accent:var(--gold)">
+        <li>Show the prototype to the four households, starting with the alert. Two minutes on the fence line might be too long when a cow is heading for the road.</li>
+        <li>Ask what they would pay. Price stops smallholders before any screen does, and a design can't fix that alone.</li>
+        <li>Find out who should get the alert. On some farms it might be a son or a daughter rather than the person who owns the cows.</li>
+      </ul>
+    </section>
+  </article>
+</template>
 <template id="t-about">
   <div class="stack-l">
     <div class="stack" style="gap:6px"><span class="k">about.txt</span><h2>Aleksandra (Alex) Vugdragovic</h2><p>I'm based in London. I spent five years in measured survey, BIM and project delivery, and I now design tools and products for that kind of work.</p></div>
@@ -928,6 +1090,7 @@ const WINS={
   moonmates:{title:'moonmates/case-study.md',right:'winner',accent:'var(--coral)',w:720,tall:true,tpl:'t-moonmates'},
   'qa-tool':{title:'qa-tool/case-study.md',right:'piloted',accent:'var(--teal)',w:720,tall:true,tpl:'t-qa'},
   careloop:{title:'careloop/case-study.md',right:'winner',accent:'var(--blue)',w:720,tall:true,tpl:'t-careloop'},
+  'cow-compass':{title:'cow-compass/case-study.md',right:'concept',accent:'#7DC46A',w:720,tall:true,tpl:'t-cow-compass'},
   about:{title:'about.txt',accent:'var(--lilac)',w:600,tpl:'t-about'},
   hackathons:{title:'hackathons.log',accent:'var(--teal)',w:520,tpl:'t-hackathons',dark:true},
   cv:{title:'CV.pdf',accent:'var(--blue)',w:560,tpl:'t-cv'},
@@ -935,8 +1098,8 @@ const WINS={
   contact:{title:'contact.txt',accent:'var(--teal)',w:400,tpl:'t-contact'}
 };
 DATA.projects.filter(p=>p.status!=='case').forEach(p=>{WINS[p.id]={title:p.id+'/README.md',accent:p.accent,w:480,project:p}});
-const DESKTOP=['hello','work','qa-tool','moonmates','careloop','about','hackathons','cv','contact','bagcheck'];
-const DOC_ORDER=['hello','qa-tool','moonmates','careloop','work',...DATA.projects.filter(p=>p.status!=='case').map(p=>p.id),'hackathons','cv','bagcheck','about'];
+const DESKTOP=['hello','work','qa-tool','moonmates','careloop','cow-compass','about','hackathons','cv','contact','bagcheck'];
+const DOC_ORDER=['hello','qa-tool','moonmates','careloop','cow-compass','work',...DATA.projects.filter(p=>p.status!=='case').map(p=>p.id),'hackathons','cv','bagcheck','about'];
 
 /* ---------- content ---------- */
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -964,6 +1127,7 @@ function fill(id,root){
         catch(e){const c=e&&e.code;if(c==='declined')return;if(c==='rate_limited'){msg.textContent='A download prompt is already open.';return}
           btn.hidden=true;msg.textContent="Download isn't available here. Email me and I'll send it."}})});}
   root.querySelectorAll('.diagram-wrap').forEach(w=>w.insertAdjacentHTML('afterend','<p class="swipe-hint">Swipe sideways to see the whole diagram →</p>'));
+  if(window.claude)root.querySelectorAll('[data-proto]').forEach(a=>a.href='https://claude.ai/artifact/SB7LjSxWTgQRXPyY1fi15Z');
   if(reduce)root.querySelectorAll('video').forEach(v=>{v.removeAttribute('autoplay');v.controls=true;v.pause()});
 }
 function selectText(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
@@ -1028,8 +1192,8 @@ document.addEventListener('click',e=>{const im=e.target.closest('img.zoom');if(i
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){closeLb();return}if(e.key==='Escape'&&!document.body.classList.contains('docmode')){const top=Object.entries(open).filter(([,o])=>!o.el.hidden).sort((a,b)=>b[1].el.style.zIndex-a[1].el.style.zIndex)[0];if(top)closeWin(top[0])}});
 
 /* desktop icons */
-const ICON_SYM={hello:['TXT','#F2C14E'],work:['DIR','#6FA8FF'],moonmates:['DIR','#FF6B4A'],'qa-tool':['DIR','#3FC1B0'],careloop:['DIR','#6FA8FF'],about:['TXT','#B79CFF'],hackathons:['LOG','#3FC1B0'],cv:['PDF','#FF6B4A'],contact:['MSN','#3FC1B0'],bagcheck:['APP','#F5B544']};
-const LABEL={hello:'hello.txt',work:'work/',moonmates:'moonmates/','qa-tool':'qa-tool/',careloop:'careloop/',about:'about.txt',hackathons:'hackathons.log',cv:'CV.pdf',contact:'contact.txt',bagcheck:'bagcheck.app'};
+const ICON_SYM={hello:['TXT','#F2C14E'],work:['DIR','#6FA8FF'],moonmates:['DIR','#FF6B4A'],'qa-tool':['DIR','#3FC1B0'],careloop:['DIR','#6FA8FF'],'cow-compass':['DIR','#7DC46A'],about:['TXT','#B79CFF'],hackathons:['LOG','#3FC1B0'],cv:['PDF','#FF6B4A'],contact:['MSN','#3FC1B0'],bagcheck:['APP','#F5B544']};
+const LABEL={hello:'hello.txt',work:'work/',moonmates:'moonmates/','qa-tool':'qa-tool/',careloop:'careloop/','cow-compass':'cow-compass/',about:'about.txt',hackathons:'hackathons.log',cv:'CV.pdf',contact:'contact.txt',bagcheck:'bagcheck.app'};
 function iconSvg(kind,c,sfx=''){
   if(kind==='MSN')return `<svg width="52" height="50" viewBox="0 0 52 50" aria-hidden="true"><defs><radialGradient id="buddyB${sfx}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#A8DBFF"/><stop offset=".5" stop-color="#2E8BE6"/><stop offset="1" stop-color="#15529E"/></radialGradient><radialGradient id="buddyG${sfx}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#C6F58E"/><stop offset=".5" stop-color="#4DB52A"/><stop offset="1" stop-color="#22731A"/></radialGradient></defs><g stroke="#0C0F15" stroke-width="2" stroke-linejoin="round"><path d="M22 40c0-11 5-17 12-17s12 6 12 17z" fill="url(#buddyB${sfx})"/><circle cx="34" cy="13" r="8" fill="url(#buddyB${sfx})"/><path d="M5 48c0-12 6-18 14-18s14 6 14 18z" fill="url(#buddyG${sfx})"/><circle cx="19" cy="19" r="9" fill="url(#buddyG${sfx})"/></g><ellipse cx="16" cy="15" rx="3.6" ry="2.2" fill="#fff" opacity=".55" transform="rotate(-25 16 15)"/><ellipse cx="31.5" cy="9.5" rx="3" ry="1.8" fill="#fff" opacity=".55" transform="rotate(-25 31.5 9.5)"/></svg>`;
   if(kind==='APP')return `<svg width="50" height="50" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="${c}" stroke="#0C0F15" stroke-width="2"/><path d="M8 15 Q16 9 24 15" stroke="#1A1405" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M9.5 20 Q16 25 22.5 20" stroke="#1A1405" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`;
