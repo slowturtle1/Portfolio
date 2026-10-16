@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Cow Compass prototype</title>
+<!-- pwa -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FFFBEF">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cow Compass">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<!-- /pwa -->
 <meta name="description" content="Clickable prototype of Cow Compass, a herd tracker for small farms with patchy signal. A concept by Alex Vugdragovic.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
@@ -173,23 +183,40 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .bell{animation:ring 1.4s ease-in-out infinite;transform-origin:50% 10%;transform-box:fill-box}
 @keyframes ring{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(14deg)}20%{transform:rotate(-12deg)}30%{transform:rotate(9deg)}40%{transform:rotate(-6deg)}50%{transform:rotate(3deg)}}
 .ghost{filter:grayscale(1);opacity:.55}
-.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:39}
-.confetti i{position:absolute;top:-20px;width:10px;height:14px;border-radius:3px;border:1.5px solid var(--ink);animation:fall 1.8s cubic-bezier(.3,.7,.6,1) forwards}
-@keyframes fall{to{transform:translateY(900px) rotate(540deg)}}
+.dc path{fill:none;stroke:var(--safe);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;animation:draw .7s .25s ease-out both}
+@keyframes draw{from{stroke-dashoffset:24}}
+.hero.settle{animation:settle .5s cubic-bezier(.2,1.3,.4,1)}
+@keyframes settle{from{transform:scale(.97);opacity:.6}}
 
 @media (max-width:900px){
   .stage{grid-template-columns:1fr;padding:16px 16px 40px;gap:20px}
   .guide{position:static;order:2}
   .phonewrap{order:1;display:flex;justify-content:center}
 }
-@media (max-width:440px){
-  body{background:var(--paper)}
-  .stage{padding:0 0 32px}
-  .guide{padding:0 16px}
-  .phone{width:100%;height:auto;border-radius:0;padding:0;box-shadow:none;background:none}
-  .screen{width:100%;height:100svh;min-height:640px;border-radius:0}
-  .island{display:none}
-}
+.demobtn,.democlose{display:none}
+.scrim{position:fixed;inset:0;z-index:55;background:rgba(23,32,15,.35)}
+/* phone mode (html.pm): the app alone, scenarios in a sheet behind Demo.
+   pmfull: a real phone, edge to edge. pm without pmfull: the claude.ai copy on a big screen, one framed phone. */
+html.pm .demobtn{display:inline-flex;align-items:center;gap:6px;position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:35;border:2px solid var(--ink);border-radius:999px;background:var(--warn-bg);padding:3px 12px;font:700 11.5px var(--mono);letter-spacing:.8px;text-transform:uppercase;box-shadow:2px 2px 0 var(--ink)}
+html.pm .guide{position:fixed;top:auto;left:0;right:0;bottom:0;z-index:60;max-height:85svh;overflow-y:auto;background:var(--paper);border-top:2px solid var(--ink);border-radius:22px 22px 0 0;padding:14px 16px calc(22px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .3s cubic-bezier(.2,.9,.3,1);box-shadow:0 -6px 0 rgba(23,32,15,.12)}
+html.pm body.demo-open .guide{transform:none}
+html.pm .democlose{display:block;align-self:flex-end;font:700 14px var(--body);text-decoration:underline;text-underline-offset:3px;padding:4px 2px;margin-bottom:-12px;order:-2}
+html.pm .toggle{order:-1;border:2px solid var(--ink);border-radius:14px;padding:10px 12px;background:#fff}
+html.pm .brand h1{font-size:28px}
+html.pm .stage{display:flex;justify-content:center;align-items:center;min-height:100vh;max-width:none;padding:24px 0}
+html.pm .phonewrap{display:flex;justify-content:center}
+html.pm:not(.pmfull) .guide{left:50%;right:auto;width:min(440px,100%);border:2px solid var(--ink);border-bottom:0;transform:translate(-50%,105%)}
+html.pm:not(.pmfull) body.demo-open .guide{transform:translate(-50%,0)}
+html.pm:not(.pmfull) .demobtn{top:14px}
+html.pmfull,html.pmfull body{height:100%;overflow:hidden}
+html.pmfull body{background:var(--paper)}
+html.pmfull .stage{display:block;padding:0;min-height:0}
+html.pmfull .phonewrap{display:block}
+html.pmfull .phone{width:100%;height:auto;border-radius:0;padding:0;box-shadow:none;background:none}
+html.pmfull .screen{width:100%;height:100svh;min-height:600px;border-radius:0}
+html.pmfull .island{display:none}
+html.pmfull .nav{padding-bottom:max(22px,env(safe-area-inset-bottom,0px))}
+html.pmfull .sheet{padding-bottom:max(26px,calc(env(safe-area-inset-bottom,0px) + 8px))}
 /* short phones: keep the map and the main action on screen */
 @container (max-height:720px){
   .sheet{gap:8px;padding-bottom:16px}
@@ -204,12 +231,20 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   .lock{padding-top:40px}
   .lock .clock{font-size:70px}
 }
+/* opened from the home screen: the phone has its own clock, so the fake one goes */
+html.standalone body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+html.standalone .screen{padding-top:env(safe-area-inset-top,0px)}
+html.standalone .status{height:36px;align-items:center;padding:0 18px}
+html.standalone .status>span:first-child{visibility:hidden}
+html.standalone .status:not(.offline) .sig{visibility:hidden}
+html.standalone .demobtn{top:calc(env(safe-area-inset-top,0px) + 4px)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div class="stage">
-  <section class="guide" aria-label="About this prototype">
+  <section class="guide" id="guide" aria-label="About this prototype">
+    <button class="democlose" id="demoClose">Close</button>
     <div class="brand">
       <svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><circle cx="27" cy="27" r="24" fill="#CFE7A6" stroke="#17200F" stroke-width="2.5"/><path d="M27 7 32 27 27 47 22 27Z" fill="#FFFBEF" stroke="#17200F" stroke-width="2"/><path d="M27 7 32 27H22Z" fill="#FF5A36" stroke="#17200F" stroke-width="2" stroke-linejoin="round"/><circle cx="27" cy="27" r="3.5" fill="#17200F"/><ellipse cx="14" cy="15" rx="5" ry="3" fill="#FFFBEF" stroke="#17200F" stroke-width="2" transform="rotate(-30 14 15)"/><ellipse cx="40" cy="15" rx="5" ry="3" fill="#FFFBEF" stroke="#17200F" stroke-width="2" transform="rotate(30 40 15)"/></svg>
       <div><h1>Cow Compass</h1><p>Clickable prototype · concept</p></div>
@@ -224,7 +259,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     <p class="foot">Concept by Alex Vugdragovic. Not tested with farmers yet. <a href="../#cow-compass">Read the case study</a></p>
   </section>
   <div class="phonewrap">
-    <div class="phone"><div class="island"></div><div class="screen" id="screen"></div></div>
+    <div class="phone"><div class="island"></div><div class="screen" id="screen"></div><button class="demobtn" id="demoBtn" aria-expanded="false" aria-controls="guide">Demo ▾</button></div>
+    <div class="scrim" id="scrim" hidden></div>
   </div>
 </div>
 
@@ -274,6 +310,13 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 (function(){
 const $=s=>document.querySelector(s);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FORCE_PHONE=false;
+const PHONEQ=matchMedia('(max-width:500px)');
+function phoneMode(){const h=document.documentElement,full=PHONEQ.matches;h.classList.toggle('pm',full||FORCE_PHONE);h.classList.toggle('pmfull',full)}
+phoneMode();
+if(navigator.standalone||matchMedia('(display-mode: standalone)').matches)document.documentElement.classList.add('standalone');
+/* works without signal once it has been opened: GitHub copy only */
+if('serviceWorker' in navigator&&!window.claude&&location.protocol!=='file:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 
 /* ---------- the farm ---------- */
 const FIELD=[[70,175],[180,150],[300,150],[338,250],[322,385],[205,440],[112,425],[56,320]];
@@ -288,7 +331,7 @@ NAMES.forEach((name,i)=>{const [x,y]=spot(200,300,140,null,34);HERD.push({id:i,n
 const DAISY=HERD[0];
 
 /* ---------- state ---------- */
-const S={screen:'home',online:true,flow:'morning',edge:null,escape:false,found:false,logged:false,reason:null,queue:0,toast:null,selected:null,lost:'06:41',pending:false,caught:false,dist:410};
+const S={screen:'home',online:true,flow:'morning',edge:null,escape:false,found:false,logged:false,reason:null,queue:0,toast:null,selected:null,lost:'06:41',lostMin:6,tk:0,pending:false,caught:false,dist:410};
 const OUT_PATH=[[178,175],[180,150],[188,130],[202,114],[222,104],[244,100]];
 
 /* ---------- map ---------- */
@@ -327,7 +370,9 @@ function mapSVG(o={}){const vb=o.vb||'0 0 390 620';
   const trail=o.trail?`<path d="M${OUT_PATH.map(p=>p.join(' ')).join('L')}" fill="none" stroke="#FF5A36" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/>`:'';
   const route=o.route?`<path d="M${YOU.x} ${YOU.y-12}C120 420 120 260 ${DAISY.x-6} ${DAISY.y+14}" fill="none" stroke="#2B6FFF" stroke-width="4" stroke-dasharray="1 9" stroke-linecap="round"/>`:'';
   const extra=o.extra||'';
-  return `<svg viewBox="${vb}" preserveAspectRatio="xMidYMid ${o.fit?'meet':'slice'}" role="img" aria-label="${o.label||'Map of the farm with the herd'}">${terrain()}${fence()}${trail}${route}${extra}<g class="cows">${cowsSVG(o)}</g>${o.you!==false?youMark():''}</svg>`}
+  const unc=o.unc?`<circle id="unc" cx="${DAISY.x.toFixed(1)}" cy="${DAISY.y.toFixed(1)}" r="${rad()}" fill="rgba(110,122,160,.14)" stroke="#6E7AA0" stroke-width="2" stroke-dasharray="5 4"/>`:'';
+  const hz=o.hazard?`<path d="M-300 34L-10 46C90 66 170 76 250 70S360 52 400 62L700 56" fill="none" stroke="#FF5A36" stroke-width="30" stroke-linecap="round" opacity=".25"/><text x="52" y="92" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" letter-spacing="1.2" fill="#C23F25">HAZARD · ROAD</text>`:'';
+  return `<svg viewBox="${vb}" preserveAspectRatio="xMidYMid ${o.fit?'meet':'slice'}" role="img" aria-label="${o.label||'Map of the farm with the herd'}">${terrain()}${hz}${fence()}${trail}${route}${extra}${unc}<g class="cows">${cowsSVG(o)}</g>${o.you!==false?youMark():''}</svg>`}
 
 /* ---------- herd motion ---------- */
 function stepHerd(){const live=S.online&&!(S.edge==='night');HERD.forEach(c=>{if(c===DAISY&&S.escape&&!S.found)return;if(S.edge&&EDGES[S.edge].mark&&EDGES[S.edge].mark[c.id])return;if(!live)return;
@@ -344,9 +389,12 @@ if(!reduce)requestAnimationFrame(loop);else document.querySelectorAll('animate')
 for(let k=0;k<400;k++)stepHerd();
 
 let head=28;
+const rad=()=>Math.min(150,15+12*S.lostMin);
+const uncText=()=>`Seen ${S.lostMin?S.lostMin+' min ago':'just now'} · within about ${rad()} m`;
 /* ---------- pieces ---------- */
 const ic=(id,s=22)=>`<svg width="${s}" height="${s}" aria-hidden="true"><use href="#${id}"/></svg>`;
-const statusBar=()=>`<div class="status ${S.online?'':'offline'}"><span>${S.edge==='night'?'23:10':'06:47'}</span><span class="sig">${S.online?'':'NO SIGNAL'}<span class="bars"><i></i><i></i><i></i><i></i></span></span></div>`;
+const clock=()=>{if(S.edge==='night')return '23:10';const t=6*60+47+(!S.online&&S.lost==='06:47'?S.lostMin:0);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')};
+const statusBar=()=>`<div class="status ${S.online?'':'offline'}"><span id="clk">${clock()}</span><span class="sig">${S.online?'':'NO SIGNAL'}<span class="bars"><i></i><i></i><i></i><i></i></span></span></div>`;
 const nav=cur=>`<nav class="nav" aria-label="App sections">${[['home','Today','i-today'],['map','Map','i-map'],['herd','Herd','i-herd'],['log','Log','i-log']].map(([k,l,i])=>`<button data-go="${k}" aria-current="${cur===k}">${ic(i,26)}${l}</button>`).join('')}</nav>`;
 const top=(title,sub,back,right='')=>`<div class="top">${back?`<button class="back" data-go="${back}" aria-label="Back">${ic('i-back',20)}</button>`:logo()}<div class="t"><b>${title}</b><small>${sub}</small></div>${right}</div>`;
 const logo=()=>`<svg width="40" height="40" viewBox="0 0 54 54" aria-hidden="true"><circle cx="27" cy="27" r="24" fill="#CFE7A6" stroke="#17200F" stroke-width="3"/><path d="M27 7 32 27 27 47 22 27Z" fill="#FFFBEF" stroke="#17200F" stroke-width="2.4"/><path d="M27 7 32 27H22Z" fill="#FF5A36" stroke="#17200F" stroke-width="2.4" stroke-linejoin="round"/><circle cx="27" cy="27" r="3.5" fill="#17200F"/></svg>`;
@@ -383,7 +431,7 @@ V.lock=()=>`<div class="lock"><div class="clock">6:47</div><div class="date">Wed
   <span class="hint">tap the alert</span></div>`;
 
 V.track=()=>{const live=S.online;
-  return `${statusBar()}<div class="app"><div class="fullmap">${mapSVG({vb:'25 10 340 580',fit:true,dim:true,outIds:[0],labels:true,trail:true,route:live,ghost:!live,label:'Map with Daisy outside the field'})}</div>
+  return `${statusBar()}<div class="app"><div class="fullmap">${mapSVG({vb:'25 10 340 580',fit:true,dim:true,outIds:[0],labels:true,trail:true,route:live,ghost:!live,unc:!live,label:'Map with Daisy outside the field'})}</div>
   <div class="floatbar"><button class="back" data-go="home" aria-label="Back">${ic('i-back',20)}</button><span class="pill">${live?'<span class="badge live" style="border:0;padding:0">Live</span> Daisy · #7':'<span class="badge seen" style="border:0;padding:0">Last seen</span> Daisy · #7'}</span></div>
   <div class="sheet"><div class="grab"></div>
    ${live?`<h2>Daisy is 420 m from you</h2><p>Walking slowly north-east, towards the forest and the road.</p>
@@ -391,19 +439,19 @@ V.track=()=>{const live=S.online;
    <button class="btn go" data-go="navigate">${ic('i-pin',22)} Walk me to Daisy</button>
    <div class="row"><button class="btn sm" data-act="share">${ic('i-share',20)} Ask a neighbour</button><button class="btn sm" data-act="found">I found her</button></div>`
    :`<h2>Daisy was seen 6 min ago</h2><p>Just past the north gate, heading north-east. Live updates are paused until your phone has signal. Her collar keeps recording.</p>
-   <div class="facts"><span class="fact stale">Last seen 06:41</span><span class="fact stale">No signal</span><span class="fact">Collar 89% at 06:41</span></div>
+   <div class="facts"><span class="fact stale">Last seen 06:41</span><span class="fact stale">Within about ${rad()} m</span><span class="fact">Collar 89% at 06:41</span></div>
    <button class="btn" data-act="found">I found her</button><p class="foot" style="text-align:center">You can still log it. It's saved on your phone and sent later.</p>`}
    <div class="others">${ic('i-check',18)} The other 15 are inside the field.</div>
   </div>${toastHTML()}</div>`};
 
 V.navigate=()=>{const live=S.online;return `${statusBar()}<div class="app ${live?'':'offline'}">${top('Walking to Daisy',live?'Live · updated 10 s ago':'No signal · last seen '+S.lost,'track')}
   <div class="navwrap">${live?'':`<div class="banner" style="width:100%">${ic('i-cloud',22)}<span><b>No signal.</b> The arrow points to where Daisy was at ${S.lost}. Your phone's GPS still works, so the distance is right, but she may have moved.</span></div>`}<div class="compass"><span class="ring"></span><span class="n">N</span><svg class="arrow" id="arrow" viewBox="0 0 110 110" style="transform:rotate(${head}deg)"><path d="M55 6 86 92 55 74 24 92Z" fill="${live?'#FF5A36':'#6E7AA0'}" stroke="#17200F" stroke-width="4" stroke-linejoin="round"/></svg></div>
-  <div class="dist" id="dist">${S.dist}<small> m</small></div><p style="margin:-4px 0 0;color:var(--sub);font-weight:600;text-align:center">${live?'About 6 min walk · she\'s grazing at the forest edge':'to her last known spot'}</p>
-  <div class="mapcard" style="width:100%">${mapSVG({vb:'70 50 300 160',outIds:[0],labels:true,trail:true,route:true,you:false,ghost:!live})}</div>
+  <div class="dist" id="dist">${S.dist}<small> m</small></div><p style="margin:-4px 0 0;color:var(--sub);font-weight:600;text-align:center">${live?'About 6 min walk · she\'s grazing at the forest edge':`to her last known spot<br><span id="uncLabel">${uncText()}</span>`}</p>
+  <div class="mapcard" style="width:100%">${mapSVG({vb:'70 50 300 160',outIds:[0],labels:true,trail:true,route:true,you:false,ghost:!live,unc:!live})}</div>
   <button class="btn go" data-act="found">${ic('i-check',22)} I can see her</button><button class="link" data-go="track">Back to the map</button></div></div>`};
 
 V.found=()=>`${statusBar()}<div class="app">${top('Daisy is back inside','Inside the North field · 06:58','home')}
-  <div class="scroll"><div class="hero safe">${face()}<span class="badge">Out for 14 min</span><h2 style="margin-top:8px">Nice work. All 16 are inside.</h2><p>Tell the app what happened, so it can spot a pattern next time. Takes 10 seconds, or skip it.</p></div>
+  <div class="scroll"><div class="hero safe settle">${face()}<span class="badge"><svg class="dc" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Out for 14 min</span><h2 style="margin-top:8px">Nice work. All 16 are inside.</h2><p>Tell the app what happened, so it can spot a pattern next time. Takes 10 seconds, or skip it.</p></div>
   <div class="k">What happened?</div>
   <div class="reasons">${['Gate left open','Fence down','Followed another cow','Something spooked her','Not sure'].map(r=>`<button class="reason" data-reason="${r}" aria-pressed="${S.reason===r}">${r}</button>`).join('')}</div>
   <div class="row"><button class="btn sm" data-act="voice">${ic('i-mic',20)} Voice note</button><button class="btn sm" data-act="photo">${ic('i-cam',20)} Photo</button></div>
@@ -413,7 +461,7 @@ V.map=()=>`${statusBar()}<div class="app"><div class="fullmap">${mapSVG({vb:'0 3
   <div class="floatbar"><button class="back" data-go="home" aria-label="Back">${ic('i-back',20)}</button><span class="pill">${S.online?'16 cows · live':'Last known · 06:41'}</span></div>
   <div class="sheet"><div class="grab"></div><h2>${S.online?'Everyone at a glance':'Where they were at 06:41'}</h2><p>${S.online?'Pinch and drag like any map. Tap a cow for her details.':'Grey cows are last known positions, not live ones.'}</p></div></div>`;
 
-const STAT={0:['Inside · normal','ok'],1:['Collar 2 days left','warn'],3:['On the fence line','warn'],12:['Not moved for 3 h','warn']};
+const STAT={0:['Inside · normal','ok'],1:['Collar 2 days left','warn'],3:['On the fence line','warn'],12:['Away from the herd','warn']};
 V.herd=()=>{const rows=HERD.map(c=>{let [t,k]=STAT[c.id]||['Inside · normal','ok'];if(c.id===0&&S.escape&&!S.found){t='Outside · live';k='hot'}if(!S.online){t='Last known 06:41';k='stale'}return{c,t,k}});
   rows.sort((a,b)=>(a.k==='ok')-(b.k==='ok'));
   return `${statusBar()}<div class="app ${S.online?'':'offline'}">${top('Your herd','16 cows · attention first',null,syncPill())}<div class="scroll"><div class="list">${rows.map(({c,t,k})=>`<button class="cowrow" data-cow="${c.id}"><svg class="av" viewBox="0 0 100 100"><use href="#cowface"/></svg><span class="nm"><b>${c.name}</b><small>#${c.num} · North field</small></span><span class="st ${k}">${t}</span></button>`).join('')}</div></div>${nav('herd')}</div>`};
@@ -438,21 +486,21 @@ V.check=()=>`${statusBar()}<div class="app ${S.online?'':'offline'}">${top('Log 
 const EDGES={
   stale:{label:'A quiet collar',mark:{1:'stale'},at:{1:[84,298]},hero:`<div class="hero stale">${face()}<span class="badge seen">Last seen 47 min ago</span><h2 style="margin-top:8px">Bella's collar has gone quiet</h2><p>Probably in the dip by the stream, where it can't reach the network. We won't show her as live until it does.</p></div><div class="row"><button class="btn sm" data-go="check">I can see her</button><button class="btn sm" data-go="map">Last known spot</button></div>`,
     note:['Never look sure about old data','My offline sketches show the time of the last sync, and my tracking wireframes switch the wording from "updated" to "seen". A collar that goes quiet shows as last seen, with its time.']},
-  fenceline:{label:'On the fence line',mark:{3:'warn'},at:{3:[319,200]},hero:`<div class="hero warn">${face()}<span class="badge">Watching · 1:40 left</span><h2 style="margin-top:8px">Gemma is right on the fence line</h2><p>GPS can wobble by a few metres. We wait 2 minutes before calling it an escape, so you don't get woken for nothing.</p></div><button class="btn sm" data-go="map">See where she is</button>`,
-    note:['Fewer false alarms','If every wobble on the fence line rang the phone, farmers would mute it, and then the real escape would go unnoticed. A short grace period trades two minutes of delay for alerts people can trust. The right length is something to test with farmers.']},
+  fenceline:{label:'On the fence line',mark:{3:'warn'},at:{3:[319,200]},hero:`<div class="hero warn">${face()}<span class="badge">Watching · 1:40 left</span><h2 style="margin-top:8px">Gemma is right on the fence line</h2><p>GPS can wobble by a few metres, and cows graze right along the fence. We wait 2 minutes before calling it an escape. If she's clearly out, you hear straight away.</p></div><button class="btn sm" data-go="map">See where she is</button>`,
+    note:['Fewer false alarms','Cows graze along the fence, push their heads through for grass and bunch up to watch people go by. If every wobble rang the phone, farmers would mute it and miss the real escape. Near the fence the app waits two minutes, a number I\'d tune from how often a collar jumps the line when the cow hasn\'t left. A cow that is clearly out alerts straight away.']},
   together:{label:'Two out together',mark:{7:'hot',8:'hot'},at:{7:[84,118],8:[124,124]},vb:'20 70 330 340',hero:`<div class="hero alert">${face()}<span class="badge live">Live</span><h2 style="margin-top:8px">Lenna and Femke are out together</h2><p>One alert for both, since they're moving as a pair. They're past the north-west corner of the fence.</p></div><button class="btn hot" data-go="track">Find them</button>`,
     note:['One problem, one alert','Cows that leave together get one alert and one route. Two separate alarms for the same walk would only add to the panic my interviews described.']},
-  road:{label:'Heading for the road',mark:{0:'hot'},at:{0:[212,92]},vb:'40 40 330 340',hero:`<div class="hero alert">${face()}<span class="badge live">Urgent</span><h2 style="margin-top:8px">Daisy is 80 m from the road</h2><p>Call someone closer if you can. Drivers can't see her round the bend.</p></div><button class="btn hot" data-act="share">${ic('i-share',20)} Call a neighbour now</button><button class="btn sm" data-go="track">Show me where</button>`,
-    note:['The road comes first','The farmers I interviewed worried about harm to other people and their property. In my journey map the farmer asks "Is she going towards the roads?" A cow near the road is a danger to drivers, so this alert outranks everything else on the screen.']},
+  road:{label:'Heading for the road',mark:{0:'hot'},at:{0:[212,92]},vb:'40 40 330 340',hero:`<div class="hero alert">${face()}<span class="badge live">Urgent · hazard</span><h2 style="margin-top:8px">Daisy is 80 m from the road</h2><p>You marked the road as a hazard. Call someone closer if you can. Drivers can't see her round the bend.</p></div><button class="btn hot" data-act="share">${ic('i-share',20)} Call a neighbour now</button><button class="btn sm" data-go="track">Show me where</button>`,
+    note:['Hazards come first','The farmers I interviewed worried about harm to other people and their property, and farmers already know where their animals head when they get out. So the farmer marks hazards on the map once, like a road, a river or someone else\'s crops. A cow near one outranks everything else on the screen.']},
   night:{label:'Night saving',hero:`<div class="hero stale">${face()}<span class="badge">${ic('i-moon',14)} Night saving</span><h2 style="margin-top:8px">Updates every 30 min until 05:00</h2><p>Saves the collar batteries overnight. Escape alerts still come through straight away.</p></div>`,
-    note:['Battery is a design constraint','Battery drain was on my list of open questions, and competitors save power at night. The app says plainly that positions are older at night, and that alerts are not.']},
+    note:['Battery is a design constraint','Battery drain was on my list of open questions, and competitors save power at night. The boundary is loaded onto the collar, which checks it on its own, so an escape at 2 am still wakes the farmer straight away. Only the routine position reports slow down.']},
   battery:{label:'Collar battery low',mark:{1:'warn'},at:{1:[112,232]},hero:`<div class="hero warn">${face()}<span class="badge">${ic('i-batt',14)} 2 days left</span><h2 style="margin-top:8px">Bella's collar needs charging</h2><p>Swap it at the evening feed and she won't drop off the map.</p></div><div class="row"><button class="btn sm" data-act="snooze">Remind me tonight</button><button class="btn sm" data-act="done">Done</button></div>`,
     note:['From my "attention needed" wireframe','Bella\'s "battery 2 days left" comes straight from that wireframe, with Snooze and Mark as checked. Not every alert is an emergency, so a low battery offers a reminder for a sensible moment.']},
-  still:{label:'Not moving',mark:{12:'warn'},hero:`<div class="hero warn">${face()}<span class="badge">Not moved for 3 h</span><h2 style="margin-top:8px">Zlatka has been still since 03:50</h2><p>Could be resting, calving or hurt. Worth a look when you're out.</p></div><div class="row"><button class="btn sm" data-go="map">Where is she?</button><button class="btn sm" data-go="check">I checked her</button></div>`,
-    note:['Stillness matters too','My journey map listed patterns worth watching, like a cow separating from the herd before giving birth. A long stillness gets a calm amber nudge. Red is kept for escapes.']}
+  still:{label:'On her own',mark:{12:'warn'},at:{12:[312,300]},hero:`<div class="hero warn">${face()}<span class="badge">Away from the herd</span><h2 style="margin-top:8px">Zlatka has been on her own since 03:50</h2><p>She's still, by the east fence, for longer than usual for her. Could be calving or hurt. Worth a look when you're out.</p></div><div class="row"><button class="btn sm" data-go="map">Where is she?</button><button class="btn sm" data-go="check">I checked her</button></div>`,
+    note:['Apart from the herd','Cows lie down for hours, so stillness alone would ring every night. My journey map pointed to a better signal: a cow separating from the herd before giving birth. The nudge comes when a cow is still and on her own for longer than is usual for her. It\'s amber, because red is kept for escapes.']}
 };
 V.edge=()=>{const e=EDGES[S.edge];return `${statusBar()}<div class="app ${S.online?'':'offline'}">${top(S.edge==='night'?'Good evening':'Good morning','Hill farm · North field',null,syncPill())}<div class="scroll">${offBanner()}${e.hero}
-  <div class="mapcard">${mapSVG({vb:e.vb||'30 120 330 340',you:false,mark:e.mark||{},labels:true,ghost:!S.online})}</div>
+  <div class="mapcard">${mapSVG({vb:e.vb||'30 120 330 340',you:false,mark:e.mark||{},labels:true,ghost:!S.online,hazard:S.edge==='road'})}</div>
   ${S.edge==='night'?'':`<div class="card"><div class="k" style="margin-bottom:4px">Since last night</div>${timeline()}</div>`}</div>${nav('home')}${toastHTML()}</div>`};
 
 function toastHTML(){return S.toast?`<div class="toast" role="status">${ic('i-check',20)}<span>${S.toast}</span></div>`:''}
@@ -462,8 +510,8 @@ const NOTES={
   home:()=>S.online?(S.logged?['Back to calm','After an escape the screen returns to one clear answer, and the new log line sits at the top of the timeline. The farmer can see the episode is closed.']:['One answer first','My dashboard sketches started from the questions a farmer has in the morning: are my animals safe, does anything need me now, what happened overnight. The first thing on screen answers the first question.']):['Honest when offline','From my offline sketches: say that live updates are paused, show when the last sync was, keep the last known positions, and let the farmer keep working. Grey cows mean last known.'],
   lock:()=>['An alert that says enough on its own','From my journey map: "Daisy left the boundary. 3 minutes ago." Name, place and time fit on the lock screen, so the farmer knows how worried to be before opening anything.'],
   track:()=>S.online?['Distance and direction before anything else','My journey map has the farmer asking "How far did she go? Where could she go? Is she going towards the roads?" The sheet answers those in that order. Navigate, share and mark as found come from my user flow.']:['Still useful without signal','The position is labelled "seen", with a time. "I found her" still works and waits on the phone until there is signal again.'],
-  navigate:()=>S.online?['Built for walking','A big arrow and a distance you can read at arm\'s length, in the sun, with one hand. The small map is only there for context.']:['When the signal drops mid-walk','A phone\'s GPS works without signal, and my notes planned to download maps on wifi. So the compass keeps going. It turns grey and says which time it points to, because Daisy may have moved since.'],
-  found:()=>['Capture while it\'s fresh','My journey map ends with "Mark as resolved" and "Add note", and my sketches have a voice memo and "queued for upload". Logging takes one tap, and a voice note works with gloves on. The log feeds the pattern view, so the 10 seconds pay off later.'],
+  navigate:()=>S.online?['Built for walking','A big arrow and a distance you can read at arm\'s length, in the sun, with one hand. The small map is only there for context.']:['When the signal drops mid-walk','A phone\'s GPS works without signal, and my notes planned to download maps on wifi. So the compass keeps going. It turns grey, says which time it points to, and draws a circle around her last spot that grows every minute, because she may have moved since.'],
+  found:()=>['Capture while it\'s fresh','My journey map ends with "Mark as resolved" and "Add note", and my sketches have a voice memo and "queued for upload". Logging takes one tap, and a voice note works with gloves on. The log feeds the pattern view, so the 10 seconds pay off later. The five reasons are placeholders until farmers give me the real ones.'],
   map:()=>['Familiar map, farm landmarks','Jakob\'s law from my board: pinch, drag, tap a cow. The map shows what a farmer navigates by: the gate, the water, the forest and the road.'],
   herd:()=>['Attention first','From my "attention needed" dashboard: cows that need something sort to the top, everyone fine stays below.'],
   cow:()=>['From positions to patterns','In my plan, patterns were the second phase. Daisy\'s profile turns repeat escapes into something the farmer can act on: a gate latch.'],
@@ -480,12 +528,11 @@ const FLOWS=[
   {id:'records',n:4,t:'Herd & history',s:'Attention first, patterns',start(){reset();go('herd')}}
 ];
 function edgeSetup(){const e=EDGES[S.edge];if(S.edge==='road')S.escape=true;Object.entries(e.at||{}).forEach(([id,[x,y]])=>{const c=HERD[id];c.x=c.tx=x;c.y=c.ty=y;HERD.forEach(o=>{if(o!==c&&!(e.at[o.id])&&Math.hypot(o.x-x,o.y-y)<30){const [nx,ny]=spot(200,300,120,o,30);o.x=o.tx=nx;o.y=o.ty=ny}})})}
-function reset(){S.screen='home';S.lost='06:41';S.online=true;S.pending=false;S.caught=false;S.dist=410;S.escape=false;S.found=false;S.logged=false;S.reason=null;S.queue=0;S.toast=null;S.edge=null;daisyT=0;HERD.forEach(c=>{if(c===DAISY||!inside(c.x,c.y)||Object.values(EDGES).some(e=>e.at&&e.at[c.id])){const [x,y]=spot(200,300,120,c,28);c.x=c.tx=x;c.y=c.ty=y}});updateSig()}
-function setOnline(v){if(!v)S.lost=S.screen==='navigate'?'06:47':'06:41';S.online=v;updateSig();if(v&&S.escape&&!S.found){S.caught=true;daisyT=Math.min(1,daisyT+.3);stepDaisy()}if(v&&(S.queue||S.caught)){S.toast=S.queue?`Sent ${S.queue} saved ${S.queue>1?'changes':'change'}.`:'Signal\'s back. Daisy\'s position is live again.';S.queue=0;S.pending=false;setTimeout(()=>{S.toast=null;render()},2600)}render()}
+function reset(){S.screen='home';S.lost='06:41';S.lostMin=6;S.online=true;S.pending=false;S.caught=false;S.dist=410;S.escape=false;S.found=false;S.logged=false;S.reason=null;S.queue=0;S.toast=null;S.edge=null;daisyT=0;HERD.forEach(c=>{if(c===DAISY||!inside(c.x,c.y)||Object.values(EDGES).some(e=>e.at&&e.at[c.id])){const [x,y]=spot(200,300,120,c,28);c.x=c.tx=x;c.y=c.ty=y}});updateSig()}
+function setOnline(v){if(!v){S.lost=S.screen==='navigate'?'06:47':'06:41';S.lostMin=S.lost==='06:47'?0:6}S.online=v;updateSig();if(v&&S.escape&&!S.found){S.caught=true;daisyT=Math.min(1,daisyT+.3);stepDaisy()}if(v&&(S.queue||S.caught)){S.toast=S.queue?`Sent ${S.queue} saved ${S.queue>1?'changes':'change'}.`:'Signal\'s back. Daisy\'s position is live again.';S.queue=0;S.pending=false;setTimeout(()=>{S.toast=null;render()},2600)}render()}
 function updateSig(){const b=$('#sig');b.setAttribute('aria-checked',String(S.online));$('#sigLabel').textContent='Phone signal: '+(S.online?'on':'off')}
 function go(screen){S.screen=screen;if(screen!=='edge')S.edge=null;render();const sc=document.querySelector('.scroll');if(sc)sc.scrollTop=0}
 function flash(msg,ms=2400){S.toast=msg;render();clearTimeout(flash.t);flash.t=setTimeout(()=>{S.toast=null;render()},ms)}
-function confetti(){const box=document.createElement('div');box.className='confetti';const cols=['#FF5A36','#2C9A58','#F2B33A','#8FD0EA','#FFFBEF'];for(let i=0;i<34;i++){const c=document.createElement('i');c.style.left=(Math.random()*100)+'%';c.style.background=cols[i%cols.length];c.style.animationDelay=(Math.random()*.4)+'s';box.appendChild(c)}$('#screen').appendChild(box);setTimeout(()=>box.remove(),2400)}
 
 function render(){const scr=$('#screen');const keep=scr.querySelector('.scroll');const st=keep?keep.scrollTop:0;scr.innerHTML=V[S.screen]();
   const sc=scr.querySelector('.scroll');if(sc&&S.toast)sc.scrollTop=st;paint();
@@ -500,13 +547,19 @@ $('#edges').innerHTML=Object.entries(EDGES).map(([k,e])=>`<button class="chip" d
 $('#flows').addEventListener('click',e=>{const b=e.target.closest('[data-flow]');if(!b)return;S.flow=b.dataset.flow;FLOWS.find(f=>f.id===S.flow).start()});
 $('#edges').addEventListener('click',e=>{const b=e.target.closest('[data-edge]');if(!b)return;reset();S.flow=null;S.edge=b.dataset.edge;edgeSetup();S.screen='edge';render()});
 $('#sig').addEventListener('click',()=>setOnline(!S.online));
+/* phones: the scenarios live in a sheet, and picking one closes it */
+function demo(on){document.body.classList.toggle('demo-open',on);$('#demoBtn').setAttribute('aria-expanded',String(on));$('#scrim').hidden=!on}
+$('#demoBtn').addEventListener('click',()=>demo(!document.body.classList.contains('demo-open')));
+$('#scrim').addEventListener('click',()=>demo(false));
+$('#demoClose').addEventListener('click',()=>demo(false));
+$('#guide').addEventListener('click',e=>{if(e.target.closest('[data-flow],[data-edge],#sig'))setTimeout(()=>demo(false),180)});
 $('#screen').addEventListener('click',e=>{const t=e.target.closest('[data-go],[data-act],[data-reason],[data-cow],[data-seen]');if(!t)return;
   if(t.dataset.go){go(t.dataset.go);return}
   if(t.dataset.cow){S.selected=+t.dataset.cow;go('cow');return}
   if(t.dataset.reason){S.reason=t.dataset.reason;render();return}
   if(t.dataset.seen){const on=t.getAttribute('aria-pressed')!=='true';if(t.dataset.seen==='all')document.querySelectorAll('[data-seen]').forEach(b=>b.setAttribute('aria-pressed',String(on)));else t.setAttribute('aria-pressed',String(on));return}
   const a=t.dataset.act;
-  if(a==='found'){if(S.online){S.found=true;daisyT=0;const [x,y]=spot(186,205,26,DAISY,20);DAISY.x=DAISY.tx=x;DAISY.y=DAISY.ty=y;go('found');confetti()}else{S.queue++;S.found=true;flash('Saved on your phone. It sends when you have signal.',3000);go('home')}return}
+  if(a==='found'){if(S.online){S.found=true;daisyT=0;const [x,y]=spot(186,205,26,DAISY,20);DAISY.x=DAISY.tx=x;DAISY.y=DAISY.ty=y;go('found')}else{S.queue++;S.found=true;flash('Saved on your phone. It sends when you have signal.',3000);go('home')}return}
   if(a==='save'||a==='skip'){const off=!S.online&&a==='save';S.logged=true;S.escape=false;if(off){S.queue++;S.pending=true}go('home');flash(off?'Saved on your phone. It sends when you have signal.':a==='save'?'Logged. All 16 safe again.':'Skipped. All 16 safe again.',off?3000:2400);return}
   if(a==='share'){if(!S.online){S.queue++;return flash('No signal. The message to Marko waits on your phone. Try calling him.',3200)}return flash('Sent Daisy\'s live location to Marko (neighbour).')}
   if(a==='voice')return flash('Recording… speak, then tap to stop.');
@@ -517,7 +570,8 @@ $('#screen').addEventListener('click',e=>{const t=e.target.closest('[data-go],[d
   if(a==='done')return flash('Marked as charged.');
   if(a==='checksave'){if(!S.online){S.queue++;flash('Check saved on your phone. Sends later.',2600)}else flash('Check saved. Thanks.');setTimeout(()=>go('home'),900);return}
 });
-setInterval(()=>{const a=$('#arrow'),d=$('#dist');if(!a||reduce)return;head+=(Math.random()*16-8);a.style.transform=`rotate(${head}deg)`;S.dist=Math.max(40,S.dist-2);d.firstChild.textContent=S.dist},1200);
+setInterval(()=>{const a=$('#arrow'),d=$('#dist');if(!a||reduce)return;head+=(Math.random()*16-8);a.style.transform=`rotate(${head}deg)`;S.dist=Math.max(40,S.dist-2);d.firstChild.textContent=S.dist;
+  if(!S.online&&++S.tk%3===0){S.lostMin++;const u=$('#unc'),l=$('#uncLabel');if(u)u.setAttribute('r',rad());if(l)l.textContent=uncText();const k=$('#clk');if(k)k.textContent=clock()}},1200);
 
 /* deep links for screenshots: #screen=track&offline=1 */
 const q=new URLSearchParams(location.hash.slice(1));
@@ -527,8 +581,8 @@ if(q.get('edge')&&EDGES[q.get('edge')]){reset();S.flow=null;S.edge=q.get('edge')
 if(q.get('screen')){if(q.get('escape')){S.escape=true;daisyT=+(q.get('t')||.55);stepDaisy()}if(q.get('logged')){S.logged=true}if(q.get('offline'))S.online=false;if(q.get('cow'))S.selected=+q.get('cow');S.screen=q.get('screen');updateSig()}
 render();
 /* desktop: shrink the phone to fit short laptop screens */
-function fit(){const p=$('.phone');p.style.zoom=innerWidth>900?String(Math.min(1,(innerHeight-56)/874)):''}
-fit();addEventListener('resize',fit);
+function fit(){const p=$('.phone'),h=document.documentElement;p.style.zoom=!h.classList.contains('pmfull')&&(innerWidth>900||h.classList.contains('pm'))?String(Math.min(1,(innerHeight-56)/874)):''}
+fit();addEventListener('resize',fit);PHONEQ.addEventListener('change',()=>{phoneMode();fit()});
 window.CC={go,S,setOnline,render};
 })();
 </script>
