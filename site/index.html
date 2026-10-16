@@ -55,7 +55,7 @@ a{color:inherit}
   display:flex;align-items:center;gap:8px;background:var(--paper);color:var(--ink);border-top:2px solid var(--ink);font:500 12.5px var(--mono);overflow:hidden}
 .taskbar .start{display:flex;align-items:center;gap:7px;font:700 15px var(--display);background:var(--gold);border:2px solid var(--ink);border-radius:7px;padding:4px 12px;box-shadow:2px 2px 0 var(--ink);flex:none}
 .taskbar .tabs{display:flex;gap:6px;overflow:hidden;min-width:0}
-.taskbar .tab{border:1.5px solid var(--ink);border-radius:6px;padding:4px 10px;background:#fff;white-space:nowrap;flex:none}
+.taskbar .tab{border:1.5px solid var(--ink);border-radius:6px;padding:4px 10px;background:#fff;white-space:nowrap;flex:0 1 auto;min-width:44px;overflow:hidden;text-overflow:ellipsis}
 .taskbar .tab.min{background:transparent;opacity:.6}
 .taskbar .tab.on{background:var(--ink);color:var(--paper)}
 .taskbar .sp{flex:1}
@@ -109,6 +109,16 @@ a{color:inherit}
 .doc{position:relative;z-index:1;padding-block:calc(var(--barH) + 28px + env(safe-area-inset-top,0px)) calc(var(--taskH) + 40px);padding-inline:16px;display:flex;flex-direction:column;align-items:center;gap:34px}
 .doc .win{position:relative;width:100%;max-width:820px;left:auto!important;top:auto!important;height:auto!important}
 .doc .win .bar{cursor:default}
+.doc .win .bar .dot{opacity:.35}
+.win:focus{outline:none}
+.win:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+body.docmode .only-desk,body:not(.docmode) .only-doc{display:none}
+.linkbtn{text-decoration:underline;text-underline-offset:3px}
+.cs-toc{display:flex;flex-wrap:wrap;gap:6px 8px}
+.doc article > section{scroll-margin-top:calc(var(--barH) + 14px + env(safe-area-inset-top,0px))}
+.cs-toc button{font:600 11px var(--mono);letter-spacing:.6px;text-transform:uppercase;border:1.5px solid var(--text);border-radius:999px;padding:3px 10px;background:var(--paper);color:var(--text)}
+.cs-toc button:hover{background:var(--gold)}
+.cs-next{display:flex;flex-wrap:wrap;gap:10px;padding-top:18px;border-top:2px dashed #D9D3C7}
 .doc .win .body{overflow:visible}
 body.docmode .desk{display:none}
 body:not(.docmode) .doc{display:none}
@@ -418,7 +428,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       </div>
     </div>
     <p class="lead">After five years working with spatial data and delivering projects, I now design products. Along the way I kept finding <span class="hl">processes worth fixing</span>, which is how I started designing and building tools.</p>
-    <p>This desktop is my portfolio. Start with the <b>QA tool</b> I designed and piloted at DPR, or <b>MoonMates</b>, a hackathon win. Everything else is in <b>work/</b>.</p>
+    <p><span class="only-desk">This desktop is my portfolio.</span><span class="only-doc">This page is my portfolio.</span> Start with the <b>QA tool</b> I designed and piloted at DPR, or <b>MoonMates</b>, a hackathon win. Everything else is in <b>work/</b>.</p>
     <div class="btnrow">
       <button class="btn primary" data-open="qa-tool">Open QA tool</button>
       <button class="btn primary" data-open="moonmates">Open MoonMates</button>
@@ -427,6 +437,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       <button class="btn" data-open="contact">Contact</button>
       <button class="btn" data-cv-quick>Download CV</button>
     </div>
+    <p class="small-note only-desk">Prefer a normal page? <button type="button" class="linkbtn" data-mode="doc">Read it as a document</button></p>
     <div class="handnote">Currently: open to product design roles · London</div>
   </div>
 </template>
@@ -737,28 +748,24 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
     <section class="stack">
       <span class="k">01 · Context &amp; problem</span>
       <h2>Small farms lose animals and look for them the old way</h2>
-      <p>In spring 2024 two bulls got out of my family's farm and were missing for nearly two weeks. My parents and the neighbours searched for them and lost time and money. The bulls damaged nearby properties, and when they were found they were thinner, stressed and confused. My family said they wished they had something that could track them.</p>
-      <p>That became the problem I wanted to understand. Farmers struggle to keep track of their animals and to get them back when they escape, and every escape costs money, time and stress.</p>
-      <p>Farms like ours are common. About 90% of the world's 570 million farms are run by families. In Croatia, 69.5% of farms are smaller than 5 hectares and a third of farm managers are 65 or older. In rural parts of the EU, fewer than half of people have basic digital skills. Livestock trackers on the market are built for large commercial herds, priced per collar with a monthly fee.</p>
-      <p class="small-note">Sources: <a href="https://openknowledge.fao.org/items/0c402799-d523-4164-b953-75f262fb7fbe" target="_blank" rel="noopener">FAO, The State of Food and Agriculture 2014</a>. <a href="https://ec.europa.eu/eurostat/documents/2995521/9028470/5-28062018-AP-EN.pdf" target="_blank" rel="noopener">Eurostat, Farm Structure Survey 2016</a>. <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Urban-rural_Europe_-_digital_society" target="_blank" rel="noopener">Eurostat, Urban-rural Europe: digital society, 2023</a>.</p>
+      <p>In spring 2024 two bulls got out of my family's farm and were missing for nearly two weeks. My parents and the neighbours searched for them and lost time and money, and when the bulls were found they were thinner, stressed and confused. My family said they wished they had something that could track them.</p>
+      <p>Farms like ours are common. About 90% of the world's 570 million farms are run by families, and in Croatia 69.5% of farms are smaller than 5 hectares. Livestock trackers on the market are built for large commercial herds, priced per collar with a monthly fee.</p>
+      <p class="small-note">Sources: <a href="https://openknowledge.fao.org/items/0c402799-d523-4164-b953-75f262fb7fbe" target="_blank" rel="noopener">FAO, The State of Food and Agriculture 2014</a>. <a href="https://ec.europa.eu/eurostat/documents/2995521/9028470/5-28062018-AP-EN.pdf" target="_blank" rel="noopener">Eurostat, Farm Structure Survey 2016</a>.</p>
     </section>
 
     <section class="stack">
       <span class="k">02 · Research</span>
       <h2>I talked to four farming households</h2>
-      <p>I interviewed farmers in Gornji Skrad and Lasinjski Sjeničak, two villages in rural Croatia. They keep bulls, cows and calves, between 5 and 20 animals. Some use apps every day and others farm without them. Today they find their animals by looking, by listening for the bell, with food as bait, with help from neighbours and with fences.</p>
+      <p>I interviewed farmers in Gornji Skrad and Lasinjski Sjeničak, two villages in rural Croatia. They keep bulls, cows and calves, between 5 and 20 animals. Today they find their animals by looking, by listening for the bell, with food as bait, with help from neighbours and with fences.</p>
       <h3>What they told me</h3>
       <ul class="ticks" style="--accent:#7DC46A">
         <li>Animals get out and move unpredictably, and nobody knows where they are until someone finds them.</li>
         <li>A search brings panic and helplessness, and the fear that the animal will hurt someone or damage a neighbour's property.</li>
         <li>Searching means long walks over rough ground, sometimes every day.</li>
-        <li>They rely on other people and old methods, and they want a better way to track their animals.</li>
-        <li>An animal that has been out loses weight or gets hurt, and a small farm feels every loss.</li>
       </ul>
       <p>From the interviews I made one persona: a small-scale farmer, 50, with a herd of 5 to 25 cows in a remote village with poor signal and little technology.</p>
       <h3>What's on the market</h3>
-      <p>I looked at eShepherd by Gallagher, Nofence, mOOvement and Monil. Some of what they do well made it into my prototype: map views farmers already know, night-time battery saving and alerts about the collars themselves. They are built for commercial herds in developed markets, and cost is where smallholders stop. One small farmer wrote online that a $60 tag already hurts.</p>
-      <p>My SWOT turned into three decisions for the concept.</p>
+      <p>I looked at eShepherd by Gallagher, Nofence, mOOvement and Monil. They are built for commercial herds in developed markets, and cost is where smallholders stop. One small farmer wrote online that a $60 tag already hurts. My SWOT turned into three decisions for the concept.</p>
       <ul class="ticks" style="--accent:#7DC46A">
         <li>Keep the first version to animal safety and escape alerts rather than heavy analytics.</li>
         <li>Design for poor connectivity from the start, because a weak signal is normal in these villages.</li>
@@ -777,7 +784,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
     <section class="stack">
       <span class="k">04 · From paper to prototype</span>
       <h2>Sketches first, then lo-fi wireframes</h2>
-      <p>I sketched on paper first. My offline sketches show the dashboard when the connection drops: the time of the last sync, the last known status of each animal, and a note that live updates are paused. The animal status sketch lets the farmer log a manual check, add a voice memo, and see it queued for upload. Then I drew lo-fi wireframes in FigJam for the escape.</p>
+      <p>I sketched on paper first, including what the app shows when the connection drops, then drew lo-fi wireframes in FigJam for the escape.</p>
       <div class="strip" tabindex="0" aria-label="Sketches and wireframes, scroll sideways. Click one to enlarge it.">
         <figure style="width:240px"><img class="zoom" src="media/cowcompass_sketch_offline.jpg" alt="Paper sketch of offline mode: no connection, last sync 7:54, live updates are paused, the app keeps the last known status of each animal" loading="lazy"><figcaption>Offline mode on paper. Last sync, last known status, and a note that live updates are paused.</figcaption></figure>
         <figure style="width:240px"><img class="zoom" src="media/cowcompass_sketch_status.jpg" alt="Paper sketch of animal status: last location, activity summary, a pop-up that real time updates are unavailable, and a manual check with a voice memo queued for upload" loading="lazy"><figcaption>Animal status. Without signal the farmer can still log a check, and it waits for upload.</figcaption></figure>
@@ -792,15 +799,29 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       <div class="decisions">
         <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="17" fill="#7DC46A" stroke="#16181F" stroke-width="2"/><path d="m14 22.5 5.5 5.5L30 17" fill="none" stroke="#16181F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Answer the first question first</h3><p>My dashboard sketches started from what a farmer asks in the morning: are my animals safe, does anything need me now, what happened overnight. The Today screen opens with one answer, all 16 safe or who is out, before any map or list.</p></div>
         <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="17" fill="#E6E9F3" stroke="#16181F" stroke-width="2"/><path d="M22 12v10l7 5" fill="none" stroke="#16181F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Show how old every position is</h3><p>A position from 40 minutes ago looks like a live one unless the app says so. Every position carries a time. A cow that isn't live turns grey, and the wording changes from “updated” to “seen”, as in my wireframes.</p></div>
-        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="17" fill="#FBF9F4" stroke="#16181F" stroke-width="2"/><path d="M22 8 27 22 22 36 17 22Z" fill="#6E7AA0" stroke="#16181F" stroke-width="1.8" stroke-linejoin="round"/><circle cx="22" cy="22" r="2.6" fill="#16181F"/></svg><h3>Keep the walk going without signal</h3><p>A phone's GPS works without mobile signal, and my notes planned for maps downloaded on wifi. So when the signal drops, the compass keeps pointing at Daisy's last known spot. It turns grey, says which time it points to, and draws a circle around that spot that grows every minute. The farmer can see how sure the app is without reading anything, the way a map app shows how accurate your own position is.</p></div>
-        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><rect x="15" y="5" width="14" height="22" rx="7" fill="#7DC46A" stroke="#16181F" stroke-width="2"/><path d="M9 20a13 13 0 0 0 26 0M22 33v6M15 39h14" fill="none" stroke="#16181F" stroke-width="2.5" stroke-linecap="round"/></svg><h3>Log it in ten seconds</h3><p>After an escape the farmer taps a reason, records a voice note or skips. Everything is saved on the phone first and sent when there is signal. The log is what makes patterns possible later, like three escapes at the same gate. The five reasons in the prototype are my placeholders, and the real ones will come from farmers.</p></div>
-        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><path d="M11 31V21a11 11 0 0 1 22 0v10l3 4H8Z" fill="#F2C14E" stroke="#16181F" stroke-width="2" stroke-linejoin="round"/><path d="M18 38a4 4 0 0 0 8 0" fill="none" stroke="#16181F" stroke-width="2"/></svg><h3>Only alert for real problems</h3><p>Cows graze right along the fence and push their heads through for grass, and GPS wobbles by a few metres. So near the fence the app waits two minutes before calling it an escape, a number I'd tune from how often a collar jumps the line when the cow hasn't left. A cow that is clearly out alerts straight away. Two cows that leave together get one alert, because if you find one, the other is there too. A low collar battery waits for a sensible moment.</p></div>
-        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="13" cy="13" r="8" fill="#2C9A58" stroke="#16181F" stroke-width="2"/><circle cx="31" cy="13" r="8" fill="#E9A21F" stroke="#16181F" stroke-width="2"/><circle cx="13" cy="31" r="8" fill="#FF5A36" stroke="#16181F" stroke-width="2"/><circle cx="31" cy="31" r="8" fill="#6E7AA0" stroke="#16181F" stroke-width="2"/></svg><h3>One set of state colours</h3><p>Green is safe, amber needs a look, red is an escape and grey is a position that isn't live. The colours mean the same thing on every screen and stay separate from the playful drawing around them, and the dark outlines hold up in sunlight. For a bigger herd I'd group cows into clusters, as some of the products I looked at do.</p></div>
+        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="17" fill="#FBF9F4" stroke="#16181F" stroke-width="2"/><path d="M22 8 27 22 22 36 17 22Z" fill="#6E7AA0" stroke="#16181F" stroke-width="1.8" stroke-linejoin="round"/><circle cx="22" cy="22" r="2.6" fill="#16181F"/></svg><h3>Keep the walk going without signal</h3><p>A phone's GPS works without mobile signal, so when the signal drops, the compass keeps pointing at Daisy's last known spot. It turns grey, says which time it points to, and draws a circle around that spot that grows every minute. The farmer can see how sure the app is without reading anything, the way a map app shows how accurate your own position is.</p></div>
+        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><rect x="15" y="5" width="14" height="22" rx="7" fill="#7DC46A" stroke="#16181F" stroke-width="2"/><path d="M9 20a13 13 0 0 0 26 0M22 33v6M15 39h14" fill="none" stroke="#16181F" stroke-width="2.5" stroke-linecap="round"/></svg><h3>Log it in ten seconds</h3><p>After an escape the farmer taps a reason, records a voice note or skips. Everything is saved on the phone first and sent when there is signal. The five reasons in the prototype are my placeholders, and the real ones will come from farmers.</p></div>
+        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><path d="M11 31V21a11 11 0 0 1 22 0v10l3 4H8Z" fill="#F2C14E" stroke="#16181F" stroke-width="2" stroke-linejoin="round"/><path d="M18 38a4 4 0 0 0 8 0" fill="none" stroke="#16181F" stroke-width="2"/></svg><h3>Only alert for real problems</h3><p>Cows graze right along the fence and push their heads through for grass, and GPS wobbles by a few metres. So near the fence the app waits two minutes before calling it an escape. A cow that is clearly out alerts straight away. Two cows that leave together get one alert, because if you find one, the other is there too.</p></div>
+        <div class="decision"><svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="13" cy="13" r="8" fill="#2C9A58" stroke="#16181F" stroke-width="2"/><circle cx="31" cy="13" r="8" fill="#E9A21F" stroke="#16181F" stroke-width="2"/><circle cx="13" cy="31" r="8" fill="#FF5A36" stroke="#16181F" stroke-width="2"/><circle cx="31" cy="31" r="8" fill="#6E7AA0" stroke="#16181F" stroke-width="2"/></svg><h3>One set of state colours</h3><p>Green is safe, amber needs a look, red is an escape and grey is a position that isn't live. The colours mean the same thing on every screen and stay separate from the playful drawing around them.</p></div>
       </div>
     </section>
 
     <section class="stack">
-      <span class="k">06 · The prototype</span>
+      <span class="k">06 · Built for the field</span>
+      <h2>Made to be used outside</h2>
+      <p>A farmer on a hill and a site manager in PPE have a lot in common: bright light, cold or gloved hands, one hand busy and a signal that comes and goes.</p>
+      <ul class="ticks" style="--accent:#7DC46A">
+        <li>Big targets. The main buttons are 58 px tall and as wide as the screen, and the reason, voice note and photo buttons are 48 px, above the usual 44 px minimum.</li>
+        <li>The main action sits low on the screen, where a thumb reaches, so the phone works in one hand.</li>
+        <li>Dark outlines and solid colours, because a pale screen washes out in sunlight. White text on the main buttons has a contrast of 5.3:1.</li>
+        <li>One big number to walk by. The distance on the compass is 64 px tall, so it reads at arm's length.</li>
+        <li>Nothing to type. Logging an escape is a tap, a voice note or a skip.</li>
+      </ul>
+      <p>I haven't tested any of this outside yet. Sun and gloves are the first things I'd check with farmers.</p>
+    </section>
+
+    <section class="stack">
+      <span class="k">07 · The prototype</span>
       <h2>Four flows on one farm</h2>
       <p>The prototype has four flows: a morning check, Daisy getting out, no signal, and the herd with its history. There is also a phone signal switch, so any screen can lose signal while you look at it.</p>
       <div class="btnrow"><a class="btn primary" data-proto href="cow-compass/" target="_blank" rel="noopener">Try the prototype</a></div>
@@ -832,18 +853,13 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
     </section>
 
     <section class="stack">
-      <span class="k">07 · States &amp; edge cases</span>
+      <span class="k">08 · States &amp; edge cases</span>
       <h2>Not every alert is an escape</h2>
       <h3>Handled in the prototype</h3>
       <ul class="ticks" style="--accent:#7DC46A">
-        <li>A collar goes quiet in a dip where it can't reach the network. The cow shows as last seen, with the time, until it reports again.</li>
-        <li>A cow stands right on the fence line. GPS can be off by a few metres, so the app waits two minutes before it calls an escape. If she is clearly outside, the alert comes straight away.</li>
-        <li>Two cows leave together. They get one alert and one route.</li>
         <li>A cow heads for a hazard. Farmers already know where their animals go when they get out, so they mark those places on the map once: the road, a river, someone else's crops. A cow near one is the most urgent alert, with a button to call a neighbour who is closer.</li>
         <li>At night the collars save battery and report their position every 30 minutes. The boundary is loaded onto each collar, which checks it on its own, so an escape at 2 am still wakes the farmer straight away.</li>
-        <li>A collar battery runs low. The app offers to remind the farmer at the evening feed.</li>
         <li>A cow stays still and on her own, away from the herd, for longer than is usual for her. She could be calving or hurt, so she gets a calm amber nudge. Cows lie down for hours, so stillness alone would ring every night.</li>
-        <li>The signal drops on any screen. Positions turn grey with a time, actions wait on the phone, and when the signal comes back the app says what changed.</li>
       </ul>
       <div class="strip" tabindex="0" aria-label="Edge case screens, scroll sideways. Click a screen to enlarge it.">
         <figure><img class="zoom" src="media/cowcompass_e_stale.jpg" alt="Bella’s collar has gone quiet, last seen 47 minutes ago" loading="lazy"><figcaption>A quiet collar shows as last seen.</figcaption></figure>
@@ -855,18 +871,14 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
         <figure><img class="zoom" src="media/cowcompass_e_still.jpg" alt="Zlatka has been on her own, away from the herd, since 03:50, could be calving or hurt" loading="lazy"><figcaption>A cow on her own, away from the herd, gets a calm nudge.</figcaption></figure>
       </div>
       <h3>What I'd design next</h3>
-      <p>The biggest gap is the alert itself. If the farmer's phone has no signal, the escape alert can't reach it. The prototype shows what was missed once the signal is back, but that can be too late. So I'd let the farmer choose people who also get escape alerts, like a family member or a neighbouring farmer. They get escapes only, they see only the animal that is out, and they can do one thing: flag that they've seen her. To plan the search they call each other. This builds on the shared search from my second phase. It is a concept and isn't in the prototype.</p>
+      <p>The biggest gap is the alert itself. If the farmer's phone has no signal, the escape alert can't reach it. The prototype shows what was missed once the signal is back, but that can be too late. So I'd let the farmer choose people who also get escape alerts, like a family member or a neighbouring farmer. They get escapes only, they see only the animal that is out, and they can do one thing: flag that they've seen her. To plan the search they call each other. It is a concept and isn't in the prototype.</p>
     </section>
 
     <section class="stack">
-      <span class="k">08 · Outcome</span>
+      <span class="k">09 · Outcome &amp; next steps</span>
       <h2>A concept, not tested with farmers yet</h2>
       <p>The research is real: four interviews, a persona, a journey map and a user flow. I built the prototype in 2026 from that research, and no farmer has used it yet. It shows how I design for people who work outside with patchy signal, rather than proving that the product works.</p>
-    </section>
-
-    <section class="stack">
-      <span class="k">09 · Next steps</span>
-      <h2>What I'd test first</h2>
+      <h3>What I'd test first</h3>
       <ul class="ticks" style="--accent:var(--gold)">
         <li>Show the prototype to the four households, starting with the alert. Two minutes on the fence line might be too long when a cow is heading for the road.</li>
         <li>Ask what they would pay. Price stops smallholders before any screen does, and a design can't fix that alone.</li>
@@ -1185,6 +1197,21 @@ function ccAnim(root){const box=root.querySelector('.cc-anim');if(!box)return;
   const frame=t=>{raf=0;if(!vis)return;const dt=last?Math.min(.05,(t-last)/1000):0;last=t;tick(dt);paint();raf=requestAnimationFrame(frame)};
   new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis&&!raf){last=0;raf=requestAnimationFrame(frame)}}).observe(box);
 }
+/* case studies: a section index at the top and a way on to the next one at the end */
+const CASES=DOC_ORDER.filter(i=>WINS[i]&&WINS[i].tall);
+function caseNav(id,root){const art=root.querySelector('article');if(!art)return;
+  const secs=[...art.querySelectorAll(':scope > section')].filter(s=>s.querySelector(':scope > .k'));
+  if(secs.length>2){const nav=document.createElement('nav');nav.className='cs-toc';nav.setAttribute('aria-label','Sections');
+    nav.innerHTML=secs.map((s,i)=>`<button type="button" data-sec="${i}">${esc(s.querySelector(':scope > .k').textContent)}</button>`).join('');
+    nav.addEventListener('click',e=>{const b=e.target.closest('[data-sec]');if(!b)return;const s=secs[+b.dataset.sec];
+      if(document.body.classList.contains('docmode')){goTo(s);return}
+      const body=s.closest('.body');let n=0,stop=false;body.addEventListener('wheel',()=>{stop=true},{once:true,passive:true});
+      const jump=()=>{if(stop)return;const off=s.getBoundingClientRect().top-body.getBoundingClientRect().top-14;if(Math.abs(off)>4)body.scrollTop+=off;if(++n<8)setTimeout(jump,250)};jump()});
+    (art.querySelector(':scope > hr.cut')||secs[0]).before(nav)}
+  const n=CASES[(CASES.indexOf(id)+1)%CASES.length],p=PROJ[n];
+  const end=document.createElement('nav');end.className='cs-next';end.setAttribute('aria-label','More work');
+  end.innerHTML=`<button type="button" class="btn primary" data-next="${n}">Next: ${esc(p?p.title:WINS[n].title)} →</button><button type="button" class="btn" data-open="work">All work</button><button type="button" class="btn" data-top>Back to top</button>`;
+  art.appendChild(end)}
 function fill(id,root){
   if(id==='work'){const c=root.querySelector('#cards');c.removeAttribute('id');
     c.innerHTML=DATA.projects.map(p=>`<button class="card" style="--c:${p.accent}" data-open="${p.id}"><span class="meta">${esc(p.meta)}</span><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p>
@@ -1207,6 +1234,7 @@ function fill(id,root){
   /* the video loads only when it scrolls into view, so phones don't download it on arrival */
   root.querySelectorAll('video[data-src]').forEach(v=>{const go=()=>{v.src=v.dataset.src;v.removeAttribute('data-src')};if(!('IntersectionObserver' in window))return go();const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();go()}},{rootMargin:'200px'});io.observe(v)});
   if(reduce)root.querySelectorAll('video').forEach(v=>{v.removeAttribute('autoplay');v.controls=true;v.pause()});
+  if(WINS[id]&&WINS[id].tall&&CASES.length>1)caseNav(id,root);
 }
 function selectText(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
 function bodyFor(id){
@@ -1218,7 +1246,7 @@ const RZ=['n','s','e','w','ne','nw','se','sw'].map(d=>'<span class="rz '+d+'" da
 function makeWin(id,docMode){
   const d=WINS[id];const w=document.createElement('section');
   w.className='win'+(d.dark?' dark':'');w.dataset.id=id;w.id=docMode?id:'win-'+id;w.style.setProperty('--accent',d.accent);
-  w.setAttribute('aria-label',d.title);
+  w.setAttribute('aria-label',d.title);if(!docMode)w.tabIndex=-1;
   w.innerHTML=`<div class="bar">${docMode?'<i class="dot" style="background:var(--coral)"></i><i class="dot" style="background:var(--gold)"></i><i class="dot" style="background:var(--teal)"></i>':
     `<button class="dot" data-act="close" data-g="×" title="Close" aria-label="Close ${esc(d.title)}" style="background:var(--coral)"></button><button class="dot" data-act="min" data-g="−" title="Minimise" aria-label="Minimise" style="background:var(--gold)"></button><button class="dot" data-act="max" data-g="+" title="Maximise" aria-label="Maximise" style="background:var(--teal)"></button>`}
     <span class="ttl">${esc(d.title)}</span>${d.right?`<span class="r">${esc(d.right)}</span>`:''}</div><div class="body"></div>${docMode?'':RZ}`;
@@ -1226,7 +1254,7 @@ function makeWin(id,docMode){
 }
 
 /* ---------- desktop ---------- */
-const desk=$('#desk'),tabs=$('#tabs');const open={};let z=10,cascade=0;
+const desk=$('#desk'),tabs=$('#tabs');const open={};let z=10,cascade=0,booted=false;
 function deskSize(){return{W:desk.clientWidth,H:desk.clientHeight}}
 /* windows open to the right of the icons: the right edge of any icon in the left half of the desk, plus a gap */
 function iconEdge(){const box=$('#icons');const{W}=deskSize();let r=0;[...box.children].forEach(b=>{const x=box.offsetLeft+b.offsetLeft;if(x<W/2)r=Math.max(r,x+b.offsetWidth)});return r||box.offsetLeft+(box.offsetWidth||96)}
@@ -1237,7 +1265,7 @@ function place(id,w){
   const{W,H}=deskSize();const d=WINS[id];const L=leftEdge();let width=Math.min(d.w,W-L-24);w.style.width=width+'px';
   let x,y,h;
   if(id==='hello'){x=L;y=24}
-  else if(d.tall){const o=id==='moonmates'?0:(open.moonmates?30:0);x=Math.max(L,Math.min(W-width-8,Math.min(W-width-24,L+470+40)+o));y=14+o}
+  else if(d.tall){const o=34*(Object.keys(open).filter(k=>k!==id&&WINS[k].tall&&!open[k].el.hidden).length%5);x=Math.max(L,Math.min(W-width-8,Math.min(W-width-24,L+470+40)+o));y=14+o}
   else{x=Math.max(L,Math.min(W-width-20,L+40+cascade*34));y=Math.min(H-200,40+cascade*30);cascade=(cascade+1)%6}
   h=d.tall?H-34:Math.min(H-y-20,680);
   w.style.left=x+'px';w.style.top=y+'px';w.style.maxHeight=(H-y-14)+'px';if(d.tall)w.style.height=h+'px';
@@ -1248,12 +1276,13 @@ function openWin(id){
   if(document.body.classList.contains('docmode')){if(id==='contact'){goTo(document.querySelector('#doc .about-contact')||'about');return}goTo(document.getElementById(id)?id:'work');return}
   if(!open[id]){const el=makeWin(id,false);place(id,el);desk.appendChild(el);open[id]={el,min:false};wire(el,id);pushWin(id)}
   const o=open[id];o.el.hidden=false;o.min=false;focusWin(id);
+  if(booted){const a=document.activeElement;if(a&&a!==document.body&&!o.el.contains(a))o.opener=a;o.el.focus({preventScroll:true})}
 }
 /* in document mode, jump straight to a window and correct the position while lazy images above it load */
 function goTo(id){const t=typeof id==='string'?document.getElementById(id):id;if(!t)return;t.scrollIntoView({block:'start'});
   let n=0,stop=false;const quit=()=>{stop=true};addEventListener('touchstart',quit,{once:true,passive:true});addEventListener('wheel',quit,{once:true,passive:true});
   const fix=()=>{if(stop)return;const off=t.getBoundingClientRect().top-(parseFloat(getComputedStyle(t).scrollMarginTop)||0);if(Math.abs(off)>4)t.scrollIntoView({block:'start'});if(++n<8)setTimeout(fix,250)};setTimeout(fix,250)}
-function closeWin(id){const o=open[id];if(!o)return;o.el.remove();delete open[id];renderTabs()}
+function closeWin(id){const o=open[id];if(!o)return;const back=o.el.contains(document.activeElement)&&o.opener&&document.contains(o.opener)?o.opener:null;o.el.remove();delete open[id];renderTabs();if(back)back.focus({preventScroll:true})}
 /* an opened window gets its own address (#id), so it can be shared, and Back closes it */
 let curHash=location.hash.slice(1);
 function pushWin(id){if(id==='hello'||location.hash==='#'+id)return;try{history.pushState({win:id},'','#'+id);curHash=id}catch(_){}}
@@ -1261,7 +1290,7 @@ function closeByUser(id){if(location.hash==='#'+id){if(history.state&&history.st
 function syncHash(){const id=location.hash.slice(1);if(id===curHash)return;const prev=curHash;curHash=id;
   if(!document.body.classList.contains('docmode')&&prev&&prev!=='hello'&&open[prev])closeWin(prev);
   if(WINS[id])openWin(id)}
-function renderTabs(active){tabs.innerHTML=Object.keys(open).map(id=>`<button class="tab${open[id].min?' min':''}${id===active?' on':''}" data-tab="${id}">${esc(WINS[id].title)}</button>`).join('')}
+function renderTabs(active){tabs.innerHTML=Object.keys(open).map(id=>`<button class="tab${open[id].min?' min':''}${id===active?' on':''}" data-tab="${id}" title="${esc(WINS[id].title)}">${esc(LABEL[id]||WINS[id].title)}</button>`).join('')}
 function wire(el,id){
   el.addEventListener('pointerdown',()=>focusWin(id));
   el.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const a=b.dataset.act;
@@ -1290,6 +1319,10 @@ function wire(el,id){
 }
 tabs.addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(!t)return;const id=t.dataset.tab;const o=open[id];
   if(o.min||!o.el.classList.contains('focus'))openWin(id);else{o.min=true;o.el.hidden=true;renderTabs()}});
+document.addEventListener('click',e=>{const how=reduce?'auto':'smooth';
+  const nx=e.target.closest('[data-next]');if(nx){e.preventDefault();const w=nx.closest('#desk .win');if(w&&open[w.dataset.id])closeWin(w.dataset.id);openWin(nx.dataset.next);return}
+  const tp=e.target.closest('[data-top]');if(tp){e.preventDefault();const b=tp.closest('#desk .body');if(b)b.scrollTo({top:0,behavior:how});else scrollTo({top:0,behavior:how});return}
+  const md=e.target.closest('[data-mode]');if(md){e.preventDefault();setMode(md.dataset.mode);scrollTo(0,0)}});
 document.addEventListener('click',e=>{const t=e.target.closest('[data-open]');if(t&&!t.closest('.icon')){e.preventDefault();openWin(t.dataset.open)}});
 const lb=$('#lb');
 function closeLb(){lb.hidden=true;lb.querySelector('img').removeAttribute('src')}
@@ -1395,6 +1428,7 @@ setMode(saved==='doc'?'doc':'desk');
 const start=(location.hash||'').slice(1);
 if(!document.body.classList.contains('docmode')){openWin('hello');placeSticky();if(start&&WINS[start]&&start!=='hello')openWin(start)}
 else if(start)setTimeout(()=>openWin(start),50);
+booted=true;
 addEventListener('resize',()=>{if(!document.body.classList.contains('docmode')){leftEdge();placeSticky()}});
 let wasNarrow=innerWidth<=760;addEventListener('resize',()=>{const n=innerWidth<=760;if(n!==wasNarrow){wasNarrow=n;let m='desk';try{m=localStorage.getItem('alex-mode')||'desk'}catch(e){}setMode(m);if(!n&&!Object.keys(open).length){openWin('hello')}}});
 addEventListener('popstate',syncHash);addEventListener('hashchange',syncHash);
