@@ -889,14 +889,11 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 </template>
 <template id="t-about">
   <div class="stack-l">
-    <div class="stack" style="gap:6px"><span class="k">about.txt</span><h2>From surveying buildings to designing products</h2><p>I'm Aleksandra Vugdragovic, Alex for short, and I live in London. I spent five years measuring buildings and delivering survey projects. This is how that turned into product design.</p></div>
-    <div class="timeline">
-      <div class="tl"><span class="when">2021</span><div><h3>Surveying buildings</h3><p>After a master's in landscape architecture in Zagreb, I started as a measured building surveyor in London. I scanned buildings on site with my colleagues and turned the point clouds into drawings and 3D models in the office.</p></div></div>
-      <div class="tl"><span class="when">2021–2025</span><div><h3>The first process I fixed</h3><p>I wrote AutoLISP scripts that standardised more than 47 CAD layers. It was my first go at fixing a process instead of working around it.</p></div></div>
-      <div class="tl"><span class="when">Dec 2024</span><div><h3>Designing on the side</h3><p>I started volunteering as the only UX designer at Nkomor Healthcare. For a year I redesigned their medication platform into a marketplace with one side for buyers and one for pharmacies.</p></div></div>
-      <div class="tl"><span class="when">2025</span><div><h3>A tool for my own team</h3><p>As a project manager at DPR, I ran a 10-storey survey project from fee proposal to handover. Drawing QA ran on email, with no record of who checked what. I interviewed five people across two QA teams, designed a checklist tool, built it with Lovable and Claude, and my team piloted it on about 10 projects. <a href="#qa-tool" data-open="qa-tool">Read the case study</a></p></div></div>
-      <div class="tl"><span class="when">2026</span><div><h3>Hackathons</h3><p>I took part in three. CareLoop won the Accurx challenge, Notice made the top 6 of 19 at Wise, and MoonMates won the Engine by Starling challenge. On CareLoop and MoonMates I led the ideation and built the first prototype. <a href="#careloop" data-open="careloop">CareLoop</a> · <a href="#moonmates" data-open="moonmates">MoonMates</a></p></div></div>
-      <div class="tl"><span class="when">Now</span><div><h3>Moving into product design</h3><p>My department at DPR closed in September 2026. Since then I've been building this portfolio, including Cow Compass, a concept for farmers in Croatia whose cattle get out. I'm looking for a product design role in London, especially in construction tech and geospatial, where my background helps most. <a href="#cow-compass" data-open="cow-compass">Cow Compass</a></p></div></div>
+    <div class="stack"><span class="k">about.txt</span><h2>From delivering projects to designing products</h2>
+      <p>Hi, I'm Alex, a London-based Product Designer. Before moving into design, I spent five years in measured building surveys, laser-scanning sites, processing point-cloud data, and managing complex spatial data projects from site to client handover.</p>
+      <p>My transition into design began when I started building tools to fix broken workflows. At DPR, I designed a <a href="#qa-tool" data-open="qa-tool">drawing QA tool</a> that was successfully piloted on about 10 projects. Since then, I’ve sharpened my rapid-prototyping skills, recently winning the <a href="#careloop" data-open="careloop">Accurx challenge</a> and the <a href="#moonmates" data-open="moonmates">Engine by Starling challenge</a> at two 2026 hackathons.</p>
+      <p>Because I’ve been the end-user on the ground, I bring firsthand empathy to highly technical workflows.</p>
+      <p>I am currently looking for a Product Design role in Construction Tech or Geospatial, where I can leverage my domain expertise to build products that solve real industry bottlenecks.</p>
     </div>
     <p>My full work history is in my CV. <button class="btn sm" data-open="cv">Open CV.pdf</button></p>
     <div class="stack about-contact" style="gap:10px">
@@ -909,15 +906,6 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
   </div>
 </template>
 
-<template id="t-hackathons">
-  <div class="term">
-    <div><span class="p">alex@moon:~$</span> cat hackathons.log</div>
-    <div class="row"><span>Oct 26</span><div><b>HuddleHive Hack</b> <span class="w">WINNER</span><small>Engine by Starling challenge · MoonMates · team of 5 · 24h</small></div></div>
-    <div class="row"><span>Jun 26</span><div><b>Wise Hackathon</b> <span class="w">TOP 6 / 19</span><small>Notice · pivoted mid-hackathon</small></div></div>
-    <div class="row"><span>Mar 26</span><div><b>HuddleHive NHS Hackathon</b> <span class="w">WINNER</span><small>Accurx challenge · CareLoop · led a team of 5 · 24h</small></div></div>
-    <div style="margin-top:10px"><span class="p">alex@moon:~$</span> <span style="opacity:.6">_</span></div>
-  </div>
-</template>
 
 <template id="t-qa">
   <article class="stack-l">
@@ -1138,14 +1126,13 @@ const WINS={
   careloop:{title:'careloop/case-study.md',right:'winner',accent:'var(--blue)',w:720,tall:true,tpl:'t-careloop'},
   'cow-compass':{title:'cow-compass/case-study.md',right:'concept',accent:'#7DC46A',w:720,tall:true,tpl:'t-cow-compass'},
   about:{title:'about.txt',accent:'var(--lilac)',w:600,tpl:'t-about'},
-  hackathons:{title:'hackathons.log',accent:'var(--teal)',w:520,tpl:'t-hackathons',dark:true},
   cv:{title:'CV.pdf',accent:'var(--blue)',w:560,tpl:'t-cv'},
   bagcheck:{title:'bagcheck.app',right:'bonus',accent:'#F5B544',w:600,tpl:'t-bagcheck'},
   contact:{title:'contact.txt',accent:'var(--teal)',w:400,tpl:'t-contact'}
 };
 DATA.projects.filter(p=>p.status!=='case').forEach(p=>{WINS[p.id]={title:p.id+'/README.md',accent:p.accent,w:480,project:p}});
-const DESKTOP=['hello','work','qa-tool','moonmates','careloop','cow-compass','about','hackathons','cv','contact','bagcheck'];
-const DOC_ORDER=['hello','qa-tool','moonmates','careloop','cow-compass','work',...DATA.projects.filter(p=>p.status!=='case').map(p=>p.id),'hackathons','cv','bagcheck','about'];
+const DESKTOP=['hello','work','qa-tool','moonmates','careloop','cow-compass','about','cv','contact','bagcheck'];
+const DOC_ORDER=['hello','qa-tool','moonmates','careloop','cow-compass','work',...DATA.projects.filter(p=>p.status!=='case').map(p=>p.id),'cv','bagcheck','about'];
 
 /* ---------- content ---------- */
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -1331,8 +1318,8 @@ document.addEventListener('click',e=>{const im=e.target.closest('img.zoom');if(i
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){closeLb();return}if(e.key==='Escape'&&!document.body.classList.contains('docmode')){const top=Object.entries(open).filter(([,o])=>!o.el.hidden).sort((a,b)=>b[1].el.style.zIndex-a[1].el.style.zIndex)[0];if(top)closeByUser(top[0])}});
 
 /* desktop icons */
-const ICON_SYM={hello:['TXT','#F2C14E'],work:['DIR','#6FA8FF'],moonmates:['DIR','#FF6B4A'],'qa-tool':['DIR','#3FC1B0'],careloop:['DIR','#6FA8FF'],'cow-compass':['DIR','#7DC46A'],about:['TXT','#B79CFF'],hackathons:['LOG','#3FC1B0'],cv:['PDF','#FF6B4A'],contact:['MSN','#3FC1B0'],bagcheck:['APP','#F5B544']};
-const LABEL={hello:'hello.txt',work:'work/',moonmates:'moonmates/','qa-tool':'qa-tool/',careloop:'careloop/','cow-compass':'cow-compass/',about:'about.txt',hackathons:'hackathons.log',cv:'CV.pdf',contact:'contact.txt',bagcheck:'bagcheck.app'};
+const ICON_SYM={hello:['TXT','#F2C14E'],work:['DIR','#6FA8FF'],moonmates:['DIR','#FF6B4A'],'qa-tool':['DIR','#3FC1B0'],careloop:['DIR','#6FA8FF'],'cow-compass':['DIR','#7DC46A'],about:['TXT','#B79CFF'],cv:['PDF','#FF6B4A'],contact:['MSN','#3FC1B0'],bagcheck:['APP','#F5B544']};
+const LABEL={hello:'hello.txt',work:'work/',moonmates:'moonmates/','qa-tool':'qa-tool/',careloop:'careloop/','cow-compass':'cow-compass/',about:'about.txt',cv:'CV.pdf',contact:'contact.txt',bagcheck:'bagcheck.app'};
 function iconSvg(kind,c,sfx=''){
   if(kind==='MSN')return `<svg width="52" height="50" viewBox="0 0 52 50" aria-hidden="true"><defs><radialGradient id="buddyB${sfx}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#A8DBFF"/><stop offset=".5" stop-color="#2E8BE6"/><stop offset="1" stop-color="#15529E"/></radialGradient><radialGradient id="buddyG${sfx}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#C6F58E"/><stop offset=".5" stop-color="#4DB52A"/><stop offset="1" stop-color="#22731A"/></radialGradient></defs><g stroke="#0C0F15" stroke-width="2" stroke-linejoin="round"><path d="M22 40c0-11 5-17 12-17s12 6 12 17z" fill="url(#buddyB${sfx})"/><circle cx="34" cy="13" r="8" fill="url(#buddyB${sfx})"/><path d="M5 48c0-12 6-18 14-18s14 6 14 18z" fill="url(#buddyG${sfx})"/><circle cx="19" cy="19" r="9" fill="url(#buddyG${sfx})"/></g><ellipse cx="16" cy="15" rx="3.6" ry="2.2" fill="#fff" opacity=".55" transform="rotate(-25 16 15)"/><ellipse cx="31.5" cy="9.5" rx="3" ry="1.8" fill="#fff" opacity=".55" transform="rotate(-25 31.5 9.5)"/></svg>`;
   if(kind==='APP')return `<svg width="50" height="50" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="${c}" stroke="#0C0F15" stroke-width="2"/><path d="M8 15 Q16 9 24 15" stroke="#1A1405" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M9.5 20 Q16 25 22.5 20" stroke="#1A1405" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`;
@@ -1416,7 +1403,7 @@ requestAnimationFrame(spy);
   let lit='';if(k>.98)lit=`<circle cx="10" cy="10" r="8" fill="#F2C14E"/>`;else if(k>.02){const rx=Math.abs(1-2*k)*r;const s1=wax?1:0;const s2=(k<.5)===wax?0:1;
     lit=`<path d="M${cx} ${cy-r} A${r} ${r} 0 0 ${s1} ${cx} ${cy+r} A${rx} ${r} 0 0 ${s2} ${cx} ${cy-r}Z" fill="#F2C14E"/>`}
   const toFull=Math.round(((syn/2-age)+syn)%syn);const txt=k>.98?'full moon tonight':k<.02?'new moon tonight':toFull===0?'full moon tonight':`full moon in ${toFull} day${toFull===1?'':'s'}`;
-  $('#phase').innerHTML=`<svg width="15" height="15" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="#232A3B" stroke="#0C0F15" stroke-width="1.5"/>${lit}</svg><span class="phase-t">${txt}</span>`})();
+  $('#phase').innerHTML=`<svg width="15" height="15" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="#232A3B" stroke="#0C0F15" stroke-width="1.5"/>${lit}</svg>`})();
 
 /* ---------- stars ---------- */
 (function(){const s=$('#stars');let seed=7;const rnd=()=>(seed=seed*16807%2147483647)/2147483647;let h='';
