@@ -14,7 +14,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8.5' fill='%230C0F15'/%3E%3Cpath d='M10 1.5 A8.5 8.5 0 0 1 10 18.5 A4 8.5 0 0 0 10 1.5Z' fill='%23F2C14E'/%3E%3C/svg%3E">
 <title>Alex Vugdragovic</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@600;700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@600;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@600;700&display=swap"></noscript>
 <style>
 /* One deliberate look: a night-sky desktop, taken from the MoonMates video. */
 :root{
@@ -203,6 +203,12 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .strip.wide{align-items:flex-start}
 .strip.wide img{border-radius:10px;background:#fff;height:220px;object-fit:cover;object-position:top left}
 .strip img.zoom{cursor:zoom-in}
+.keypair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+.keypair figure{margin:0;display:flex;flex-direction:column;gap:8px}
+.keypair img{width:100%;border-radius:16px;border:2px solid var(--text);display:block;background:var(--screen)}
+.keypair figcaption{font-size:14px;line-height:1.45;color:var(--sub)}
+.keypair figcaption b,.uifig figcaption b{color:var(--text)}
+@media (max-width:560px){.keypair{grid-template-columns:1fr}.keypair figure{max-width:320px;margin:0 auto}}
 .users{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .user{border:2px solid var(--text);border-radius:12px;background:var(--paper);padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:4px 4px 0 var(--c)}
 .user .ic{width:34px;height:34px;border-radius:50%;background:var(--c);border:2px solid var(--text);display:grid;place-items:center;font:700 15px var(--display)}
@@ -213,7 +219,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .chg p{font-size:13.5px;line-height:1.45}
 .chg p:nth-of-type(1){font-style:italic;color:#3A3E48}
 .chg .k{font-size:10.5px}
-.chg .k.to{color:#1F8F80;margin-top:4px}
+.chg .k.to{color:#157366;margin-top:4px}
 .qa-anim{position:relative;aspect-ratio:4/5;max-width:100%;background:var(--screen);border:2px solid var(--text);border-radius:12px;box-shadow:6px 6px 0 var(--teal);padding:14px;display:flex;flex-direction:column;gap:8px;overflow:hidden;color:var(--paper)}
 .qa-anim .lab{font:600 10.5px var(--mono);letter-spacing:1.4px;text-transform:uppercase;color:var(--muted)}
 .qa-anim .lab.after{color:var(--teal)}
@@ -231,7 +237,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .qa-anim .row.bad b{animation-name:qa-fail}
 .qa-anim .r2 b{animation-delay:.35s}.qa-anim .r3 b{animation-delay:.7s}.qa-anim .r4 b{animation-delay:1.05s}
 .qa-anim .report{margin-top:auto;align-self:flex-start;font:700 11px var(--mono);background:var(--teal);color:var(--ink);border:2px solid var(--text);border-radius:8px;padding:5px 9px;animation:qa-pop 6s infinite}
-@keyframes qa-mail{0%,8%{opacity:1}30%,70%{opacity:.35;filter:blur(.6px)}92%,100%{opacity:1}}
+@keyframes qa-mail{0%,8%{opacity:1}30%,70%{opacity:.55;filter:blur(.6px)}92%,100%{opacity:1}}
 @keyframes qa-tick{0%,30%{background:#fff}38%,88%{background:#3FC1B0}96%,100%{background:#fff}}
 @keyframes qa-fail{0%,30%{background:#fff}38%,88%{background:#FF6B4A}96%,100%{background:#fff}}
 @keyframes qa-pop{0%,52%{transform:scale(.4);opacity:0}60%{transform:scale(1.12);opacity:1}66%,88%{transform:scale(1);opacity:1}96%,100%{transform:scale(.4);opacity:0}}
@@ -448,7 +454,7 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
     </dl>
 
     <div class="hero-media">
-      <div class="vidframe"><video src="media/moonmates.mp4" poster="media/poster.jpg" autoplay muted loop playsinline aria-label="MoonMates in 13 seconds: friends save daily, cross paths on the Tube, the moon fills up and turns into pizza night"></video></div>
+      <div class="vidframe"><video data-src="media/moonmates.mp4" poster="media/poster.jpg" autoplay muted loop playsinline aria-label="MoonMates in 13 seconds: friends save daily, cross paths on the Tube, the moon fills up and turns into pizza night"></video></div>
       <div class="stack">
         <span class="k">The brief</span>
         <h3>“Connect a mock Engine core to an unexpected, non-banking API and create a brand new financial service.”</h3>
@@ -798,6 +804,10 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       <h2>Four flows on one farm</h2>
       <p>The prototype has four flows: a morning check, Daisy getting out, no signal, and the herd with its history. There is also a phone signal switch, so any screen can lose signal while you look at it.</p>
       <div class="btnrow"><a class="btn primary" data-proto href="cow-compass/" target="_blank" rel="noopener">Try the prototype</a></div>
+      <div class="keypair">
+        <figure><img class="zoom" src="media/cowcompass_02_alert.jpg" alt="Lock screen alert: Daisy left the North field, near the north gate, 3 minutes ago" loading="lazy"><figcaption><b>The alert.</b> It names the cow, the place and the time, right on the lock screen.</figcaption></figure>
+        <figure><img class="zoom" src="media/cowcompass_09_off_walk.jpg" alt="Compass in grey: the arrow points to where Daisy was at 06:47, seen 9 minutes ago, within about 123 metres" loading="lazy"><figcaption><b>Signal drops mid-walk.</b> The arrow turns grey and points to where Daisy was last seen. The circle grows every minute, so the app never looks surer than it is.</figcaption></figure>
+      </div>
       <h3>Daisy gets out</h3>
       <div class="strip" tabindex="0" aria-label="Escape flow screens, scroll sideways. Click a screen to enlarge it.">
         <figure><img class="zoom" src="media/cowcompass_01_morning.jpg" alt="Today screen: all 16 cows are safe, with the North field map" loading="lazy"><figcaption>A normal morning. One answer first: all 16 are safe.</figcaption></figure>
@@ -998,6 +1008,8 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       <p>The first idea had three tabs: checklist, screenshots and report. I presented it to the analysts and the senior leaders of the team and tested it with them. The tool changed after that, but the basics were already there: every check gets a pass, needs improvement or a fail, a screenshot sits on its check, and the report lists what passed and what needs work.</p>
       <div class="strip wide" tabindex="0" aria-label="First idea screens, scroll sideways"><figure><img class="zoom" src="media/qa_first_1_checklist.jpg" alt="First idea, Checklist tab: point cloud checks marked pass or needs improvement, with a note field and a screenshot added to one check" style="object-position:0 42%" loading="lazy"><figcaption><b>First idea.</b> The checklist. Each check is a pass, needs improvement or a fail, with a note and a screenshot.</figcaption></figure><figure><img class="zoom" src="media/qa_first_2_screenshots.jpg" alt="First idea, Screenshots tab: an upload box and a screenshot linked to the check it relates to" style="object-position:0 42%" loading="lazy"><figcaption><b>First idea.</b> Screenshots in one tab, each linked to its check.</figcaption></figure><figure><img class="zoom" src="media/qa_first_3_report.jpg" alt="First idea, Report tab: 17 passed, 0 issues and 4 improvements, with lists of what is good and what needs improvement" style="object-position:0 58%" loading="lazy"><figcaption><b>First idea.</b> The report lists what passed and what needs improvement.</figcaption></figure></div>
       <p class="small-note">Screens from the phase 2 concept, rebuilt in Lovable with made-up projects and people. The two report screens are from the version my team piloted. The queue, the tree, @mentions and the failed check came after the usability test. Click a screen to enlarge it.</p>
+      <figure class="uifig"><img class="ui zoom" src="media/qa_03_fail_check_crop.png" data-full="media/qa_03_fail_check_conversation.png" alt="A failed check, No double lines or duplicate points, open in place with the reviewer note and a screenshot slot, between checks marked Pass" loading="lazy"><figcaption><b>After the test.</b> The checks use the teams' own words. A failed check opens where it sits, with the note and the screenshot slot, so the feedback stays next to its check.</figcaption></figure>
+      <figure class="uifig"><img class="ui zoom" src="media/qa_06_report_bar.png" data-full="media/qa_06_report_issue.png" style="max-width:632px" alt="Report actions: Export report, Return for fixes, and Approve greyed out with the note Finish all checks to approve" loading="lazy"><figcaption><b>In the pilot.</b> Approve stays locked until every check is done. Return for fixes sends the work back.</figcaption></figure>
       <div class="strip wide" tabindex="0" aria-label="QA tool screens, scroll sideways"><figure><img class="zoom" src="media/qa_01_queue_filters.png" alt="The review queue with a filter open on the Team column" loading="lazy"><figcaption><b>After the test.</b> The review queue. Every column sorts and filters.</figcaption></figure><figure><img class="zoom" src="media/qa_02_review_header_tree.png" alt="A drawing review with job details, progress and the checklist as a tree" loading="lazy"><figcaption><b>After the test.</b> A review: job details, progress and the checklist as a tree.</figcaption></figure><figure><img class="zoom" src="media/qa_03_fail_check_conversation.png" alt="A failed check with the reviewer note, a screenshot slot and the conversation" loading="lazy"><figcaption><b>After the test.</b> A failed check opens in place, with a note, a screenshot slot and the conversation.</figcaption></figure><figure><img class="zoom" src="media/qa_04_mention.png" alt="Typing @ in a comment suggests a colleague with role and team" loading="lazy"><figcaption><b>After the test.</b> Typing @ suggests people with their role and team.</figcaption></figure><figure><img class="zoom" src="media/qa_05_report_summary.png" alt="Report summary counting issues, improvements and checks not done" loading="lazy"><figcaption><b>In the pilot.</b> The report counts issues, improvements and checks not done.</figcaption></figure><figure><img class="zoom" src="media/qa_06_report_issue.png" alt="An issue in the report with Approve locked" loading="lazy"><figcaption><b>In the pilot.</b> Approve stays locked until every check is done.</figcaption></figure></div>
     </section>
 
@@ -1192,6 +1204,8 @@ function fill(id,root){
   root.querySelectorAll('.diagram-wrap').forEach(w=>w.insertAdjacentHTML('afterend','<p class="swipe-hint">Swipe sideways to see the whole diagram →</p>'));
   if(id==='cow-compass')ccAnim(root);
   if(window.claude)root.querySelectorAll('[data-proto]').forEach(a=>a.href='https://claude.ai/artifact/SB7LjSxWTgQRXPyY1fi15Z');
+  /* the video loads only when it scrolls into view, so phones don't download it on arrival */
+  root.querySelectorAll('video[data-src]').forEach(v=>{const go=()=>{v.src=v.dataset.src;v.removeAttribute('data-src')};if(!('IntersectionObserver' in window))return go();const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();go()}},{rootMargin:'200px'});io.observe(v)});
   if(reduce)root.querySelectorAll('video').forEach(v=>{v.removeAttribute('autoplay');v.controls=true;v.pause()});
 }
 function selectText(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
@@ -1279,7 +1293,7 @@ tabs.addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(!t)r
 document.addEventListener('click',e=>{const t=e.target.closest('[data-open]');if(t&&!t.closest('.icon')){e.preventDefault();openWin(t.dataset.open)}});
 const lb=$('#lb');
 function closeLb(){lb.hidden=true;lb.querySelector('img').removeAttribute('src')}
-document.addEventListener('click',e=>{const im=e.target.closest('img.zoom');if(im){lb.querySelector('img').src=im.src;lb.querySelector('img').alt=im.alt;lb.hidden=false;$('#lbClose').focus();return}
+document.addEventListener('click',e=>{const im=e.target.closest('img.zoom');if(im){lb.querySelector('img').src=im.dataset.full||im.src;lb.querySelector('img').alt=im.alt;lb.hidden=false;$('#lbClose').focus();return}
   if(!lb.hidden&&(e.target===lb||e.target.id==='lbClose'))closeLb()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){closeLb();return}if(e.key==='Escape'&&!document.body.classList.contains('docmode')){const top=Object.entries(open).filter(([,o])=>!o.el.hidden).sort((a,b)=>b[1].el.style.zIndex-a[1].el.style.zIndex)[0];if(top)closeByUser(top[0])}});
 
