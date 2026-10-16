@@ -80,7 +80,7 @@ a{color:inherit}
 
 /* windows */
 .win{--accent:var(--teal);position:absolute;display:flex;flex-direction:column;background:var(--paper2);color:var(--text);border:2px solid var(--paper);border-radius:12px;
-  box-shadow:8px 8px 0 var(--accent);overflow:hidden;max-width:calc(100% - 20px)}
+  box-shadow:8px 8px 0 var(--accent);overflow:visible;max-width:calc(100% - 20px)}
 .win.focus{box-shadow:10px 10px 0 var(--accent)}
 .win .bar{flex:none;height:34px;display:flex;align-items:center;gap:7px;padding:0 12px;background:var(--paper);border-bottom:2px solid var(--ink);font:600 13px var(--mono);color:var(--ink);cursor:grab;user-select:none;touch-action:none}
 .win .bar:active{cursor:grabbing}
@@ -90,9 +90,17 @@ a{color:inherit}
 .win .body{flex:1;overflow:auto;padding:22px 26px 28px;overscroll-behavior:contain}
 .win.dark .body{background:var(--screen);color:var(--paper)}
 .win.max{left:var(--maxL,8px)!important;top:8px!important;width:calc(100% - var(--maxL,8px) - 18px)!important;height:calc(100% - 26px)!important;max-width:none;max-height:none!important}
-.win .grip{position:absolute;right:0;bottom:0;width:20px;height:20px;z-index:3;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 0 50%,var(--sub) 50% 57%,transparent 57% 68%,var(--sub) 68% 75%,transparent 75%)}
-.win.dark .grip{background:linear-gradient(135deg,transparent 0 50%,var(--muted) 50% 57%,transparent 57% 68%,var(--muted) 68% 75%,transparent 75%)}
-.win.max .grip{display:none}
+.win>.bar{border-radius:10px 10px 0 0}
+.win>.body{border-radius:0 0 10px 10px}
+.win .rz{position:absolute;z-index:3;touch-action:none}
+.win .rz.n{top:-7px;left:10px;right:10px;height:10px;cursor:ns-resize}
+.win .rz.s{bottom:-7px;left:10px;right:10px;height:10px;cursor:ns-resize}
+.win .rz.e{right:-7px;top:10px;bottom:10px;width:10px;cursor:ew-resize}
+.win .rz.w{left:-7px;top:10px;bottom:10px;width:10px;cursor:ew-resize}
+.win .rz.ne,.win .rz.nw,.win .rz.se,.win .rz.sw{width:17px;height:17px}
+.win .rz.ne{top:-7px;right:-7px;cursor:nesw-resize}.win .rz.sw{bottom:-7px;left:-7px;cursor:nesw-resize}
+.win .rz.nw{top:-7px;left:-7px;cursor:nwse-resize}.win .rz.se{bottom:-7px;right:-7px;cursor:nwse-resize}
+.win.max .rz{display:none}
 .win.resizing,.win.resizing *{user-select:none;-webkit-user-select:none}
 .win .bar button.dot{position:relative}
 .win .bar:hover button.dot::after,.win .bar button.dot:focus-visible::after{content:attr(data-g);position:absolute;inset:0;display:grid;place-items:center;font:700 10px/1 var(--mono);color:var(--ink)}
@@ -1192,13 +1200,14 @@ function bodyFor(id){
   if(d.tpl)wrap.appendChild(document.getElementById(d.tpl).content.cloneNode(true));else wrap.innerHTML=projectBody(d.project);
   fill(id,wrap);return wrap;
 }
+const RZ=['n','s','e','w','ne','nw','se','sw'].map(d=>'<span class="rz '+d+'" data-rz="'+d+'" aria-hidden="true"></span>').join('');
 function makeWin(id,docMode){
   const d=WINS[id];const w=document.createElement('section');
   w.className='win'+(d.dark?' dark':'');w.dataset.id=id;w.id=docMode?id:'win-'+id;w.style.setProperty('--accent',d.accent);
   w.setAttribute('aria-label',d.title);
   w.innerHTML=`<div class="bar">${docMode?'<i class="dot" style="background:var(--coral)"></i><i class="dot" style="background:var(--gold)"></i><i class="dot" style="background:var(--teal)"></i>':
     `<button class="dot" data-act="close" data-g="×" title="Close" aria-label="Close ${esc(d.title)}" style="background:var(--coral)"></button><button class="dot" data-act="min" data-g="−" title="Minimise" aria-label="Minimise" style="background:var(--gold)"></button><button class="dot" data-act="max" data-g="+" title="Maximise" aria-label="Maximise" style="background:var(--teal)"></button>`}
-    <span class="ttl">${esc(d.title)}</span>${d.right?`<span class="r">${esc(d.right)}</span>`:''}</div><div class="body"></div>${docMode?'':'<span class="grip" title="Drag to resize" aria-hidden="true"></span>'}`;
+    <span class="ttl">${esc(d.title)}</span>${d.right?`<span class="r">${esc(d.right)}</span>`:''}</div><div class="body"></div>${docMode?'':RZ}`;
   w.querySelector('.body').appendChild(bodyFor(id));return w;
 }
 
@@ -1223,7 +1232,7 @@ function focusWin(id){Object.values(open).forEach(o=>o.el.classList.remove('focu
 function openWin(id){
   if(!WINS[id])return;
   if(document.body.classList.contains('docmode')){if(id==='contact'){goTo(document.querySelector('#doc .about-contact')||'about');return}goTo(document.getElementById(id)?id:'work');return}
-  if(!open[id]){const el=makeWin(id,false);place(id,el);desk.appendChild(el);open[id]={el,min:false};wire(el,id)}
+  if(!open[id]){const el=makeWin(id,false);place(id,el);desk.appendChild(el);open[id]={el,min:false};wire(el,id);pushWin(id)}
   const o=open[id];o.el.hidden=false;o.min=false;focusWin(id);
 }
 /* in document mode, jump straight to a window and correct the position while lazy images above it load */
@@ -1231,25 +1240,39 @@ function goTo(id){const t=typeof id==='string'?document.getElementById(id):id;if
   let n=0,stop=false;const quit=()=>{stop=true};addEventListener('touchstart',quit,{once:true,passive:true});addEventListener('wheel',quit,{once:true,passive:true});
   const fix=()=>{if(stop)return;const off=t.getBoundingClientRect().top-(parseFloat(getComputedStyle(t).scrollMarginTop)||0);if(Math.abs(off)>4)t.scrollIntoView({block:'start'});if(++n<8)setTimeout(fix,250)};setTimeout(fix,250)}
 function closeWin(id){const o=open[id];if(!o)return;o.el.remove();delete open[id];renderTabs()}
+/* an opened window gets its own address (#id), so it can be shared, and Back closes it */
+let curHash=location.hash.slice(1);
+function pushWin(id){if(id==='hello'||location.hash==='#'+id)return;try{history.pushState({win:id},'','#'+id);curHash=id}catch(_){}}
+function closeByUser(id){if(location.hash==='#'+id){if(history.state&&history.state.win===id){history.back();return}try{history.replaceState(null,'',location.pathname+location.search)}catch(_){}curHash=''}closeWin(id)}
+function syncHash(){const id=location.hash.slice(1);if(id===curHash)return;const prev=curHash;curHash=id;
+  if(!document.body.classList.contains('docmode')&&prev&&prev!=='hello'&&open[prev])closeWin(prev);
+  if(WINS[id])openWin(id)}
 function renderTabs(active){tabs.innerHTML=Object.keys(open).map(id=>`<button class="tab${open[id].min?' min':''}${id===active?' on':''}" data-tab="${id}">${esc(WINS[id].title)}</button>`).join('')}
 function wire(el,id){
   el.addEventListener('pointerdown',()=>focusWin(id));
   el.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const a=b.dataset.act;
-    if(a==='close')closeWin(id);if(a==='min'){open[id].min=true;el.hidden=true;renderTabs()}if(a==='max')el.classList.toggle('max')}));
+    if(a==='close')closeByUser(id);if(a==='min'){open[id].min=true;el.hidden=true;renderTabs()}if(a==='max')el.classList.toggle('max')}));
   const bar=el.querySelector('.bar');let sx,sy,ox,oy,drag=false;
   bar.addEventListener('pointerdown',e=>{if(e.target.closest('[data-act]')||el.classList.contains('max'))return;drag=true;sx=e.clientX;sy=e.clientY;ox=el.offsetLeft;oy=el.offsetTop;bar.setPointerCapture(e.pointerId)});
   bar.addEventListener('pointermove',e=>{if(!drag)return;const{W,H}=deskSize();
     el.style.left=Math.max(-el.offsetWidth+120,Math.min(W-80,ox+e.clientX-sx))+'px';el.style.top=Math.max(0,Math.min(H-40,oy+e.clientY-sy))+'px'});
   bar.addEventListener('pointerup',()=>{drag=false});
   bar.addEventListener('dblclick',e=>{if(!e.target.closest('[data-act]'))el.classList.toggle('max')});
-  const grip=el.querySelector('.grip');if(!grip)return;let rs=null;
-  grip.addEventListener('pointerdown',e=>{if(el.classList.contains('max'))return;e.preventDefault();e.stopPropagation();focusWin(id);
-    rs={x:e.clientX,y:e.clientY,w:el.offsetWidth,h:el.offsetHeight};el.classList.add('resizing');grip.setPointerCapture(e.pointerId)});
-  grip.addEventListener('pointermove',e=>{if(!rs)return;const{W,H}=deskSize();
-    el.style.width=Math.max(320,Math.min(W-el.offsetLeft-8,rs.w+e.clientX-rs.x))+'px';
-    el.style.height=Math.max(180,Math.min(H-el.offsetTop-8,rs.h+e.clientY-rs.y))+'px';el.style.maxHeight='none'});
-  const endResize=()=>{rs=null;el.classList.remove('resizing')};grip.addEventListener('pointerup',endResize);grip.addEventListener('pointercancel',endResize);
-  grip.addEventListener('dblclick',()=>el.classList.toggle('max'));
+  /* resize from any edge or corner, like a desktop window */
+  let rs=null;
+  el.querySelectorAll('[data-rz]').forEach(hd=>{
+    hd.addEventListener('pointerdown',e=>{if(el.classList.contains('max')||e.button!==0)return;e.preventDefault();e.stopPropagation();focusWin(id);
+      rs={d:hd.dataset.rz,x:e.clientX,y:e.clientY,l:el.offsetLeft,t:el.offsetTop,w:el.offsetWidth,h:el.offsetHeight};el.classList.add('resizing');hd.setPointerCapture(e.pointerId)});
+    hd.addEventListener('pointermove',e=>{if(!rs)return;const{W,H}=deskSize();const dx=e.clientX-rs.x,dy=e.clientY-rs.y,MW=320,MH=180;
+      let l=rs.l,t=rs.t,w=rs.w,h=rs.h;
+      if(rs.d.includes('e'))w=Math.max(MW,Math.min(W-l-8,rs.w+dx));
+      if(rs.d.includes('s'))h=Math.max(MH,Math.min(H-t-8,rs.h+dy));
+      if(rs.d.includes('w')){l=Math.max(0,Math.min(rs.l+rs.w-MW,rs.l+dx));w=rs.w+rs.l-l}
+      if(rs.d.includes('n')){t=Math.max(0,Math.min(rs.t+rs.h-MH,rs.t+dy));h=rs.h+rs.t-t}
+      el.style.left=l+'px';el.style.top=t+'px';el.style.width=w+'px';el.style.height=h+'px';el.style.maxHeight='none'});
+    const end=()=>{rs=null;el.classList.remove('resizing')};hd.addEventListener('pointerup',end);hd.addEventListener('pointercancel',end);
+    hd.addEventListener('dblclick',()=>el.classList.toggle('max'));
+  });
 }
 tabs.addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(!t)return;const id=t.dataset.tab;const o=open[id];
   if(o.min||!o.el.classList.contains('focus'))openWin(id);else{o.min=true;o.el.hidden=true;renderTabs()}});
@@ -1258,7 +1281,7 @@ const lb=$('#lb');
 function closeLb(){lb.hidden=true;lb.querySelector('img').removeAttribute('src')}
 document.addEventListener('click',e=>{const im=e.target.closest('img.zoom');if(im){lb.querySelector('img').src=im.src;lb.querySelector('img').alt=im.alt;lb.hidden=false;$('#lbClose').focus();return}
   if(!lb.hidden&&(e.target===lb||e.target.id==='lbClose'))closeLb()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){closeLb();return}if(e.key==='Escape'&&!document.body.classList.contains('docmode')){const top=Object.entries(open).filter(([,o])=>!o.el.hidden).sort((a,b)=>b[1].el.style.zIndex-a[1].el.style.zIndex)[0];if(top)closeWin(top[0])}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){closeLb();return}if(e.key==='Escape'&&!document.body.classList.contains('docmode')){const top=Object.entries(open).filter(([,o])=>!o.el.hidden).sort((a,b)=>b[1].el.style.zIndex-a[1].el.style.zIndex)[0];if(top)closeByUser(top[0])}});
 
 /* desktop icons */
 const ICON_SYM={hello:['TXT','#F2C14E'],work:['DIR','#6FA8FF'],moonmates:['DIR','#FF6B4A'],'qa-tool':['DIR','#3FC1B0'],careloop:['DIR','#6FA8FF'],'cow-compass':['DIR','#7DC46A'],about:['TXT','#B79CFF'],hackathons:['LOG','#3FC1B0'],cv:['PDF','#FF6B4A'],contact:['MSN','#3FC1B0'],bagcheck:['APP','#F5B544']};
@@ -1329,7 +1352,7 @@ function setMenu(on){mnav.hidden=!on;mscrim.hidden=!on;mbtn.setAttribute('aria-e
 mbtn.addEventListener('click',()=>setMenu(mnav.hidden));
 curTab.addEventListener('click',()=>setMenu(mnav.hidden));
 mscrim.addEventListener('click',()=>setMenu(false));
-mnav.addEventListener('click',e=>{const a=e.target.closest('[data-go]');if(!a)return;e.preventDefault();setMenu(false);openWin(a.dataset.go);try{history.replaceState(null,'','#'+a.dataset.go)}catch(_){}});
+mnav.addEventListener('click',e=>{const a=e.target.closest('[data-go]');if(!a)return;e.preventDefault();setMenu(false);openWin(a.dataset.go);try{history.replaceState(null,'','#'+a.dataset.go);curHash=a.dataset.go}catch(_){}});
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!mnav.hidden){setMenu(false);mbtn.focus()}});
 let spyQ=false;
 function spy(){spyQ=false;if(!document.body.classList.contains('docmode'))return;let cur=DOC_ORDER[0];
@@ -1360,6 +1383,6 @@ if(!document.body.classList.contains('docmode')){openWin('hello');placeSticky();
 else if(start)setTimeout(()=>openWin(start),50);
 addEventListener('resize',()=>{if(!document.body.classList.contains('docmode')){leftEdge();placeSticky()}});
 let wasNarrow=innerWidth<=760;addEventListener('resize',()=>{const n=innerWidth<=760;if(n!==wasNarrow){wasNarrow=n;let m='desk';try{m=localStorage.getItem('alex-mode')||'desk'}catch(e){}setMode(m);if(!n&&!Object.keys(open).length){openWin('hello')}}});
-addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(WINS[id])openWin(id)});
+addEventListener('popstate',syncHash);addEventListener('hashchange',syncHash);
 })();
 </script>
