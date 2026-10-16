@@ -1397,6 +1397,11 @@ function spy(){spyQ=false;if(!document.body.classList.contains('docmode'))return
 addEventListener('scroll',()=>{if(!spyQ){spyQ=true;requestAnimationFrame(spy)}},{passive:true});
 requestAnimationFrame(spy);
 
+/* ---------- the moon in the browser tab turns ---------- */
+(function(){const fav=document.querySelector('link[rel="icon"]');if(!fav||reduce)return;let last=-1;
+  const draw=a=>"data:image/svg+xml,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><circle cx='10' cy='10' r='8.5' fill='#0C0F15'/><path transform='rotate(${a} 10 10)' d='M10 1.5 A8.5 8.5 0 0 1 10 18.5 A4 8.5 0 0 0 10 1.5Z' fill='#F2C14E'/></svg>`);
+  const tick=()=>{const a=Math.floor(Date.now()/1000*36%360/6)*6;if(a!==last){last=a;fav.href=draw(a)}};tick();setInterval(tick,100)})();
+
 /* ---------- tonight's moon (real phase) ---------- */
 (function(){const syn=29.530588853,ref=Date.UTC(2000,0,6,18,14)/864e5;const age=((Date.now()/864e5-ref)%syn+syn)%syn;
   const k=(1-Math.cos(2*Math.PI*age/syn))/2,wax=age<syn/2,r=8,cx=10,cy=10;
