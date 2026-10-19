@@ -288,12 +288,15 @@ article>header h1{animation:rise .55s .05s cubic-bezier(.2,.8,.25,1) backwards}
 .pv-bar>span:first-of-type{margin-left:4px}
 .pv-r{margin-left:auto;font-weight:500;opacity:.7}
 .pv-r.won{opacity:1;font:700 10.5px var(--mono);background:var(--coral);border:1.5px solid var(--text);border-radius:999px;padding:0 7px}
-.pv-shot{display:block;height:clamp(64px,calc(50vh - 330px),170px);background:#ddd 0 0/cover no-repeat;border-bottom:2px solid var(--text)}
-.pv-txt{display:flex;flex-direction:column;gap:4px;padding:10px 13px 12px}
+.pv-shot{display:block;height:clamp(64px,calc(50vh - 296px),190px);background:#ddd 0 0/cover no-repeat;border-bottom:2px solid var(--text)}
+.pv-txt{display:flex;flex-direction:column;gap:3px;padding:8px 13px 10px}
 .pv-txt .meta{font:600 10px var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--sub)}
-.pv-txt b{font:700 17px/1.22 var(--display);letter-spacing:-.2px}
+.pv-txt b{font:700 16.5px/1.18 var(--display);letter-spacing:-.2px}
 .pv-sub{font-size:13px;line-height:1.4;color:#3A3E48}
 body.docmode .pv-shot{height:200px}
+.pv-phones,.pv-desk{display:flex;justify-content:center;align-items:center;gap:8px;padding:8px;background:color-mix(in srgb,var(--c) 18%,#fff)}
+.pv-phones img{height:100%;width:auto;max-width:31%;object-fit:contain;border-radius:7px;border:1.5px solid var(--text);box-shadow:2px 2px 0 var(--text);background:#fff}
+.pv-desk img{max-width:100%;max-height:100%;width:auto;height:auto;border-radius:4px;border:1.5px solid var(--text);box-shadow:2px 2px 0 var(--text)}
 .pv-name{display:inline-block;margin-right:4px;padding:1px 6px;border-radius:4px;background:color-mix(in srgb,var(--c) 38%,transparent);color:var(--text);font-weight:700}
 @keyframes rise{from{opacity:0;transform:translateY(12px)}}
 @keyframes hl-in{from{background-size:0% 100%}to{background-size:100% 100%}}
@@ -427,13 +430,13 @@ body.docmode .pv-shot{height:200px}
     "notion": "https://avugdragovic.notion.site/portfolio"
   },
   "projects": [
-    {"id":"qa-tool","title":"Benchmark","headline":"A standardised way for a survey team to check drawings","folder":"benchmark","tag":"piloted","thumb":"qa_02_review_header_tree.png","pos":"0% 0%","sub":"Piloted on about 10 live projects at DPR.","accent":"#3FC1B0","status":"case","meta":"DPR · internal tool · 2025–2026","badge":"piloted",
+    {"id":"qa-tool","title":"Benchmark","headline":"A standardised way for a survey team to check drawings","folder":"benchmark","tag":"piloted","thumb":"qa_02_review_header_tree.png","fit":"desk","pos":"0% 0%","sub":"Piloted on about 10 live projects at DPR.","accent":"#3FC1B0","status":"case","meta":"DPR · internal tool · 2025–2026","badge":"piloted",
      "summary":"Drawing QA at DPR ran through Outlook, with no shared standard and no record of who checked what. I designed one checklist that keeps the feedback with the project, built the prototype with Lovable and Claude, and piloted it on about 10 projects in my team."},
     {"id":"moonmates","title":"MoonMates","headline":"Turning “we should catch up” into a booked night out","folder":"moonmates","tag":"winner","thumb":"winners.jpg","pos":"50% 38%","sub":"Won the Engine by Starling challenge.","accent":"#FF6B4A","status":"case","meta":"Hackathon · Oct 2026","badge":"winner",
      "summary":"A shared savings app for the friends you keep meaning to see. Won the Engine by Starling challenge at HuddleHive Hack."},
-    {"id":"careloop","title":"CareLoop","headline":"Letting patients on waiting lists log symptoms by talking","folder":"careloop","tag":"winner","thumb":"careloop_hero.jpg","pos":"50% 42%","sub":"Won the Accurx challenge in 24 hours.","accent":"#6FA8FF","status":"case","meta":"Hackathon · Mar 2026","badge":"winner",
+    {"id":"careloop","title":"CareLoop","headline":"Letting patients on waiting lists log symptoms by talking","folder":"careloop","tag":"winner","thumb":"careloop_hero.jpg","phones":["careloop_02.png","careloop_04.png","careloop_05.png"],"pos":"50% 42%","sub":"Won the Accurx challenge in 24 hours.","accent":"#6FA8FF","status":"case","meta":"Hackathon · Mar 2026","badge":"winner",
      "summary":"A spoken symptom diary. I led a team of five to a working prototype in 24 hours, and we won the Accurx challenge at the HuddleHive NHS Hackathon."},
-    {"id":"cow-compass","title":"Cow Compass","headline":"Helping small farms find an escaped cow, even without signal","folder":"cow-compass","tag":"concept","thumb":"cowcompass_hero.jpg","pos":"50% 30%","sub":"Concept from four interviews in rural Croatia.","accent":"#7DC46A","status":"case","meta":"Personal project · 2026",
+    {"id":"cow-compass","title":"Cow Compass","headline":"Helping small farms find an escaped cow, even without signal","folder":"cow-compass","tag":"concept","thumb":"cowcompass_hero.jpg","phones":["cowcompass_01_morning.jpg","cowcompass_04_walk.jpg","cowcompass_05_found.jpg"],"pos":"50% 30%","sub":"Concept from four interviews in rural Croatia.","accent":"#7DC46A","status":"case","meta":"Personal project · 2026",
      "summary":"A herd tracker for small farms with patchy signal. I interviewed four farming households in rural Croatia and designed a clickable prototype for the moment a cow gets out."}
   ]
 }
@@ -463,8 +466,8 @@ body.docmode .pv-shot{height:200px}
 </template>
 
 <template id="t-work">
-  <div class="stack-l" style="gap:18px">
-    <div class="stack" style="gap:6px"><span class="k">work/</span><h2>Selected work</h2><p>An internal tool, two hackathon wins and a personal project.</p></div>
+  <div class="stack-l" style="gap:14px">
+    <div class="stack" style="gap:6px"><span class="k only-doc">work/</span><h2>Selected work</h2><p>An internal tool, two hackathon wins and a personal project.</p></div>
     <div class="pvs" id="cards"></div>
   </div>
 </template>
@@ -1231,7 +1234,7 @@ function fill(id,root){
   if(id==='work'){const c=root.querySelector('#cards');c.removeAttribute('id');
     c.innerHTML=DATA.projects.map((p,i)=>`<button class="pv" style="--c:${p.accent};--i:${i}" data-open="${p.id}">
       <span class="pv-bar"><i style="background:#FF6B4A"></i><i style="background:#F2C14E"></i><i style="background:#3FC1B0"></i><span>${esc(p.folder||p.id)}/</span><span class="pv-r${p.tag==='winner'?' won':''}">${esc(p.tag||'')}</span></span>
-      <span class="pv-shot" style="background-image:url(media/${p.thumb});background-position:${p.pos}"></span>
+      ${p.phones?`<span class="pv-shot pv-phones">${p.phones.map(f=>`<img src="media/${f}" alt="" loading="lazy">`).join('')}</span>`:p.fit==='desk'?`<span class="pv-shot pv-desk"><img src="media/${p.thumb}" alt="" loading="lazy"></span>`:`<span class="pv-shot" style="background-image:url(media/${p.thumb});background-position:${p.pos}"></span>`}
       <span class="pv-txt"><span class="meta"><span class="pv-name">${esc(p.title)}</span> ${esc(p.meta)}</span><b>${esc(p.headline||p.title)}</b><span class="pv-sub">${esc(p.sub||p.summary)}</span></span></button>`).join('');}
   if(id==='contact'||id==='about')root.querySelectorAll('[data-copybtn]').forEach(btn=>{const code=btn.parentElement.querySelector('code');
     btn.addEventListener('click',()=>{const done=()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1600)};
@@ -1284,6 +1287,7 @@ function place(id,w){
   if(id==='hello'){x=L;y=24}
   else if(d.tall){const o=34*(Object.keys(open).filter(k=>k!==id&&WINS[k].tall&&!open[k].el.hidden).length%5);x=Math.max(L,Math.min(W-width-8,Math.min(W-width-24,L+470+40)+o));y=14+o}
   else{x=Math.max(L,Math.min(W-width-20,L+40+cascade*34));y=Math.min(H-200,40+cascade*30);cascade=(cascade+1)%6}
+  if(id==='work')y=14;
   h=d.tall?H-34:Math.min(H-y-20,680);
   w.style.left=x+'px';w.style.top=y+'px';w.style.maxHeight=(H-y-14)+'px';if(d.tall)w.style.height=h+'px';
 }
