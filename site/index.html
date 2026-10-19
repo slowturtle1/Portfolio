@@ -277,15 +277,21 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .card:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--c,var(--teal))}
 .card h3{font-size:18px}
 .card p{font-size:13.5px;line-height:1.45;color:#3A3E48}
-.picks{display:flex;flex-direction:column;gap:9px}
-.pick{display:flex;flex-direction:column;gap:2px;text-align:left;border:2px solid var(--text);border-left:8px solid var(--c);border-radius:10px;background:var(--paper);padding:9px 12px 10px;box-shadow:3px 3px 0 var(--c)}
-.pick:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--c)}
-.pick .meta{font:600 10.5px var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--sub)}
-.pick b{font:700 16px/1.25 var(--display);color:var(--text)}
 /* small motion: picks and cards come in one after another, an arrow on hover, highlights draw in */
-.pick{position:relative;padding-right:40px;transition:transform .15s,box-shadow .15s;animation:rise .45s cubic-bezier(.2,.8,.25,1) backwards;animation-delay:calc(var(--i,0)*70ms + 120ms)}
-.pick .go{position:absolute;right:14px;top:50%;font:700 18px var(--display);color:var(--text);opacity:0;transform:translate(-8px,-50%);transition:opacity .2s,transform .2s}
-.pick:hover .go,.pick:focus-visible .go{opacity:1;transform:translate(0,-50%)}
+.hicons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.hicon{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px 9px;border-radius:10px;transition:background .15s;animation:pop .5s cubic-bezier(.3,1.5,.5,1) backwards;animation-delay:calc(var(--i,0)*90ms + 150ms)}
+.hicon svg{transition:transform .2s cubic-bezier(.3,1.5,.5,1)}
+.hicon:hover,.hicon:focus-visible{background:rgba(22,24,31,.06)}
+.hicon:hover svg,.hicon:focus-visible svg{transform:translateY(-4px) rotate(-5deg)}
+.hicon span{font:500 12px var(--mono);background:rgba(12,15,21,.88);color:var(--paper);padding:1px 6px;border-radius:3px;white-space:nowrap}
+.hicon .badge{position:absolute;top:2px;right:2px;font:700 10px var(--mono);font-style:normal;background:var(--coral);color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:1px 6px;transform:rotate(8deg)}
+.hicon .tip{position:absolute;z-index:5;bottom:calc(100% + 4px);left:50%;width:210px;transform:translate(-50%,4px);background:var(--ink);color:var(--paper);font:500 12.5px/1.35 var(--body);font-style:normal;text-align:left;padding:8px 10px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s}
+.hicon:first-child .tip{left:0;transform:translate(0,4px)}
+.hicon:last-child .tip{left:auto;right:0;transform:translate(0,4px)}
+.hicon:hover .tip,.hicon:focus-visible .tip{opacity:1;transform:translate(-50%,0)}
+.hicon:first-child:hover .tip,.hicon:first-child:focus-visible .tip,.hicon:last-child:hover .tip,.hicon:last-child:focus-visible .tip{transform:translate(0,0)}
+@media (max-width:480px){.hicons{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.8)}}
 .cards .card{animation:rise .45s cubic-bezier(.2,.8,.25,1) backwards;animation-delay:calc(var(--i,0)*70ms + 80ms)}
 article>header h1{animation:rise .55s .05s cubic-bezier(.2,.8,.25,1) backwards}
 .pvs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px 22px;padding:0 8px 8px 0}
@@ -457,7 +463,7 @@ article>header h1{animation:rise .55s .05s cubic-bezier(.2,.8,.25,1) backwards}
     </div>
     <p class="lead">After five years working with spatial data and delivering projects, I now design products. Along the way I kept finding <span class="hl">processes worth fixing</span>, which is how I started designing and building tools.</p>
     <p><span class="only-desk">This desktop is my portfolio.</span><span class="only-doc">This page is my portfolio.</span> Start with one of these:</p>
-    <div class="picks" data-picks></div>
+    <div class="hicons" data-picks></div>
     <div class="btnrow">
       <button class="btn" data-open="work">See all work</button>
       <button class="btn" data-open="about">About</button>
@@ -1235,7 +1241,7 @@ function caseNav(id,root){const art=root.querySelector('article');if(!art)return
   end.innerHTML=`<button type="button" class="btn primary" data-next="${n}">Next: ${esc(p?p.title:WINS[n].title)} →</button><button type="button" class="btn" data-open="work">All work</button><button type="button" class="btn" data-top>Back to top</button>`;
   art.appendChild(end)}
 function fill(id,root){
-  if(id==='hello'){const c=root.querySelector('[data-picks]');if(c)c.innerHTML=DATA.projects.filter(p=>p.status==='case').map((p,i)=>`<button class="pick" style="--c:${p.accent};--i:${i}" data-open="${p.id}"><span class="go" aria-hidden="true">→</span><span class="meta">${esc(p.title)}${p.badge==='winner'?' · winner':p.badge==='piloted'?' · piloted':''}</span><b>${esc(p.headline||p.title)}</b></button>`).join('')}
+  if(id==='hello'){const c=root.querySelector('[data-picks]');if(c)c.innerHTML=DATA.projects.filter(p=>p.status==='case').map((p,i)=>`<button class="hicon" style="--i:${i}" data-open="${p.id}" aria-label="Open ${esc(p.title)}: ${esc(p.headline||'')}">${iconSvg('DIR',p.accent)}<span>${esc(p.folder||p.id)}/</span>${p.badge==='winner'?'<i class="badge">winner</i>':''}<em class="tip" aria-hidden="true">${esc(p.headline||p.title)}</em></button>`).join('')}
   if(id==='work'){const c=root.querySelector('#cards');c.removeAttribute('id');
     c.innerHTML=DATA.projects.map((p,i)=>`<button class="pv" style="--c:${p.accent};--i:${i}" data-open="${p.id}">
       <span class="pv-bar"><i style="background:#FF6B4A"></i><i style="background:#F2C14E"></i><i style="background:#3FC1B0"></i><span>${esc(p.folder||p.id)}/</span><span class="pv-r${p.tag==='winner'?' won':''}">${esc(p.tag||'')}</span></span>
