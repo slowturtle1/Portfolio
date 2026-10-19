@@ -277,6 +277,11 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .card:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--c,var(--teal))}
 .card h3{font-size:18px}
 .card p{font-size:13.5px;line-height:1.45;color:#3A3E48}
+.picks{display:flex;flex-direction:column;gap:9px}
+.pick{display:flex;flex-direction:column;gap:2px;text-align:left;border:2px solid var(--text);border-left:8px solid var(--c);border-radius:10px;background:var(--paper);padding:9px 12px 10px;box-shadow:3px 3px 0 var(--c)}
+.pick:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--c)}
+.pick .meta{font:600 10.5px var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--sub)}
+.pick b{font:700 16px/1.25 var(--display);color:var(--text)}
 .card .meta{font:600 11px var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--sub)}
 
 /* about */
@@ -407,13 +412,13 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
     "notion": "https://avugdragovic.notion.site/portfolio"
   },
   "projects": [
-    {"id":"qa-tool","title":"Benchmark","accent":"#3FC1B0","status":"case","meta":"DPR · internal tool · 2025–2026","badge":"piloted",
+    {"id":"qa-tool","title":"Benchmark","headline":"A standardised way for a survey team to check drawings","accent":"#3FC1B0","status":"case","meta":"DPR · internal tool · 2025–2026","badge":"piloted",
      "summary":"Drawing QA at DPR ran through Outlook, with no shared standard and no record of who checked what. I designed one checklist that keeps the feedback with the project, built the prototype with Lovable and Claude, and piloted it on about 10 projects in my team."},
-    {"id":"moonmates","title":"MoonMates","accent":"#FF6B4A","status":"case","meta":"Hackathon · Oct 2026","badge":"winner",
+    {"id":"moonmates","title":"MoonMates","headline":"Turning “we should catch up” into a booked night out","accent":"#FF6B4A","status":"case","meta":"Hackathon · Oct 2026","badge":"winner",
      "summary":"A shared savings app for the friends you keep meaning to see. Won the Engine by Starling challenge at HuddleHive Hack."},
-    {"id":"careloop","title":"CareLoop","accent":"#6FA8FF","status":"case","meta":"Hackathon · Mar 2026","badge":"winner",
+    {"id":"careloop","title":"CareLoop","headline":"Letting patients on waiting lists log symptoms by talking","accent":"#6FA8FF","status":"case","meta":"Hackathon · Mar 2026","badge":"winner",
      "summary":"A spoken symptom diary. I led a team of five to a working prototype in 24 hours, and we won the Accurx challenge at the HuddleHive NHS Hackathon."},
-    {"id":"cow-compass","title":"Cow Compass","accent":"#7DC46A","status":"case","meta":"Personal project · 2026",
+    {"id":"cow-compass","title":"Cow Compass","headline":"Helping small farms find an escaped cow, even without signal","accent":"#7DC46A","status":"case","meta":"Personal project · 2026",
      "summary":"A herd tracker for small farms with patchy signal. I interviewed four farming households in rural Croatia and designed a clickable prototype for the moment a cow gets out."}
   ]
 }
@@ -430,10 +435,9 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
       </div>
     </div>
     <p class="lead">After five years working with spatial data and delivering projects, I now design products. Along the way I kept finding <span class="hl">processes worth fixing</span>, which is how I started designing and building tools.</p>
-    <p><span class="only-desk">This desktop is my portfolio.</span><span class="only-doc">This page is my portfolio.</span> Start with <b>Benchmark</b>, the drawing QA tool I designed and piloted at DPR, or <b>MoonMates</b>, a hackathon win. Everything else is in <b>work/</b>.</p>
+    <p><span class="only-desk">This desktop is my portfolio.</span><span class="only-doc">This page is my portfolio.</span> Start with one of these:</p>
+    <div class="picks" data-picks></div>
     <div class="btnrow">
-      <button class="btn primary" data-open="qa-tool">Open Benchmark</button>
-      <button class="btn primary" data-open="moonmates">Open MoonMates</button>
       <button class="btn" data-open="work">See all work</button>
       <button class="btn" data-open="about">About</button>
       <button class="btn" data-open="contact">Contact</button>
@@ -455,7 +459,8 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
   <article class="stack-l">
     <header class="stack" style="gap:10px">
       <div class="pillrow"><span class="pill win-p">Winner</span><span class="pill">Engine by Starling challenge</span><span class="pill">HuddleHive Hack 2026</span></div>
-      <h1>MoonMates</h1>
+      <span class="k">MoonMates</span>
+      <h1>Turning “we should catch up” into a booked night out</h1>
       <p class="lead">An app for the friends you keep meaning to see. Your circle saves a little every day into a shared pot, a moon fills up as the balance grows, and when it's full the app suggests a time and place that already fit everyone's week.</p>
     </header>
 
@@ -595,7 +600,8 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
   <article class="stack-l">
     <header class="stack" style="gap:10px">
       <div class="pillrow"><span class="pill win-p">Winner</span><span class="pill">Accurx challenge</span><span class="pill">HuddleHive NHS Hackathon 2026</span></div>
-      <h1>CareLoop</h1>
+      <span class="k">CareLoop</span>
+      <h1>Letting patients on waiting lists log symptoms by talking</h1>
       <p class="lead">A spoken symptom diary for patients waiting for specialist care. Patients say how they feel instead of typing it, CareLoop fills in the GP form for them, and the practice can see when someone is getting worse.</p>
     </header>
 
@@ -724,7 +730,8 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
   <article class="stack-l">
     <header class="stack" style="gap:10px">
       <div class="pillrow"><span class="pill">Personal project</span><span class="pill">Concept</span><span class="pill">Rural Croatia</span></div>
-      <h1>Cow Compass</h1>
+      <span class="k">Cow Compass</span>
+      <h1>Helping small farms find an escaped cow, even without signal</h1>
       <p class="lead">A herd tracker for small farms where the signal comes and goes. It started when my family's bulls went missing for nearly two weeks. I interviewed four farming households in rural Croatia and designed a clickable prototype for the moment a cow gets out.</p>
     </header>
 
@@ -913,7 +920,8 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
   <article class="stack-l">
     <header class="stack" style="gap:10px">
       <div class="pillrow"><span class="pill piloted">Piloted</span><span class="pill">Drawing QA tool</span><span class="pill">DPR · measured survey</span></div>
-      <h1>Benchmark</h1>
+      <span class="k">Benchmark</span>
+      <h1>A standardised way for a survey team to check drawings</h1>
       <p class="lead">Drawing QA at DPR ran through Outlook threads, with no shared standard and no record of who checked what. I designed one checklist that keeps the feedback and the record with the project, built the prototype with Lovable and Claude alongside my PM job, and piloted it on about 10 projects in my team.</p>
     </header>
 
@@ -1206,8 +1214,9 @@ function caseNav(id,root){const art=root.querySelector('article');if(!art)return
   end.innerHTML=`<button type="button" class="btn primary" data-next="${n}">Next: ${esc(p?p.title:WINS[n].title)} →</button><button type="button" class="btn" data-open="work">All work</button><button type="button" class="btn" data-top>Back to top</button>`;
   art.appendChild(end)}
 function fill(id,root){
+  if(id==='hello'){const c=root.querySelector('[data-picks]');if(c)c.innerHTML=DATA.projects.filter(p=>p.status==='case').map(p=>`<button class="pick" style="--c:${p.accent}" data-open="${p.id}"><span class="meta">${esc(p.title)}${p.badge==='winner'?' · winner':p.badge==='piloted'?' · piloted':''}</span><b>${esc(p.headline||p.title)}</b></button>`).join('')}
   if(id==='work'){const c=root.querySelector('#cards');c.removeAttribute('id');
-    c.innerHTML=DATA.projects.map(p=>`<button class="card" style="--c:${p.accent}" data-open="${p.id}"><span class="meta">${esc(p.meta)}</span><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p>
+    c.innerHTML=DATA.projects.map(p=>`<button class="card" style="--c:${p.accent}" data-open="${p.id}"><span class="meta">${esc(p.title)} · ${esc(p.meta)}</span><h3>${esc(p.headline||p.title)}</h3><p>${esc(p.summary)}</p>
       <span class="pillrow">${p.badge==='winner'?'<span class="pill win-p">Winner</span>':p.badge==='piloted'?'<span class="pill piloted">Piloted</span>':''}${p.status==='case'?'<span class="pill">Case study</span>':'<span class="pill soon">Coming soon</span>'}</span></button>`).join('');}
   if(id==='contact'||id==='about')root.querySelectorAll('[data-copybtn]').forEach(btn=>{const code=btn.parentElement.querySelector('code');
     btn.addEventListener('click',()=>{const done=()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1600)};
