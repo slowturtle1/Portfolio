@@ -288,6 +288,19 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .pick:hover .go,.pick:focus-visible .go{opacity:1;transform:translate(0,-50%)}
 .cards .card{animation:rise .45s cubic-bezier(.2,.8,.25,1) backwards;animation-delay:calc(var(--i,0)*70ms + 80ms)}
 article>header h1{animation:rise .55s .05s cubic-bezier(.2,.8,.25,1) backwards}
+.pvs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px 22px;padding:0 8px 8px 0}
+.pv{display:flex;flex-direction:column;text-align:left;background:var(--paper2);color:var(--text);border:2px solid var(--text);border-radius:12px;box-shadow:7px 7px 0 var(--c);overflow:hidden;transition:transform .15s,box-shadow .15s;animation:rise .45s cubic-bezier(.2,.8,.25,1) backwards;animation-delay:calc(var(--i,0)*80ms + 80ms)}
+.pv:hover,.pv:focus-visible{transform:translate(-2px,-2px);box-shadow:10px 10px 0 var(--c)}
+.pv-bar{display:flex;align-items:center;gap:6px;height:32px;padding:0 11px;background:var(--paper);border-bottom:2px solid var(--text);font:600 12.5px var(--mono)}
+.pv-bar i{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--text);flex:none}
+.pv-bar>span:first-of-type{margin-left:4px}
+.pv-r{margin-left:auto;font-weight:500;opacity:.7}
+.pv-r.won{opacity:1;font:700 10.5px var(--mono);background:var(--coral);border:1.5px solid var(--text);border-radius:999px;padding:0 7px}
+.pv-shot{display:block;height:200px;background:#ddd 0 0/cover no-repeat;border-bottom:2px solid var(--text)}
+.pv-txt{display:flex;flex-direction:column;gap:5px;padding:12px 15px 15px}
+.pv-txt .meta{font:600 10.5px var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--sub)}
+.pv-txt b{font:700 19px/1.22 var(--display);letter-spacing:-.2px}
+.pv-sub{font-size:13.5px;line-height:1.4;color:#3A3E48}
 @keyframes rise{from{opacity:0;transform:translateY(12px)}}
 @keyframes hl-in{from{background-size:0% 100%}to{background-size:100% 100%}}
 .card .meta{font:600 11px var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--sub)}
@@ -420,13 +433,13 @@ article>header h1{animation:rise .55s .05s cubic-bezier(.2,.8,.25,1) backwards}
     "notion": "https://avugdragovic.notion.site/portfolio"
   },
   "projects": [
-    {"id":"qa-tool","title":"Benchmark","headline":"A standardised way for a survey team to check drawings","accent":"#3FC1B0","status":"case","meta":"DPR · internal tool · 2025–2026","badge":"piloted",
+    {"id":"qa-tool","title":"Benchmark","headline":"A standardised way for a survey team to check drawings","folder":"benchmark","tag":"piloted","thumb":"qa_02_review_header_tree.png","pos":"0% 0%","sub":"Piloted on about 10 live projects at DPR.","accent":"#3FC1B0","status":"case","meta":"DPR · internal tool · 2025–2026","badge":"piloted",
      "summary":"Drawing QA at DPR ran through Outlook, with no shared standard and no record of who checked what. I designed one checklist that keeps the feedback with the project, built the prototype with Lovable and Claude, and piloted it on about 10 projects in my team."},
-    {"id":"moonmates","title":"MoonMates","headline":"Turning “we should catch up” into a booked night out","accent":"#FF6B4A","status":"case","meta":"Hackathon · Oct 2026","badge":"winner",
+    {"id":"moonmates","title":"MoonMates","headline":"Turning “we should catch up” into a booked night out","folder":"moonmates","tag":"winner","thumb":"winners.jpg","pos":"50% 38%","sub":"Won the Engine by Starling challenge.","accent":"#FF6B4A","status":"case","meta":"Hackathon · Oct 2026","badge":"winner",
      "summary":"A shared savings app for the friends you keep meaning to see. Won the Engine by Starling challenge at HuddleHive Hack."},
-    {"id":"careloop","title":"CareLoop","headline":"Letting patients on waiting lists log symptoms by talking","accent":"#6FA8FF","status":"case","meta":"Hackathon · Mar 2026","badge":"winner",
+    {"id":"careloop","title":"CareLoop","headline":"Letting patients on waiting lists log symptoms by talking","folder":"careloop","tag":"winner","thumb":"careloop_hero.jpg","pos":"50% 42%","sub":"Won the Accurx challenge in 24 hours.","accent":"#6FA8FF","status":"case","meta":"Hackathon · Mar 2026","badge":"winner",
      "summary":"A spoken symptom diary. I led a team of five to a working prototype in 24 hours, and we won the Accurx challenge at the HuddleHive NHS Hackathon."},
-    {"id":"cow-compass","title":"Cow Compass","headline":"Helping small farms find an escaped cow, even without signal","accent":"#7DC46A","status":"case","meta":"Personal project · 2026",
+    {"id":"cow-compass","title":"Cow Compass","headline":"Helping small farms find an escaped cow, even without signal","folder":"cow-compass","tag":"concept","thumb":"cowcompass_hero.jpg","pos":"50% 30%","sub":"Concept from four interviews in rural Croatia.","accent":"#7DC46A","status":"case","meta":"Personal project · 2026",
      "summary":"A herd tracker for small farms with patchy signal. I interviewed four farming households in rural Croatia and designed a clickable prototype for the moment a cow gets out."}
   ]
 }
@@ -459,7 +472,7 @@ article>header h1{animation:rise .55s .05s cubic-bezier(.2,.8,.25,1) backwards}
 <template id="t-work">
   <div class="stack-l">
     <div class="stack" style="gap:6px"><span class="k">work/</span><h2>Selected work</h2><p>Internal tools, hackathon products and a personal project. Full case studies are added one at a time.</p></div>
-    <div class="cards" id="cards"></div>
+    <div class="pvs" id="cards"></div>
   </div>
 </template>
 
@@ -1142,7 +1155,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-cv-quick]'
 /* ---------- window definitions ---------- */
 const WINS={
   hello:{title:'hello.txt',accent:'var(--gold)',w:470,tpl:'t-hello'},
-  work:{title:'work/',accent:'var(--blue)',w:640,tpl:'t-work'},
+  work:{title:'work/',accent:'var(--blue)',w:880,tpl:'t-work'},
   moonmates:{title:'moonmates/case-study.md',right:'winner',accent:'var(--coral)',w:720,tall:true,tpl:'t-moonmates'},
   'qa-tool':{title:'benchmark/case-study.md',right:'piloted',accent:'var(--teal)',w:720,tall:true,tpl:'t-qa'},
   careloop:{title:'careloop/case-study.md',right:'winner',accent:'var(--blue)',w:720,tall:true,tpl:'t-careloop'},
@@ -1224,8 +1237,10 @@ function caseNav(id,root){const art=root.querySelector('article');if(!art)return
 function fill(id,root){
   if(id==='hello'){const c=root.querySelector('[data-picks]');if(c)c.innerHTML=DATA.projects.filter(p=>p.status==='case').map((p,i)=>`<button class="pick" style="--c:${p.accent};--i:${i}" data-open="${p.id}"><span class="go" aria-hidden="true">→</span><span class="meta">${esc(p.title)}${p.badge==='winner'?' · winner':p.badge==='piloted'?' · piloted':''}</span><b>${esc(p.headline||p.title)}</b></button>`).join('')}
   if(id==='work'){const c=root.querySelector('#cards');c.removeAttribute('id');
-    c.innerHTML=DATA.projects.map((p,i)=>`<button class="card" style="--c:${p.accent};--i:${i}" data-open="${p.id}"><span class="meta">${esc(p.title)} · ${esc(p.meta)}</span><h3>${esc(p.headline||p.title)}</h3><p>${esc(p.summary)}</p>
-      <span class="pillrow">${p.badge==='winner'?'<span class="pill win-p">Winner</span>':p.badge==='piloted'?'<span class="pill piloted">Piloted</span>':''}${p.status==='case'?'<span class="pill">Case study</span>':'<span class="pill soon">Coming soon</span>'}</span></button>`).join('');}
+    c.innerHTML=DATA.projects.map((p,i)=>`<button class="pv" style="--c:${p.accent};--i:${i}" data-open="${p.id}">
+      <span class="pv-bar"><i style="background:#FF6B4A"></i><i style="background:#F2C14E"></i><i style="background:#3FC1B0"></i><span>${esc(p.folder||p.id)}/</span><span class="pv-r${p.tag==='winner'?' won':''}">${esc(p.tag||'')}</span></span>
+      <span class="pv-shot" style="background-image:url(media/${p.thumb});background-position:${p.pos}"></span>
+      <span class="pv-txt"><span class="meta">${esc(p.title)} · ${esc(p.meta)}</span><b>${esc(p.headline||p.title)}</b><span class="pv-sub">${esc(p.sub||p.summary)}</span></span></button>`).join('');}
   if(id==='contact'||id==='about')root.querySelectorAll('[data-copybtn]').forEach(btn=>{const code=btn.parentElement.querySelector('code');
     btn.addEventListener('click',()=>{const done=()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1600)};
       try{navigator.clipboard.writeText(code.textContent).then(done,()=>selectText(code))}catch(e){selectText(code)}})});
