@@ -134,7 +134,7 @@ p{margin:0;max-width:66ch}
 .stack{display:flex;flex-direction:column;gap:14px}
 .stack-l{display:flex;flex-direction:column;gap:26px}
 .lead{font-size:17px;line-height:1.55}
-.hl{background:linear-gradient(transparent 58%,rgba(242,193,78,.55) 58%);padding:0 2px}
+.hl{background:linear-gradient(transparent 58%,rgba(242,193,78,.55) 58%) 0 0/100% 100% no-repeat;padding:0 2px;animation:hl-in .8s .35s cubic-bezier(.2,.8,.25,1) both}
 .teal{color:#1F8F80}
 .pillrow{display:flex;flex-wrap:wrap;gap:8px}
 .pill{font:600 12px var(--mono);border:1.5px solid var(--text);border-radius:999px;padding:3px 10px;white-space:nowrap}
@@ -282,6 +282,14 @@ ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;he
 .pick:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--c)}
 .pick .meta{font:600 10.5px var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--sub)}
 .pick b{font:700 16px/1.25 var(--display);color:var(--text)}
+/* small motion: picks and cards come in one after another, an arrow on hover, highlights draw in */
+.pick{position:relative;padding-right:40px;transition:transform .15s,box-shadow .15s;animation:rise .45s cubic-bezier(.2,.8,.25,1) backwards;animation-delay:calc(var(--i,0)*70ms + 120ms)}
+.pick .go{position:absolute;right:14px;top:50%;font:700 18px var(--display);color:var(--text);opacity:0;transform:translate(-8px,-50%);transition:opacity .2s,transform .2s}
+.pick:hover .go,.pick:focus-visible .go{opacity:1;transform:translate(0,-50%)}
+.cards .card{animation:rise .45s cubic-bezier(.2,.8,.25,1) backwards;animation-delay:calc(var(--i,0)*70ms + 80ms)}
+article>header h1{animation:rise .55s .05s cubic-bezier(.2,.8,.25,1) backwards}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
+@keyframes hl-in{from{background-size:0% 100%}to{background-size:100% 100%}}
 .card .meta{font:600 11px var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--sub)}
 
 /* about */
@@ -1214,9 +1222,9 @@ function caseNav(id,root){const art=root.querySelector('article');if(!art)return
   end.innerHTML=`<button type="button" class="btn primary" data-next="${n}">Next: ${esc(p?p.title:WINS[n].title)} →</button><button type="button" class="btn" data-open="work">All work</button><button type="button" class="btn" data-top>Back to top</button>`;
   art.appendChild(end)}
 function fill(id,root){
-  if(id==='hello'){const c=root.querySelector('[data-picks]');if(c)c.innerHTML=DATA.projects.filter(p=>p.status==='case').map(p=>`<button class="pick" style="--c:${p.accent}" data-open="${p.id}"><span class="meta">${esc(p.title)}${p.badge==='winner'?' · winner':p.badge==='piloted'?' · piloted':''}</span><b>${esc(p.headline||p.title)}</b></button>`).join('')}
+  if(id==='hello'){const c=root.querySelector('[data-picks]');if(c)c.innerHTML=DATA.projects.filter(p=>p.status==='case').map((p,i)=>`<button class="pick" style="--c:${p.accent};--i:${i}" data-open="${p.id}"><span class="go" aria-hidden="true">→</span><span class="meta">${esc(p.title)}${p.badge==='winner'?' · winner':p.badge==='piloted'?' · piloted':''}</span><b>${esc(p.headline||p.title)}</b></button>`).join('')}
   if(id==='work'){const c=root.querySelector('#cards');c.removeAttribute('id');
-    c.innerHTML=DATA.projects.map(p=>`<button class="card" style="--c:${p.accent}" data-open="${p.id}"><span class="meta">${esc(p.title)} · ${esc(p.meta)}</span><h3>${esc(p.headline||p.title)}</h3><p>${esc(p.summary)}</p>
+    c.innerHTML=DATA.projects.map((p,i)=>`<button class="card" style="--c:${p.accent};--i:${i}" data-open="${p.id}"><span class="meta">${esc(p.title)} · ${esc(p.meta)}</span><h3>${esc(p.headline||p.title)}</h3><p>${esc(p.summary)}</p>
       <span class="pillrow">${p.badge==='winner'?'<span class="pill win-p">Winner</span>':p.badge==='piloted'?'<span class="pill piloted">Piloted</span>':''}${p.status==='case'?'<span class="pill">Case study</span>':'<span class="pill soon">Coming soon</span>'}</span></button>`).join('');}
   if(id==='contact'||id==='about')root.querySelectorAll('[data-copybtn]').forEach(btn=>{const code=btn.parentElement.querySelector('code');
     btn.addEventListener('click',()=>{const done=()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1600)};
